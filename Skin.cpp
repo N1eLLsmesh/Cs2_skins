@@ -309,8 +309,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		}
 		char buf[255] = { 0 };
 		char buf2[255] = { 0 };
-		sprintf(buf, "%s\x0b Welcome to my Skin Server!", CHAT_PREFIX);
-		sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
+		//sprintf(buf, "%s\x0b Welcome to my Skin Server!", CHAT_PREFIX);
+		//sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
 		g_PlayerMessages[steamid] = 1;
