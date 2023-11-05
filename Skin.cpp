@@ -37,7 +37,7 @@ CPlayerSpawnEvent g_PlayerSpawnEvent;
 CRoundPreStartEvent g_RoundPreStartEvent;
 
 //TEST//////
-CPlayerByuWeaponEvent g_PlayerBuyWeaponEvent;
+Event_ItemPurchase g_PlayerBuy;
 //TEST//////
 
 CEntityListener g_EntityListener;
@@ -241,7 +241,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 		gameeventmanager->AddListener(&g_RoundPreStartEvent, "round_prestart", true);
 
 		//Test//////////////////////
-		gameeventmanager->AddListener(&g_PlayerBuyWeaponEvent, "item_purchase", true);
+		gameeventmanager->AddListener(&g_PlayerBuy, "item_purchase", true);
 		//test/////////////////////
 		bDone = true;
 	}
@@ -328,16 +328,13 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 //TEST///////////////
 
-void CPlayerBuyEvent::FireGameEvent(IGameEvent* event)
+void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
-    const char* eventName = event->GetName();
-    if (strcmp(eventName, "item_purchase") == 0)
-    {
-        // Обработка события покупки скинов или предметов
-        const char* weapon = event->GetString("weapon");
-	    META_CONPRINTF("PLAYER BUY WEAPON\n");
-        // Другие действия по обработке события
-    }
+	const char* weapon = event->GetString("weapon");
+	const int userId = event->GetInt("userid");
+
+	META_CONPRINTF("PLAYER BUY WEAPON\n");
+	// Обработка покупки оружия, например, запись в лог или выполнение дополнительных действий.
 }
 //META_CONPRINTF("PLAYER BUY WEAPON\n");
 //TEST END
