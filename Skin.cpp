@@ -321,8 +321,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     }
 
     // Проверка, что игрок является CCSPlayerController
-   CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
-   if (pCSPlayerController)
+    const CCSPlayerPawn* playerPawn = pCSPlayerController->m_hPlayerPawn.Get();
+	if (pCSPlayerController)
     {
         // Получение CCSPlayerPawn из CCSPlayerController
         const CCSPlayerPawn* playerPawn = pCSPlayerController->GetPlayerPawn();
