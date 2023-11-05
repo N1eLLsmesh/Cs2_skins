@@ -324,7 +324,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
      CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     if (pCSPlayerController)
     {
-        const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn.Get();
+        const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
         if (playerPawn)
         {
             std::cout << "CCSPlayerPawn is handled." << std::endl;
