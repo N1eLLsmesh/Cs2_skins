@@ -321,6 +321,32 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     	}
 
     CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    		///TEST
+     		
+		if (pCSPlayerController)
+		{
+    			const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
+    			if (playerPawn)
+    			{
+        			char buf[256]; // Создайте буфер для сообщения
+        			sprintf(buf, "Success!");
+        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+    			}
+    			else
+			{
+        			char buf[256]; // Создайте буфер для сообщения
+        			sprintf(buf, "WRONG PLAYERPAWN!");
+        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+    			}
+		}
+		else
+		{
+    			char buf[256]; // Создайте буфер для сообщения
+    			sprintf(buf, "WRONG CSPlayerController!");
+    			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		}
+		///TEST
+	
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
 	{
 		return;
@@ -333,31 +359,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		//	{
 		//	return;
 		//	}
-    		///TEST
-     		
-		if (pCSPlayerController)
-		{
-    			const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
-    			if (playerPawn)
-    			{
-        			char buf[256]; // Создайте буфер для сообщения
-        			sprintf(buf, "%s\x04 Success!");
-        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-    			}
-    			else
-			{
-        			char buf[256]; // Создайте буфер для сообщения
-        			sprintf(buf, "%s\x04 WRONG PLAYERPAWN!");
-        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-    			}
-		}
-		else
-		{
-    			char buf[256]; // Создайте буфер для сообщения
-    			sprintf(buf, "WRONG CSPlayerController!");
-    			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		}
-		///TEST
+
 	
 
 		
