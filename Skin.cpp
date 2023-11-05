@@ -35,6 +35,11 @@ CSchemaSystem* g_pCSchemaSystem = nullptr;
 CCSGameRules* g_pGameRules = nullptr;
 CPlayerSpawnEvent g_PlayerSpawnEvent;
 CRoundPreStartEvent g_RoundPreStartEvent;
+
+//TEST//////
+CPlayerByuWeaponEvent g_PlayerBuyWeapon;
+//TEST//////
+
 CEntityListener g_EntityListener;
 bool g_bPistolRound;
 
