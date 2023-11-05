@@ -311,17 +311,18 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 
 	//TEST
-	const int client = event->GetInt("userid");
-	CCSPlayerController* playerController = static_cast<CCSPlayerController*>(g_pSM->ToBasePlayer(client));
-
-	if (playerController)
-	{
-		CCSPlayerPawn* playerPawn = playerController->GetCharacter();
-		if (playerPawn)
-		{
-			META_CONPRINTF("PAWN IS HANDLED\n"+playerPawn);
-		}
-	}
+		const CBaseEntity* victim = info.GetInflictor();
+    			if (victim)
+    			{
+        			if (victim->IsPlayer())
+        			{
+            				const CCSPlayerPawn* playerPawn = static_cast<const CCSPlayerPawn*>(victim);
+            				if (playerPawn)
+           				{
+                				std::cout << "CCSPlayerPawn is handled." << std::endl;
+            				}
+        			}
+    			}
 	//TEST
 
 	
