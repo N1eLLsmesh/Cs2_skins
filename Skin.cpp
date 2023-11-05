@@ -312,7 +312,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	int userid_pawn = event->GetInt("userid_pawn"); // Получите userid_pawn из события "playerspawned"
 
 	
-	CCSPlayerPawnBase* playerPawn = GetPlayerPawnByUserID(userid_pawn); // Реализуйте функцию для поиска playerpawn по userid_pawn
+	CSPlayer* playerPawn = static_cast<CSPlayer*>(UTIL_GetPlayerByIndex(userid_pawn));// Реализуйте функцию для поиска playerpawn по userid_pawn
 
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
