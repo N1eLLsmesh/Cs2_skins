@@ -320,7 +320,22 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         	return;
     	}
 
-    CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    
+	
+	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
+	{
+		return;
+	}
+	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
+	{
+
+		// Проверка, что игрок является CCSPlayerController
+		//<ТЕСТ ДОЛЖЕН БЫТЬ Перед>if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
+		//	{
+		//	return;
+		//	}
+
+	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		///TEST
      		
 		if (pCSPlayerController)
@@ -346,21 +361,6 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		}
 		///TEST
-	
-	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
-	{
-		return;
-	}
-	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
-	{
-
-		// Проверка, что игрок является CCSPlayerController
-		//<ТЕСТ ДОЛЖЕН БЫТЬ Перед>if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
-		//	{
-		//	return;
-		//	}
-
-	
 
 		
 		int64_t steamid = pPlayerController->m_steamID();
