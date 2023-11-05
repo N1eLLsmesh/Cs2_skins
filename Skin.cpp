@@ -199,7 +199,8 @@ bool Skin::Unload(char *error, size_t maxlen)
 
 	gameeventmanager->RemoveListener(&g_PlayerSpawnEvent);
 	gameeventmanager->RemoveListener(&g_RoundPreStartEvent);
-
+	gameeventmanager->RemoveListener(&g_PlayerBuy);
+	
 	g_pGameEntitySystem->RemoveListenerEntity(&g_EntityListener);
 
 	ConVar_Unregister();
@@ -333,6 +334,24 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	const char* weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 
+	
+	if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
+	{
+		return;
+	}
+	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
+	{
+		return;
+	}
+
+	CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
+	if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
+		return;
+	}
+	char buf[255] = { 0 };
+
+	
 	META_CONPRINTF("PLAYER BUY WEAPON\n");
 	// Обработка покупки оружия, например, запись в лог или выполнение дополнительных действий.
 }
