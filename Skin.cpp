@@ -348,15 +348,15 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 CCSPlayerPawnBase* GetPlayerPawnByUserID(int userId)
 {
-    for (int i = 1; i <= gpGlobals->maxClients; i++) {
-        CBasePlayer* player = UTIL_PlayerByIndex(i);
-        if (player && player->GetUserID() == userId) {
-            CCSPlayerPawnBase* playerPawn = static_cast<CCSPlayerPawnBase*>(player);
-            if (playerPawn) {
-                return playerPawn;
-            }
+for (int i = 1; i <= gpGlobals->maxClients; i++) {
+    CBasePlayer* player = UTIL_PlayerByIndex(i);
+    if (player && player->IsConnected() && player->GetUserID() == userId) {
+        CCSPlayerPawnBase* playerPawn = player->m_hPlayerPawn().Get();
+        if (playerPawn) {
+            // Используйте playerPawn для дальнейших операций.
         }
     }
+}
     return nullptr;
 }
 
