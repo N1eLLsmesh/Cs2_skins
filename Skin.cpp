@@ -308,7 +308,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     {
         return;
     }
-    CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+    //CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 
     // Получение игрока по идентификатору клиента (userid)
 ///TEST
@@ -321,11 +321,11 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     }
 
     // Проверка, что игрок является CCSPlayerController
-    CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
-    if (pCSPlayerController)
+   CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+   if (pCSPlayerController)
     {
         // Получение CCSPlayerPawn из CCSPlayerController
-        const CCSPlayerPawn* playerPawn = static_cast<const CCSPlayerPawn*>(pCSPlayerController);
+        const CCSPlayerPawn* playerPawn = pCSPlayerController->GetPlayerPawn();
         if (playerPawn)
         {
             std::cout << "CCSPlayerPawn is handled." << std::endl;
