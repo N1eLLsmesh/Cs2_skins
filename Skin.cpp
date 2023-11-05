@@ -307,6 +307,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	{
 		return;
 	}
+	CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
 
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
@@ -335,24 +336,24 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	const int userId = event->GetInt("userid");
 
 	
-	if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
-	{
-		return;
-	}
+	//if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
+	//{
+		//return;
+	//}
 	
 	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid")); //nowork
 
-	CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
-	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
-	{
-		return;
-	}
+	////CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
+	//if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
+	//{
+		//return;
+	//}
 
-	CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
-	if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
-		return;
-	}
-	char buf[255] = { 0 };
+	//CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
+	//if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
+		//return;
+	//}
+	//char buf[255] = { 0 };
 
 	
 	META_CONPRINTF("PLAYER BUY WEAPON\n");
