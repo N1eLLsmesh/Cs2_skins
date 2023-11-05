@@ -348,31 +348,16 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 CCSPlayerPawnBase* GetPlayerPawnByUserID(int userId)
 {
-    player_info_t playerInfo;
-
-    if (engine->GetPlayerInfo(userId, &playerInfo)) {
-        int entityId = playerInfo.entity;
-        CBaseEntity* entity = CBaseEntity::Instance(entityId);
-
-        if (entity) {
-            CCSPlayerPawnBase* playerPawn = dynamic_cast<CCSPlayerPawnBase*>(entity);
+    for (int i = 1; i <= gpGlobals->maxClients; i++) {
+        CBasePlayer* player = UTIL_PlayerByIndex(i);
+        if (player && player->GetUserID() == userId) {
+            CCSPlayerPawnBase* playerPawn = static_cast<CCSPlayerPawnBase*>(player);
             if (playerPawn) {
                 return playerPawn;
             }
-            else {
-                // PlayerPawn не найден
-                return nullptr;
-            }
-        }
-        else {
-            // Сущность не найдена
-            return nullptr;
         }
     }
-    else {
-        // Информация о игроке не доступна или игрок не подключен
-        return nullptr;
-    }
+    return nullptr;
 }
 
 
