@@ -43,7 +43,7 @@ class CRoundPreStartEvent : public IGameEventListener2
 	void FireGameEvent(IGameEvent* event) override;
 };
 
-class CPlayerByuWeaponEvent : public IGameEventListener2
+class Event_ItemPurchase : public IGameEventListener2
 {
 	void FireGameEvent(IGameEvent* event) override;
 };
