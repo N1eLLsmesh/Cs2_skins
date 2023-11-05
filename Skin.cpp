@@ -349,29 +349,29 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 CCSPlayerPawnBase* GetPlayerPawnByUserID(int userId)
 {
 	const IPlayerInfo* playerInfo = engine->GetPlayerInfo(userId);
-	if (playerInfo && playerInfo->IsConnected()) {
-		int entityId = playerInfo->GetEntityIndex();
-		CBaseEntity* entity = CBaseEntity::Instance(entityId);
-
-		if (entity) {
-			CCSPlayerPawnBase* playerPawn = dynamic_cast<CCSPlayerPawnBase*>(entity);
-			if (playerPawn) {
-				return playerPawn;
-			}
-			else {
-				// PlayerPawn не найден
-				return NULL;
-			}
-		}
-		else {
-			// Сущность не найдена
-			return NULL;
-		}
-	}
-	else {
-		// Информация о игроке не доступна или игрок не подключен
+//	if (playerInfo && playerInfo->IsConnected()) {
+//		int entityId = playerInfo->GetEntityIndex();
+//		CBaseEntity* entity = CBaseEntity::Instance(entityId);
+//
+//		if (entity) {
+//			CCSPlayerPawnBase* playerPawn = dynamic_cast<CCSPlayerPawnBase*>(entity);
+//			if (playerPawn) {
+//				return playerPawn;
+//			}
+//			else {
+//				// PlayerPawn не найден
+//				return NULL;
+//			}
+//		}
+//		else {
+//			// Сущность не найдена
+//			return NULL;
+//		}
+//	}
+//	else {
+//		// Информация о игроке не доступна или игрок не подключен
 		return NULL;
-	}
+//	}
 }
 
 
