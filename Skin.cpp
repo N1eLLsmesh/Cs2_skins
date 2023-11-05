@@ -309,6 +309,22 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		return;
 	}
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+
+	//TEST
+	const int client = event->GetInt("userid");
+	CCSPlayerController* playerController = static_cast<CCSPlayerController*>(g_pSM->ToBasePlayer(client));
+
+	if (playerController)
+	{
+		CCSPlayerPawn* playerPawn = playerController->GetCharacter();
+		if (playerPawn)
+		{
+			META_CONPRINTF("PAWN IS HANDLED\n"+playerPawn);
+		}
+	}
+	//TEST
+
+	
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
 	{
 		return;
@@ -352,7 +368,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	const char* weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 	
-	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
     	char command[256];
