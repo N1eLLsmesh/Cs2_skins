@@ -380,7 +380,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	const char* weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 
-	CCSPlayerPawnBase* playerPawn=GetPlayerPawnByUserID(int userId);
+	CCSPlayerPawnBase* playerPawn=GetPlayerPawnByUserID( userId);
 	//if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
 	//{
 		//return;
