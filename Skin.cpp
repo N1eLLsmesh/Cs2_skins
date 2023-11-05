@@ -304,40 +304,51 @@ void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 {
-	    if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
-    {
-        return;
-    }
+	if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
+	{
+        	return;
+	}
     //CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 
     // Получение игрока по идентификатору клиента (userid)
 ///TEST
-     int client = event->GetInt("userid");
-    CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+     	int client = event->GetInt("userid");
+    	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 
     if (!pPlayerController)
     {
         return;
     }
 
-    // Проверка, что игрок является CCSPlayerController
-     CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
-    if (pCSPlayerController)
-    {
-        const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
-        if (playerPawn)
-        {
-            META_CONPRINTF("PlayerPawn HANDLED\n");
-        }
-    }
-	///TEST
-	
+    
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
 	{
 		return;
 	}
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
+
+		// Проверка, что игрок является CCSPlayerController
+    		///TEST
+     		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    		if (pCSPlayerController)
+    		{
+        		const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
+        		if (playerPawn)
+        		{
+            			sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
+            			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+        		}
+			else
+			{
+				sprintf(buf, "%s\x04 WRONG!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
+               			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+			}
+    		}
+		///TEST
+	
+
+		
 		int64_t steamid = pPlayerController->m_steamID();
 		auto message = g_PlayerMessages.find(steamid);
 		if (message != g_PlayerMessages.end())
@@ -351,24 +362,6 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 }
 
 
-//TEST///////////////
-
-//void Event_PlayerSpawned::FireGameEvent(IGameEvent* event) NOWORK
-//{
-	//const int userId = event->GetInt("userid");
-
-	// Получите информацию о игроке по его идентификатору
-	//const IPlayerInfo* playerInfo = engine->GetPlayerInfo(userId);
-
-	//if (playerInfo) {
-		//const char* playerName = playerInfo->GetName();
-		//META_CONPRINTF("Player %s spawned.\n", playerName);
-
-		// Вы можете использовать playerInfo и playerName здесь
-	//}
-//}
-
-
 
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
@@ -377,10 +370,6 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	
 	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
-	
-    	char command[256];
-    	snprintf(command, sizeof(command), "skin %s", weapon); // Предполагая, что вы хотите отправить команду "skin" с параметром "weapon"
-    	engine->ServerCommand("skin\n");
 	
 	
 	META_CONPRINTF("PLAYER BUY WEAPON\n");
