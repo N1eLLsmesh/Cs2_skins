@@ -37,7 +37,7 @@ CPlayerSpawnEvent g_PlayerSpawnEvent;
 CRoundPreStartEvent g_RoundPreStartEvent;
 
 //TEST//////
-CPlayerByuWeaponEvent g_PlayerBuyWeapon;
+CPlayerByuWeaponEvent g_PlayerBuyWeaponEvent;
 //TEST//////
 
 CEntityListener g_EntityListener;
@@ -241,7 +241,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 		gameeventmanager->AddListener(&g_RoundPreStartEvent, "round_prestart", true);
 
 		//Test//////////////////////
-		gameeventmanager->AddListener(&g_PlayerBuyWeapon, "item_purchase", true);
+		gameeventmanager->AddListener(&g_PlayerBuyWeaponEvent, "item_purchase", true);
 		//test/////////////////////
 		bDone = true;
 	}
