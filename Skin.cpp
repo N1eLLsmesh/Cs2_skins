@@ -447,7 +447,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 			new CTimer(1.0f, false, false, [pCEconEntityWeapon, skin_parm]() {
 				char buf[255] = { 0 };
-				sprintf(buf, "%s Timer executed", CHAT_PREFIX);
+				//sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 				FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
 				pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 				pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
@@ -516,7 +516,7 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	}
 
 	if (weapon_name == g_KnivesMap.end()) {
-		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
+		//sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
 	}
@@ -564,11 +564,11 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 CON_COMMAND_F(test, "test", FCVAR_CLIENT_CAN_EXECUTE) {
 	new CTimer(10.0f, false, false, []() {
         char buf[255] = { 0 };
-		sprintf(buf, "%s Timer executed", CHAT_PREFIX);
+		//sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
 	});
 	char buf[255] = { 0 };
-	sprintf(buf, "%s Timer started", CHAT_PREFIX);
+	//sprintf(buf, "%s Timer started", CHAT_PREFIX);
 	FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
 }
 
