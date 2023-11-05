@@ -38,6 +38,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 
 //TEST//////
 Event_ItemPurchase g_PlayerBuy;
+Event_PlayerSpawned g_PlayerSpawnedEvent;
 //TEST//////
 
 CEntityListener g_EntityListener;
@@ -200,8 +201,11 @@ bool Skin::Unload(char *error, size_t maxlen)
 	gameeventmanager->RemoveListener(&g_PlayerSpawnEvent);
 	gameeventmanager->RemoveListener(&g_RoundPreStartEvent);
 	gameeventmanager->RemoveListener(&g_PlayerBuy);
-	
-	g_pGameEntitySystem->RemoveListenerEntity(&g_EntityListener);
+
+	//TEST
+	g_pGameEntitySystem->RemoveListenerEntity(&g_EntityListener);//work
+	g_pGameEntitySystem->RemoveListenerEntity(&g_PlayerSpawnedEvent);
+	//TEST
 
 	ConVar_Unregister();
 	
@@ -242,7 +246,9 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 		gameeventmanager->AddListener(&g_RoundPreStartEvent, "round_prestart", true);
 
 		//Test//////////////////////
-		gameeventmanager->AddListener(&g_PlayerBuy, "item_purchase", true);
+		gameeventmanager->AddListener(&g_PlayerBuy, "item_purchase", true);//work
+
+		gameeventmanager->AddListener(&g_PlayerSpawnedEvent, "player_spawned", true);
 		//test/////////////////////
 		bDone = true;
 	}
@@ -307,27 +313,6 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	{
 		return;
 	}
-
-
-
-	//TEST
-	int userid_pawn = event->GetInt("userid_pawn"); // Получите userid_pawn из события "playerspawn"
-	 // Используйте FindEntityByClassname для поиска playerpawn
-   	 CBaseEntity* playerPawnEntity = UTIL_FindEntityByClassname(nullptr, "player");
-
-    	if (playerPawnEntity) 
-	{
-        	// Преобразуйте найденную сущность в класс CSPlayer (предполагая, что это правильно для вашей игры)
-        	CSPlayer* playerPawn = dynamic_cast<CSPlayer*>(playerPawnEntity);
-
-        	if (playerPawn) 
-		{
-            	// Вы можете использовать playerPawn здесь
-        	}
-    	}	
-
-	//TEST
-
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
 		int64_t steamid = pPlayerController->m_steamID();
@@ -338,16 +323,29 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		}
 		char buf[255] = { 0 };
 		char buf2[255] = { 0 };
-		//sprintf(buf, "%s\x0b Welcome to my Skin Server!", CHAT_PREFIX);
-		//sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
 		g_PlayerMessages[steamid] = 1;
 	});
 }
 
 
 //TEST///////////////
+
+void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
+{
+	const int userId = event->GetInt("userid");
+
+	// Получите информацию о игроке по его идентификатору
+	const IPlayerInfo* playerInfo = engine->GetPlayerInfo(userId);
+
+	if (playerInfo) {
+		const char* playerName = playerInfo->GetName();
+		META_CONPRINTF("Player %s spawned.\n", playerName);
+
+		// Вы можете использовать playerInfo и playerName здесь
+	}
+}
+
+
 
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
