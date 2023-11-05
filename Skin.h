@@ -48,10 +48,6 @@ class Event_ItemPurchase : public IGameEventListener2
 	void FireGameEvent(IGameEvent* event) override;
 };
 
-class Event_PlayerSpawned : public IGameEventListener2
-{
-	void FireGameEvent(IGameEvent* event) override;
-};
 
 class CEntityListener : public IEntityListener
 {
