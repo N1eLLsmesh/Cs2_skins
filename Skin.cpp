@@ -335,24 +335,27 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		//	}
     		///TEST
      		
-    		if (pCSPlayerController)
-    		{
-        		const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
-        		if (playerPawn)
-        		{
-            			sprintf("%s\x04 Success!");
-            			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-        		}
-			else
+		if (pCSPlayerController)
+		{
+    			const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn.Get();
+    			if (playerPawn)
+    			{
+        			char buf[256]; // Создайте буфер для сообщения
+        			sprintf(buf, "%s\x04 Success!", pCSPlayerController->GetPlayerName());
+        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+    			}
+    			else
 			{
-				sprintf("%s\x04 WRONG PLAYERPAWN!");
-               			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-			}
-    		}
+        			char buf[256]; // Создайте буфер для сообщения
+        			sprintf(buf, "%s\x04 WRONG PLAYERPAWN!", pCSPlayerController->GetPlayerName());
+        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+    			}
+		}
 		else
 		{
-			sprintf("%s\x04 WRONG CSPlayerController!");
-               			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+    			char buf[256]; // Создайте буфер для сообщения
+    			sprintf(buf, "WRONG CSPlayerController!");
+    			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		}
 		///TEST
 	
