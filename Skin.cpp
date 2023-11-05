@@ -38,7 +38,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 
 //TEST//////
 Event_ItemPurchase g_PlayerBuy;
-Event_PlayerSpawned g_PlayerSpawnedEvent;
+//Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
 //TEST//////
 
 CEntityListener g_EntityListener;
@@ -204,7 +204,7 @@ bool Skin::Unload(char *error, size_t maxlen)
 
 	//TEST
 	g_pGameEntitySystem->RemoveListenerEntity(&g_EntityListener);//work
-	g_pGameEntitySystem->RemoveListenerEntity(&g_PlayerSpawnedEvent);
+	//g_pGameEntitySystem->RemoveListenerEntity(&g_PlayerSpawnedEvent);//nowork
 	//TEST
 
 	ConVar_Unregister();
@@ -248,7 +248,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 		//Test//////////////////////
 		gameeventmanager->AddListener(&g_PlayerBuy, "item_purchase", true);//work
 
-		gameeventmanager->AddListener(&g_PlayerSpawnedEvent, "player_spawned", true);
+		//gameeventmanager->AddListener(&g_PlayerSpawnedEvent, "player_spawned", true);//nowork
 		//test/////////////////////
 		bDone = true;
 	}
@@ -330,20 +330,20 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 //TEST///////////////
 
-void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
-{
-	const int userId = event->GetInt("userid");
+//void Event_PlayerSpawned::FireGameEvent(IGameEvent* event) NOWORK
+//{
+	//const int userId = event->GetInt("userid");
 
 	// Получите информацию о игроке по его идентификатору
-	const IPlayerInfo* playerInfo = engine->GetPlayerInfo(userId);
+	//const IPlayerInfo* playerInfo = engine->GetPlayerInfo(userId);
 
-	if (playerInfo) {
-		const char* playerName = playerInfo->GetName();
-		META_CONPRINTF("Player %s spawned.\n", playerName);
+	//if (playerInfo) {
+		//const char* playerName = playerInfo->GetName();
+		//META_CONPRINTF("Player %s spawned.\n", playerName);
 
 		// Вы можете использовать playerInfo и playerName здесь
-	}
-}
+	//}
+//}
 
 
 
