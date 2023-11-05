@@ -304,22 +304,35 @@ void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 {
-	if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
-	{
-		return;
-	}
-	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+	    if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
+    {
+        return;
+    }
+    CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 
-	//TEST
-	int client = event->GetInt("userid");
-    	const CCSPlayerPawn* playerPawn = static_cast<CCSPlayerPawn*>(engine->PEntityOfClientIndex(client));
+    // Получение игрока по идентификатору клиента (userid)
+///TEST
+    int client = event->GetInt("userid");
+    CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(engine->GetClientNetworkable(client));
     
-    	if (playerPawn)
-    	{
-       		std::cout << "CCSPlayerPawn is handled." << std::endl;
-    	}
-	//TEST
+    if (!pPlayerController)
+    {
+        return;
+    }
 
+    // Проверка, что игрок является CCSPlayerController
+    CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    if (pCSPlayerController)
+    {
+        // Получение CCSPlayerPawn из CCSPlayerController
+        const CCSPlayerPawn* playerPawn = pCSPlayerController->GetCharacter();
+
+        if (playerPawn)
+        {
+            std::cout << "CCSPlayerPawn is handled." << std::endl;
+        }
+    }
+	///TEST
 	
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
 	{
