@@ -352,6 +352,13 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	const char* weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 
+
+	 if (context.GetPlayerSlot() == -1) {
+		return;
+	}
+    CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
+    CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
+	
     	char command[256];
     	snprintf(command, sizeof(command), "skin %s", weapon); // Предполагая, что вы хотите отправить команду "skin" с параметром "weapon"
     	engine->ServerCommand("skin\n");
