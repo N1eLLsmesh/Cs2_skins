@@ -353,7 +353,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	const int userId = event->GetInt("userid");
 
     	char command[256];
-    	snprintf(command, sizeof(command), "skin", weapon);
+    	snprintf(command, sizeof(command), "skin %s", weapon); // Предполагая, что вы хотите отправить команду "skin" с параметром "weapon"
     	clientCommand(userId, command);
 	
 	
