@@ -351,13 +351,9 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
 	const char* weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
-
-
-	 if (context.GetPlayerSlot() == -1) {
-		return;
-	}
-    CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
-    CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
+	
+	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
     	char command[256];
     	snprintf(command, sizeof(command), "skin %s", weapon); // Предполагая, что вы хотите отправить команду "skin" с параметром "weapon"
@@ -548,9 +544,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     {
         char buf2[255] = { 0 };
 		sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
-		//sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
+		sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
         return;
     }
 
@@ -569,8 +565,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	}
 
 	if (weapon_name == g_KnivesMap.end()) {
-		//sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
 	}
 
@@ -582,8 +578,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
 	if (weapon_slot_map == g_ItemToSlotMap.end()) {
-		//sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
 	}
 	auto weapon_slot = weapon_slot_map->second;
