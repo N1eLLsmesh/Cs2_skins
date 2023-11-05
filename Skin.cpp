@@ -327,7 +327,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
         if (playerPawn)
         {
-            std::cout << "CCSPlayerPawn is handled." << std::endl;
+            META_CONPRINTF("PlayerPawn HANDLED\n");
         }
     }
 	///TEST
