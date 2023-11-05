@@ -340,15 +340,20 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         		const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
         		if (playerPawn)
         		{
-            			sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01");
+            			sprintf("%s\x04 Success!");
             			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
         		}
 			else
 			{
-				sprintf(buf, "%s\x04 WRONG!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01");
+				sprintf("%s\x04 WRONG PLAYERPAWN!");
                			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 			}
     		}
+		else
+		{
+			sprintf("%s\x04 WRONG CSPlayerController!");
+               			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		}
 		///TEST
 	
 
