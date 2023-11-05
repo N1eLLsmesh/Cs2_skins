@@ -321,11 +321,10 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     }
 
     // Проверка, что игрок является CCSPlayerController
-    const CCSPlayerPawn* playerPawn = pCSPlayerController->m_hPlayerPawn.Get();
-	if (pCSPlayerController)
+     CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    if (pCSPlayerController)
     {
-        // Получение CCSPlayerPawn из CCSPlayerController
-        const CCSPlayerPawn* playerPawn = pCSPlayerController->GetPlayerPawn();
+        const CCSPlayerPawn* playerPawn = pCSPlayerController->m_hPlayerPawn.Get();
         if (playerPawn)
         {
             std::cout << "CCSPlayerPawn is handled." << std::endl;
