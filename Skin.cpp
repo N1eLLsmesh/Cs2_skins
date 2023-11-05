@@ -48,7 +48,7 @@ float g_flUniversalTime;
 float g_flLastTickedTime;
 bool g_bHasTicked;
 
-#define CHAT_PREFIX	" \x05[Cobra]\x01"
+#define CHAT_PREFIX	""
 
 typedef struct SkinParm
 {
@@ -675,20 +675,20 @@ const char* Skin::GetLogTag()
 
 const char* Skin::GetAuthor()
 {
-	return "Cobra";
+	return "Monsoon X tiltedboyxddd";
 }
 
 const char* Skin::GetDescription()
 {
-	return "!ws for CS2";
+	return "Private Skinchanger for cstrigon.net";
 }
 
 const char* Skin::GetName()
 {
-	return "Change Skin";
+	return "Skinchanger";
 }
 
 const char* Skin::GetURL()
 {
-	return "https://google.com";
+	return "cstrigon.net";
 }
