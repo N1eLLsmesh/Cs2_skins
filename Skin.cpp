@@ -312,9 +312,9 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
     // Получение игрока по идентификатору клиента (userid)
 ///TEST
-    int client = event->GetInt("userid");
-    CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(engine->GetClientNetworkable(client));
-    
+     int client = event->GetInt("userid");
+    CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+
     if (!pPlayerController)
     {
         return;
@@ -325,8 +325,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     if (pCSPlayerController)
     {
         // Получение CCSPlayerPawn из CCSPlayerController
-        const CCSPlayerPawn* playerPawn = pCSPlayerController->GetCharacter();
-
+        const CCSPlayerPawn* playerPawn = static_cast<const CCSPlayerPawn*>(pCSPlayerController);
         if (playerPawn)
         {
             std::cout << "CCSPlayerPawn is handled." << std::endl;
