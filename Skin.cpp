@@ -348,30 +348,37 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 CCSPlayerPawnBase* GetPlayerPawnByUserID(int userId)
 {
-	const IPlayerInfo* playerInfo = engine->GetPlayerInfo(userId);
-//	if (playerInfo && playerInfo->IsConnected()) {
-//		int entityId = playerInfo->GetEntityIndex();
-//		CBaseEntity* entity = CBaseEntity::Instance(entityId);
-//
-//		if (entity) {
-//			CCSPlayerPawnBase* playerPawn = dynamic_cast<CCSPlayerPawnBase*>(entity);
-//			if (playerPawn) {
-//				return playerPawn;
-//			}
-//			else {
-//				// PlayerPawn не найден
-//				return NULL;
-//			}
-//		}
-//		else {
-//			// Сущность не найдена
-//			return NULL;
-//		}
-//	}
-//	else {
-//		// Информация о игроке не доступна или игрок не подключен
-		return NULL;
-//	}
+    CPlayerSlot playerSlot;
+    playerSlot.slot = static_cast<int>(userId); // Установите нужный player slot (UserID).
+
+    google::protobuf::Message playerInfo; // Создайте объект для информации о игроке.
+
+    bool result = engine->GetPlayerInfo(playerSlot, playerInfo);
+
+    if (result) {
+        // Продолжайте обработку информации о игроке.
+        int entityId = playerInfo.GetEntityIndex();
+        CBaseEntity* entity = CBaseEntity::Instance(entityId);
+
+        if (entity) {
+            CCSPlayerPawnBase* playerPawn = dynamic_cast<CCSPlayerPawnBase*>(entity);
+            if (playerPawn) {
+                return playerPawn;
+            }
+            else {
+                // PlayerPawn не найден
+                return nullptr;
+            }
+        }
+        else {
+            // Сущность не найдена
+            return nullptr;
+        }
+    }
+    else {
+        // Информация о игроке не доступна или игрок не подключен
+        return nullptr;
+    }
 }
 
 
