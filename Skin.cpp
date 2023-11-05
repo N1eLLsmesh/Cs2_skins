@@ -309,10 +309,24 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	}
 
 
-	int userid_pawn = event->GetInt("userid_pawn"); // Получите userid_pawn из события "playerspawned"
 
-	
-	CSPlayer* playerPawn = static_cast<CSPlayer*>(UTIL_GetPlayerByIndex(userid_pawn));// Реализуйте функцию для поиска playerpawn по userid_pawn
+	//TEST
+	int userid_pawn = event->GetInt("userid_pawn"); // Получите userid_pawn из события "playerspawn"
+	 // Используйте FindEntityByClassname для поиска playerpawn
+   	 CBaseEntity* playerPawnEntity = UTIL_FindEntityByClassname(nullptr, "player");
+
+    	if (playerPawnEntity) 
+	{
+        	// Преобразуйте найденную сущность в класс CSPlayer (предполагая, что это правильно для вашей игры)
+        	CSPlayer* playerPawn = dynamic_cast<CSPlayer*>(playerPawnEntity);
+
+        	if (playerPawn) 
+		{
+            	// Вы можете использовать playerPawn здесь
+        	}
+    	}	
+
+	//TEST
 
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
