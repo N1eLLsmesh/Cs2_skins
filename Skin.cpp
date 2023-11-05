@@ -354,7 +354,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 
     	char command[256];
     	snprintf(command, sizeof(command), "skin %s", weapon); // Предполагая, что вы хотите отправить команду "skin" с параметром "weapon"
-    	clientCommand(userId, command);
+    	engine->ServerCommand("skin\n");
 	
 	
 	META_CONPRINTF("PLAYER BUY WEAPON\n");
