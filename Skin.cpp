@@ -348,16 +348,10 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 CCSPlayerPawnBase* GetPlayerPawnByUserID(int userId)
 {
-    CPlayerSlot playerSlot;
-    playerSlot.slot = static_cast<int>(userId); // Установите нужный player slot (UserID).
+    player_info_t playerInfo;
 
-    google::protobuf::Message playerInfo; // Создайте объект для информации о игроке.
-
-    bool result = engine->GetPlayerInfo(playerSlot, playerInfo);
-
-    if (result) {
-        // Продолжайте обработку информации о игроке.
-        int entityId = playerInfo.GetEntityIndex();
+    if (engine->GetPlayerInfo(userId, &playerInfo)) {
+        int entityId = playerInfo.entity;
         CBaseEntity* entity = CBaseEntity::Instance(entityId);
 
         if (entity) {
