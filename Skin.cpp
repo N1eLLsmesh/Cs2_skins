@@ -339,7 +339,10 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	{
 		return;
 	}
-	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+	
+	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid")); //nowork
+
+	CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
 	{
 		return;
