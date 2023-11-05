@@ -235,6 +235,9 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 		gameeventmanager->AddListener(&g_PlayerSpawnEvent, "player_spawn", true);
 		gameeventmanager->AddListener(&g_RoundPreStartEvent, "round_prestart", true);
 
+		//Test//////////////////////
+		gameeventmanager->AddListener(&g_PlayerBuyWeapon, "player_buyweapon", true);
+		//test/////////////////////
 		bDone = true;
 	}
 }
@@ -316,6 +319,15 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		g_PlayerMessages[steamid] = 1;
 	});
 }
+
+
+//TEST///////////////
+
+void CPlayerBuyEvent::FireGameEvent(IGameEvent* event)
+{
+	META_CONPRINTF("PLAYER BUY WEAPON\n");
+}
+//TEST END
 
 void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
 {
