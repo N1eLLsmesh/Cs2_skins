@@ -315,12 +315,12 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
      	int client = event->GetInt("userid");
     	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 
-    if (!pPlayerController)
-    {
-        return;
-    }
+    	if (!pPlayerController)
+    	{
+        	return;
+    	}
 
-    
+    CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
 	{
 		return;
@@ -329,8 +329,12 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	{
 
 		// Проверка, что игрок является CCSPlayerController
+		//<ТЕСТ ДОЛЖЕН БЫТЬ Перед>if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
+		//	{
+		//	return;
+		//	}
     		///TEST
-     		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+     		
     		if (pCSPlayerController)
     		{
         		const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
