@@ -337,17 +337,17 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
      		
 		if (pCSPlayerController)
 		{
-    			const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn.Get();
+    			const CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
     			if (playerPawn)
     			{
         			char buf[256]; // Создайте буфер для сообщения
-        			sprintf(buf, "%s\x04 Success!", pCSPlayerController->GetPlayerName());
+        			sprintf(buf, "%s\x04 Success!");
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
     			}
     			else
 			{
         			char buf[256]; // Создайте буфер для сообщения
-        			sprintf(buf, "%s\x04 WRONG PLAYERPAWN!", pCSPlayerController->GetPlayerName());
+        			sprintf(buf, "%s\x04 WRONG PLAYERPAWN!");
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
     			}
 		}
