@@ -346,46 +346,16 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 //}
 
 
-CCSPlayerPawnBase* GetPlayerPawnByUserID(int userId)
-{
-for (int i = 1; i <= gpGlobals->maxClients; i++) {
-    CBasePlayer* player = UTIL_PlayerByIndex(i);
-    if (player && player->IsConnected() && player->GetUserID() == userId) {
-        CCSPlayerPawnBase* playerPawn = player->m_hPlayerPawn().Get();
-        if (playerPawn) {
-            // Используйте playerPawn для дальнейших операций.
-        }
-    }
-}
-    return nullptr;
-}
-
 
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
 	const char* weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 
-	CCSPlayerPawnBase* playerPawn=GetPlayerPawnByUserID( userId);
-	//if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
-	//{
-		//return;
-	//}
+    	char command[256];
+    	snprintf(command, sizeof(command), "skin", weapon);
+    	clientCommand(userId, command);
 	
-	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid")); //nowork
-
-	////CCSPlayerController* pPlayerController = (CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
-	//if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
-	//{
-		//return;
-	//}
-
-	//CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
-	//if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
-		//return;
-	//}
-	//char buf[255] = { 0 };
-
 	
 	META_CONPRINTF("PLAYER BUY WEAPON\n");
 	// Обработка покупки оружия, например, запись в лог или выполнение дополнительных действий.
@@ -570,9 +540,9 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (args.ArgC() != 5)
     {
         char buf2[255] = { 0 };
-		//sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
+		sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
 		//sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		//FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
         return;
     }
