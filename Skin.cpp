@@ -40,7 +40,14 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 Event_ItemPurchase g_PlayerBuy;
 //Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
-bool firstPlayerSpawnEvent = true;
+
+std::unordered_map<int64_t, PlayerState> playerStates;
+struct PlayerState
+{
+    bool processed;
+
+    PlayerState() : processed(false) {}
+};
 //TEST//////
 
 CEntityListener g_EntityListener;
@@ -60,6 +67,8 @@ typedef struct SkinParm
 	float m_flFallbackWear;
 	bool used = false;
 }SkinParm;
+
+
 
 #ifdef _WIN32
 typedef void*(FASTCALL* SubClassChange_t)(const CCommandContext &context, const CCommand &args);
@@ -311,11 +320,12 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         	return;
 	}
 	//TEST 2
-	if (firstPlayerSpawnEvent)
+	if (!playerStates[userId].processed)
     	{
-        	firstPlayerSpawnEvent = false; // Пометьте, что первое событие уже обработано
-        	return;
-    	}
+        // Действия, которые нужно выполнить один раз для игрока
+        	playerStates[userId].processed = true;
+		return;
+	}
     // Получение игрока по идентификатору клиента (userid)
 ///TEST
      	int client = event->GetInt("userid");
