@@ -336,7 +336,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		//	{
 		//	return;
 		//	}
-
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
 	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		///TEST
      		
@@ -348,9 +348,9 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			char buf[256]; // Создайте буфер для сообщения
         			sprintf(buf, "Success!");
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-				//7 801 1 0///TESTFORCHANGE
-				std::this_thread::sleep_for(std::chrono::milliseconds(150));
-				TestSkinchanger(pCSPlayerController, playerPawn, 7, 801, 1, 0.0f);
+				//500 420 1 0///TESTFORCHANGE
+				
+				TestSkinchanger(pCSPlayerController, playerPawn, 500, 420, 1, 0.0f);
 				//TESTEND
 				
     			}
@@ -570,19 +570,6 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 		return;
 	}
 	char buf[255] = { 0 };
-	//if (args.ArgC() != 5)
-	//{
-		//char buf2[255] = { 0 };
-		//sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
-		//sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
-		//return;
-	//}
-	//int32_t weapon_id = atoi(args.Arg(1));
-	//int64_t paint_kit = atoi(args.Arg(2));
-	//int64_t pattern_id = atoi(args.Arg(3));
-	//float wear = atof(args.Arg(4));
 	
 	auto weapon_name = g_WeaponsMap.find(weapon_id);
 	bool isKnife = false;
