@@ -649,20 +649,8 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 		return;
 	}
 	char buf[255] = { 0 };
-	//if (args.ArgC() != 5)
-	//{
-		//char buf2[255] = { 0 };
-		//sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
-		//sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		//FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
-		//return;
-	//}
-	//int32_t weapon_id = atoi(args.Arg(1));
-	//int64_t paint_kit = atoi(args.Arg(2));
-	//int64_t pattern_id = atoi(args.Arg(3));
-	//float wear = atof(args.Arg(4));
-	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(6000));
 	auto weapon_name = g_WeaponsMap.find(weapon_id);
 	bool isKnife = false;
 	int64_t steamid = pPlayerController->m_steamID();
@@ -692,6 +680,8 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
 	//TEST
+	META_CONPRINTF("pPlayerWeapont %lld\n\n", pPlayerWeapon);
+	META_CONPRINTF("pPlayerWeapons %lld\n\n", pPlayerWeapons);
 	META_CONPRINTF("WeaponSlot %lld\n", weapon_slot_map);
 	//TEST
 	if (weapon_slot_map == g_ItemToSlotMap.end()) {
@@ -725,7 +715,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	// pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 	// FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 	// pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
-	META_CONPRINTF("called by %lld\n", steamid);
+	//META_CONPRINTF("called by %lld\n", steamid);
 	//sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
 	//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 
@@ -789,6 +779,10 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	g_PlayerSkins[steamid].m_flFallbackWear = wear;
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
+	
+	META_CONPRINTF("pPlayerWeapont %lld\n\n", pPlayerWeapon);
+	META_CONPRINTF("pPlayerWeapons %lld\n\n", pPlayerWeapons);
+	
 	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
 	if (weapon_slot_map == g_ItemToSlotMap.end()) {
 		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
