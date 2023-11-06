@@ -345,7 +345,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
     	if (firstPlayerSpawnEvent==0)
     	{
-        	firstPlayerSpawnEvent+=1; // Пометьте, что первое событие уже обработано
+        	firstPlayerSpawnEvent=false; // Пометьте, что первое событие уже обработано
         	return;
     	
 	
