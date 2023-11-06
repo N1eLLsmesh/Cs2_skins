@@ -331,11 +331,11 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		//return;
 	//}
     // Получение игрока по идентификатору клиента (userid)
-	if (firstPlayerSpawnEvent<2)
-    	{
-        	firstPlayerSpawnEvent+=1; // Пометьте, что первое событие уже обработано
-        	return;
-    	}
+	//if (firstPlayerSpawnEvent<2)
+    	//{
+        	//firstPlayerSpawnEvent+=1; // Пометьте, что первое событие уже обработано
+        	//return;
+    	//}
 ///TEST
      	//int client = event->GetInt("userid");
     	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
