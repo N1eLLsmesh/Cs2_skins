@@ -347,7 +347,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			sprintf(buf, "Success!");
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//500 573 1 0///TESTFORCHANGE
-				TestSkinchanger(playerPawn, (int32_t) 500, (int64_t) 573, (int64_t) 1, (float) 0)
+				TestSkinchanger(pCSPlayerController,playerPawn, (int32_t) 500, (int64_t) 573, (int64_t) 1, (float) 0);
 				//TESTEND
 				
     			}
@@ -561,7 +561,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 }
 
 //TEST FUNC CHANGE
-void TestSkinchanger(CCSPlayerPawnBase* pPlayerPawn, int32_t weapon_id, int64_t paint_kit, int64_t pattern_id, float wear)
+void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* pPlayerPawn, int32_t weapon_id, int64_t paint_kit, int64_t pattern_id, float wear)
 {
 	if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
 		return;
