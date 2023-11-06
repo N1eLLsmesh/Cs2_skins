@@ -39,6 +39,8 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 //TEST//////
 Event_ItemPurchase g_PlayerBuy;
 //Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
+void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
+
 //TEST//////
 
 CEntityListener g_EntityListener;
