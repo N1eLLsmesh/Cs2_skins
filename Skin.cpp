@@ -419,7 +419,11 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
 	const char* weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
-	
+	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    	CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
+	//7 639 1 0
+	TestSkinchanger(pCSPlayerController, playerPawn, 7, 639, 1, 0.0f);
 	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
@@ -446,7 +450,7 @@ void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
 
 void OnRoundStart::FireGameEvent(IGameEvent* event) 
 {
-	TestSkinchanger(PC, PP, 61, 657, 1, 0.0f);
+	//TestSkinchanger(PC, PP, 61, 657, 1, 0.0f);
     	META_CONPRINTF("RoundStarted\n");
 }
 
