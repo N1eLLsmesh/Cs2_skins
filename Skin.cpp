@@ -678,13 +678,16 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 		if (!currentWeapon)
 			continue;
 		auto weapon = static_cast<CEconEntity*>(currentWeapon.Get());
+		META_CONPRINTF("weapon %lld\n",weapon);
 		if (!weapon)
 			continue;
 		auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		META_CONPRINTF("weapon_slot_map_my_weapon %lld\n",weapon_slot_map_my_weapon);
 		if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
 			continue;
 		}
 		auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
+		META_CONPRINTF("weapon_slot_my_weapon %lld\n",weapon_slot_my_weapon);
 		if (weapon_slot == weapon_slot_my_weapon) {
 			pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
 			FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
