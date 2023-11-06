@@ -40,7 +40,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 Event_ItemPurchase g_PlayerBuy;
 //Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
-bool firstPlayerSpawnEvent=true;
+int firstPlayerSpawnEvent=0;
 
 struct PlayerState
 {
@@ -331,9 +331,9 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		//return;
 	//}
     // Получение игрока по идентификатору клиента (userid)
-	if (firstPlayerSpawnEvent)
+	if (firstPlayerSpawnEvent<2)
     	{
-        	firstPlayerSpawnEvent = false; // Пометьте, что первое событие уже обработано
+        	firstPlayerSpawnEvent+=1; // Пометьте, что первое событие уже обработано
         	return;
     	}
 ///TEST
@@ -375,7 +375,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//7 707 1 0///TESTFORCHANGE
 				std::this_thread::sleep_for(std::chrono::milliseconds(300));
-				//TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
+				TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
 				//TESTEND
 				
     			}
