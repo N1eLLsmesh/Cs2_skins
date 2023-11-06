@@ -567,20 +567,20 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 		return;
 	}
 	char buf[255] = { 0 };
-	/*if (args.ArgC() != 5)
-	{
-		char buf2[255] = { 0 };
-		sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
-		sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
-		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
-		return;
-	}
-
-	/*int32_t weapon_id = atoi(args.Arg(1));
-	int64_t paint_kit = atoi(args.Arg(2));
-	int64_t pattern_id = atoi(args.Arg(3));
-	float wear = atof(args.Arg(4));*/
+	//if (args.ArgC() != 5)
+	//{
+		//char buf2[255] = { 0 };
+		//sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
+		//sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
+		//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		//FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
+		//return;
+	//}
+	//int32_t weapon_id = atoi(args.Arg(1));
+	//int64_t paint_kit = atoi(args.Arg(2));
+	//int64_t pattern_id = atoi(args.Arg(3));
+	//float wear = atof(args.Arg(4));
+	
 	auto weapon_name = g_WeaponsMap.find(weapon_id);
 	bool isKnife = false;
 	int64_t steamid = pPlayerController->m_steamID();
