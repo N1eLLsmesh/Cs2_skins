@@ -346,6 +346,10 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			char buf[256]; // Создайте буфер для сообщения
         			sprintf(buf, "Success!");
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+				//500 573 1 0///TESTFORCHANGE
+				TestSkinchanger(playerPawn, (int32_t) 500, (int64_t) 573, (int64_t) 1, (float) 0)
+				//TESTEND
+				
     			}
     			else
 			{
@@ -555,6 +559,85 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 	});
 }
+
+//TEST FUNC CHANGE
+void TestSkinchanger(CCSPlayerPawnBase* pPlayerPawn, int32_t weapon_id, int64_t paint_kit, int64_t pattern_id, float wear)
+{
+	if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
+		return;
+	}
+	char buf[255] = { 0 };
+	if (args.ArgC() != 5)
+	{
+		char buf2[255] = { 0 };
+		sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
+		sprintf(buf2, "%s Console command: \x06skin \x04ItemDefIndex PaintKit PatternID Float\x01", CHAT_PREFIX);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf2, nullptr, nullptr, nullptr, nullptr);
+		return;
+	}
+
+	/*int32_t weapon_id = atoi(args.Arg(1));
+	int64_t paint_kit = atoi(args.Arg(2));
+	int64_t pattern_id = atoi(args.Arg(3));
+	float wear = atof(args.Arg(4));*/
+	auto weapon_name = g_WeaponsMap.find(weapon_id);
+	bool isKnife = false;
+	int64_t steamid = pPlayerController->m_steamID();
+	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
+
+	if (weapon_name == g_WeaponsMap.end()) {
+		weapon_name = g_KnivesMap.find(weapon_id);
+		isKnife = true;
+	}
+
+	if (weapon_name == g_KnivesMap.end()) {
+		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		return;
+	}
+
+	g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id;
+	g_PlayerSkins[steamid].m_nFallbackPaintKit = paint_kit;
+	g_PlayerSkins[steamid].m_nFallbackSeed = pattern_id;
+	g_PlayerSkins[steamid].m_flFallbackWear = wear;
+	CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
+	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
+	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
+	if (weapon_slot_map == g_ItemToSlotMap.end()) {
+		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
+		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		return;
+	}
+	auto weapon_slot = weapon_slot_map->second;
+	for (size_t i = 0; i < pPlayerWeapons.m_size; i++)
+	{
+		auto currentWeapon = pPlayerWeapons.m_data[i];
+		if (!currentWeapon)
+			continue;
+		auto weapon = static_cast<CEconEntity*>(currentWeapon.Get());
+		if (!weapon)
+			continue;
+		auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
+		if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
+			continue;
+		}
+		auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
+		if (weapon_slot == weapon_slot_my_weapon) {
+			pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
+			FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
+		}
+	}
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+	// pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+	// FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+	// pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
+	META_CONPRINTF("called by %lld\n", steamid);
+	//sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
+	//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+
+}
+//TEST END
 
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
