@@ -362,7 +362,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		//	{
 		//	return;
 		//	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(6000));
+	//std::this_thread::sleep_for(std::chrono::milliseconds(6000));
 	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		///TEST
      		
@@ -668,7 +668,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	//int64_t paint_kit = atoi(args.Arg(2));
 	//int64_t pattern_id = atoi(args.Arg(3));
 	//float wear = atof(args.Arg(4));
-	
+	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 	auto weapon_name = g_WeaponsMap.find(weapon_id);
 	bool isKnife = false;
 	int64_t steamid = pPlayerController->m_steamID();
