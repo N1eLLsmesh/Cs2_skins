@@ -57,6 +57,4 @@ class CEntityListener : public IEntityListener
 	void OnEntityParentChanged(CEntityInstance *pEntity, CEntityInstance *pNewParent) override;
 };
 
-void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
-
 #endif //_INCLUDE_METAMOD_SOURCE_STUB_PLUGIN_H_
