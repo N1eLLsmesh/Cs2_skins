@@ -41,13 +41,14 @@ Event_ItemPurchase g_PlayerBuy;
 //Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
 
-std::unordered_map<int64_t, PlayerState> playerStates;
+
 struct PlayerState
 {
     bool processed;
 
     PlayerState() : processed(false) {}
 };
+std::map<int64_t, PlayerState> playerStates;
 //TEST//////
 
 CEntityListener g_EntityListener;
