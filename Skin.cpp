@@ -39,9 +39,12 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 //TEST//////
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
+OnRoundStart g_RoundStart;
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
 bool firstPlayerSpawnEvent=true;
 
+CCSPlayerController* PC;
+CCSPlayerPawnBase* PW;
 struct PlayerState
 {
     bool processed;
@@ -214,7 +217,7 @@ bool Skin::Unload(char *error, size_t maxlen)
 	gameeventmanager->RemoveListener(&g_RoundPreStartEvent);
 	gameeventmanager->RemoveListener(&g_PlayerBuy);
 	gameeventmanager->RemoveListener(&g_PlayerSpawnedEvent);
-
+	gameeventmanager->RemoveListener(&g_RoundStart);
 	//TEST
 	g_pGameEntitySystem->RemoveListenerEntity(&g_EntityListener);//work
 	//g_pGameEntitySystem->RemoveListenerEntity(&g_PlayerSpawnedEvent);//nowork
@@ -261,6 +264,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 		//Test//////////////////////
 		gameeventmanager->AddListener(&g_PlayerBuy, "item_purchase", true);//work
 		gameeventmanager->AddListener(&g_PlayerSpawnedEvent,"player_spawned",true);
+		gameeventmanager->AddListener(&g_RoundStart,"round_start",true);
 		//gameeventmanager->AddListener(&g_PlayerSpawnedEvent, "player_spawned", true);//nowork
 		//test/////////////////////
 		bDone = true;
@@ -359,7 +363,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	//std::this_thread::sleep_for(std::chrono::milliseconds(6000));
 	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		///TEST
-     		
+     		PC=pCSPlayerController;//globalCONTROLLER
 		if (pCSPlayerController)
 		{
     			 CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
@@ -368,11 +372,11 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			char buf[256]; // Создайте буфер для сообщения
         			sprintf(buf, "Success!");
 				
-				
+				PP=playerPawn;//globalPAWN
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//61 657 1 0///TESTFORCHANGE
 				//std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-				TestSkinchanger(pCSPlayerController, playerPawn, 61, 657, 1, 0.0f);
+				//TestSkinchanger(pCSPlayerController, playerPawn, 61, 657, 1, 0.0f);
 
 				META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
 				META_CONPRINTF("CCSPlayerPawnBase %lld\n", playerPawn);
@@ -433,48 +437,19 @@ void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
 	}
 	else
 	{
-		//std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-		//CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
-    		///TEST
-     		
-		//if (pCSPlayerController)
-		//{
-    			// CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
-    			//if (playerPawn)
-    			//{
-        			//char buf[256]; // Создайте буфер для сообщения
-        			//sprintf(buf, "Success!");
-				
-				
-        			//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-				//7 707 1 0///TESTFORCHANGE
-				//std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-				//TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
 
-				//META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
-				//META_CONPRINTF("CCSPlayerPawnBase %lld\n", playerPawn);
-				//TESTEND
-				
-    			//}
-    			//else
-			//{
-        			//char buf[256]; // Создайте буфер для сообщения
-        			//sprintf(buf, "WRONG PLAYERPAWN!");
-        			//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-    			//}
-		//}
-		//else
-		//{
-    			//char buf[256]; // Создайте буфер для сообщения
-    			//sprintf(buf, "WRONG CSPlayerController!");
-    			//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		//}
-		///TEST
 	}
 
 	
 	META_CONPRINTF("PLAYER Spawned\n");
 }
+
+void OnRoundStart::FireGameEvent(IGameEvent* event) 
+{
+	TestSkinchanger(PC, PP, 61, 657, 1, 0.0f);
+    	META_CONPRINTF("RoundStarted\n");
+}
+
 //META_CONPRINTF("PLAYER BUY WEAPON\n");
 //TEST END
 
