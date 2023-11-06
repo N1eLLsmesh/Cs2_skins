@@ -438,6 +438,7 @@ void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
 	}
 	else
 	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		///TEST
      		
@@ -452,7 +453,7 @@ void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
 				
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//7 707 1 0///TESTFORCHANGE
-				std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+				//std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 				TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
 
 				META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
