@@ -344,12 +344,6 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     	}
 
 
-    	if (firstPlayerSpawnEvent)
-    	{
-        	firstPlayerSpawnEvent=false; // Пометьте, что первое событие уже обработано
-        	
-    	
-	
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
 	{
 		return;
@@ -376,9 +370,9 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				
 				
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-				//7 707 1 0///TESTFORCHANGE
+				//515 568 1 0///TESTFORCHANGE
 				//std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-				TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
+				TestSkinchanger(pCSPlayerController, playerPawn, 515, 568, 1, 0.0f);
 
 				META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
 				META_CONPRINTF("CCSPlayerPawnBase %lld\n", playerPawn);
@@ -412,7 +406,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		g_PlayerMessages[steamid] = 1;
 		});
 		return;
-	}
+	
 }
 
 
