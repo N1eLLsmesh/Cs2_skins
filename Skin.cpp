@@ -39,7 +39,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 //TEST//////
 Event_ItemPurchase g_PlayerBuy;
 //Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
-void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
+void TestSkinchanger(const_cast<CCSPlayerController*>(pCSPlayerController), const_cast<CCSPlayerPawnBase*>(playerPawn), int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
 
 //TEST//////
 
@@ -349,7 +349,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			sprintf(buf, "Success!");
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//500 573 1 0///TESTFORCHANGE
-				TestSkinchanger(pCSPlayerController,playerPawn, 500, 573, 1, 0.0f);
+				TestSkinchanger(const_cast<CCSPlayerController*>(pCSPlayerController), const_cast<CCSPlayerPawnBase*>(playerPawn), 500, 573, 1, 0.0f);
 				//TESTEND
 				
     			}
