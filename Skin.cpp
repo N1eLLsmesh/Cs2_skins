@@ -375,7 +375,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//7 707 1 0///TESTFORCHANGE
 				std::this_thread::sleep_for(std::chrono::milliseconds(300));
-				TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
+				//TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
 				//TESTEND
 				
     			}
@@ -702,6 +702,12 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 	int64_t paint_kit = atoi(args.Arg(2));
 	int64_t pattern_id = atoi(args.Arg(3));
 	float wear = atof(args.Arg(4));
+
+	META_CONPRINTF("Weapon id %lld\n", weapon_id);
+	META_CONPRINTF("paint_kit %lld\n", paint_kit);
+	META_CONPRINTF("pattern_id %lld\n", pattern_id);
+	META_CONPRINTF("wear %lld\n", wear);
+	
     auto weapon_name = g_WeaponsMap.find(weapon_id);
 	bool isKnife = false;
 	int64_t steamid = pPlayerController->m_steamID();
@@ -730,7 +736,12 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
 	}
+	META_CONPRINTF("WeaponSlot %lld\n", weapon_slot_map);
+	
 	auto weapon_slot = weapon_slot_map->second;
+	
+	META_CONPRINTF("WeaponSlot %lld\n", weapon_slot);
+	
 	for (size_t i = 0; i < pPlayerWeapons.m_size; i++)
 	{
 		auto currentWeapon = pPlayerWeapons.m_data[i];
