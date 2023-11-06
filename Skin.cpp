@@ -370,9 +370,9 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				
 				
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-				//515 568 1 0///TESTFORCHANGE
+				//61 657 1 0///TESTFORCHANGE
 				//std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-				TestSkinchanger(pCSPlayerController, playerPawn, 515, 568, 1, 0.0f);
+				TestSkinchanger(pCSPlayerController, playerPawn, 61, 657, 1, 0.0f);
 
 				META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
 				META_CONPRINTF("CCSPlayerPawnBase %lld\n", playerPawn);
