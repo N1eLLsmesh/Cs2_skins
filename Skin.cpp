@@ -373,9 +373,9 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				
 				
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-				//7 474 1 0///TESTFORCHANGE
+				//515 568 1 0///TESTFORCHANGE
 				std::this_thread::sleep_for(std::chrono::milliseconds(300));
-				TestSkinchanger(pCSPlayerController, playerPawn, 7, 474, 1, 0.01f);
+				TestSkinchanger(pCSPlayerController, playerPawn, 515, 568, 1, 0.0f);
 				//TESTEND
 				
     			}
@@ -613,7 +613,12 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	bool isKnife = false;
 	int64_t steamid = pPlayerController->m_steamID();
 	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
-
+	
+	META_CONPRINTF("Weapon id\n" + std::string::tostring(weapon_id), steamid);
+	META_CONPRINTF("paint_kit\n" + std::string::tostring(paint_kit), steamid);
+	META_CONPRINTF("pattern_id\n" + std::string::tostring(pattern_id), steamid);
+	META_CONPRINTF("pattern_id\n" + std::string::tostring(pattern_id), steamid);
+	
 	if (weapon_name == g_WeaponsMap.end()) {
 		weapon_name = g_KnivesMap.find(weapon_id);
 		isKnife = true;
@@ -632,12 +637,18 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
+	//TEST
+	META_CONPRINTF("WeaponSlot\n" + std::string::tostring(weapon_slot_map), steamid);
+	//TEST
 	if (weapon_slot_map == g_ItemToSlotMap.end()) {
 		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
 		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 		return;
 	}
 	auto weapon_slot = weapon_slot_map->second;
+	//TEST
+	META_CONPRINTF("WeaponSlot\n" + std::string::tostring(weapon_slot), steamid);
+	//TEST
 	for (size_t i = 0; i < pPlayerWeapons.m_size; i++)
 	{
 		auto currentWeapon = pPlayerWeapons.m_data[i];
