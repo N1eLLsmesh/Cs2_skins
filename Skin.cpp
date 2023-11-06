@@ -625,7 +625,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	}
 	char buf[255] = { 0 };
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(6000));
+	//std::this_thread::sleep_for(std::chrono::milliseconds(6000));
 	auto weapon_name = g_WeaponsMap.find(weapon_id);
 	bool isKnife = false;
 	int64_t steamid = pPlayerController->m_steamID();
