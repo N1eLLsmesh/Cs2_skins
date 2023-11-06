@@ -423,7 +423,13 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     	CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 	//7 639 1 0
-	TestSkinchanger(pCSPlayerController, playerPawn, 7, 639, 1, 0.0f);
+	
+	new CTimer(1.0f, false, false, []() {
+        TestSkinchanger(pCSPlayerController, playerPawn, 7, 639, 1, 0.0f);
+		//sprintf(buf, "%s Timer executed", CHAT_PREFIX);
+		//FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
+	});
+	//TestSkinchanger(pCSPlayerController, playerPawn, 7, 639, 1, 0.0f);
 	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
