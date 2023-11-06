@@ -348,8 +348,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			char buf[256]; // Создайте буфер для сообщения
         			sprintf(buf, "Success!");
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-				//500 573 1 0///TESTFORCHANGE
-				TestSkinchanger(pCSPlayerController, playerPawn, 500, 573, 1, 0.0f);
+				//7 801 1 0///TESTFORCHANGE
+				TestSkinchanger(pCSPlayerController, playerPawn, 7, 801, 1, 0.0f);
 				//TESTEND
 				
     			}
