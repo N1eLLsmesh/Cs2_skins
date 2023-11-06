@@ -359,7 +359,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		//	{
 		//	return;
 		//	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(150));
+	
 	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		///TEST
      		
@@ -370,10 +370,12 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     			{
         			char buf[256]; // Создайте буфер для сообщения
         			sprintf(buf, "Success!");
-        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-				//500 420 1 0///TESTFORCHANGE
 				
-				TestSkinchanger(pCSPlayerController, playerPawn, 500, 420, 1, 0.0f);
+				
+        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+				//7 474 1 0///TESTFORCHANGE
+				std::this_thread::sleep_for(std::chrono::milliseconds(150));
+				TestSkinchanger(pCSPlayerController, playerPawn, 7, 474, 1, 0.01f);
 				//TESTEND
 				
     			}
