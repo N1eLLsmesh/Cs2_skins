@@ -38,7 +38,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 
 //TEST//////
 Event_ItemPurchase g_PlayerBuy;
-//Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
+Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
 bool firstPlayerSpawnEvent=true;
 
@@ -213,6 +213,7 @@ bool Skin::Unload(char *error, size_t maxlen)
 	gameeventmanager->RemoveListener(&g_PlayerSpawnEvent);
 	gameeventmanager->RemoveListener(&g_RoundPreStartEvent);
 	gameeventmanager->RemoveListener(&g_PlayerBuy);
+	gameeventmanager->RemoveListener(&g_PlayerSpawnedEvent);
 
 	//TEST
 	g_pGameEntitySystem->RemoveListenerEntity(&g_EntityListener);//work
@@ -259,7 +260,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 
 		//Test//////////////////////
 		gameeventmanager->AddListener(&g_PlayerBuy, "item_purchase", true);//work
-
+		gameeventmanager->AddListener(&g_PlayerSpawnedEvent,"player_spawned",true);
 		//gameeventmanager->AddListener(&g_PlayerSpawnedEvent, "player_spawned", true);//nowork
 		//test/////////////////////
 		bDone = true;
@@ -426,6 +427,11 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	
 	META_CONPRINTF("PLAYER BUY WEAPON\n");
 	// Обработка покупки оружия, например, запись в лог или выполнение дополнительных действий.
+}
+
+void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
+{
+	META_CONPRINTF("PLAYER Spawned\n");
 }
 //META_CONPRINTF("PLAYER BUY WEAPON\n");
 //TEST END
