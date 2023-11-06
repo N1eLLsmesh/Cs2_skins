@@ -40,7 +40,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 Event_ItemPurchase g_PlayerBuy;
 //Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
-
+bool firstPlayerSpawnEvent=true;
 
 struct PlayerState
 {
@@ -321,13 +321,21 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         	return;
 	}
 	//TEST 2
-	if (!playerStates[userId].processed)
-    	{
+	int client = event->GetInt("userid");
+	//PlayerState playerState;
+	//playerState.processed = false;
+	//if (!playerStates[userId].processed)
+    	//{
         // Действия, которые нужно выполнить один раз для игрока
-        	playerStates[userId].processed = true;
-		return;
-	}
+        	//playerStates[userId].processed = true;
+		//return;
+	//}
     // Получение игрока по идентификатору клиента (userid)
+	if (firstPlayerSpawnEvent)
+    	{
+        	firstPlayerSpawnEvent = false; // Пометьте, что первое событие уже обработано
+        	return;
+    	}
 ///TEST
      	int client = event->GetInt("userid");
     	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
@@ -365,7 +373,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//500 420 1 0///TESTFORCHANGE
 				
-				//TestSkinchanger(pCSPlayerController, playerPawn, 500, 420, 1, 0.0f);
+				TestSkinchanger(pCSPlayerController, playerPawn, 500, 420, 1, 0.0f);
 				//TESTEND
 				
     			}
