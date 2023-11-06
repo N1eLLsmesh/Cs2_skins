@@ -40,7 +40,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 Event_ItemPurchase g_PlayerBuy;
 //Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
-
+bool firstPlayerSpawnEvent = true;
 //TEST//////
 
 CEntityListener g_EntityListener;
@@ -310,8 +310,12 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	{
         	return;
 	}
-    //CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
-
+	//TEST 2
+	if (firstPlayerSpawnEvent)
+    	{
+        	firstPlayerSpawnEvent = false; // Пометьте, что первое событие уже обработано
+        	return;
+    	}
     // Получение игрока по идентификатору клиента (userid)
 ///TEST
      	int client = event->GetInt("userid");
