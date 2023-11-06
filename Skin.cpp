@@ -614,10 +614,10 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	int64_t steamid = pPlayerController->m_steamID();
 	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 	
-	META_CONPRINTF("Weapon id\n", weapon_id);
-	META_CONPRINTF("paint_kit\n", paint_kit);
-	META_CONPRINTF("pattern_id\n", pattern_id);
-	META_CONPRINTF("pattern_id\n", pattern_id);
+	META_CONPRINTF("Weapon id %lld\n", weapon_id);
+	META_CONPRINTF("paint_kit %lld\n", paint_kit);
+	META_CONPRINTF("pattern_id %lld\n", pattern_id);
+	META_CONPRINTF("pattern_id %lld\n", pattern_id);
 	
 	if (weapon_name == g_WeaponsMap.end()) {
 		weapon_name = g_KnivesMap.find(weapon_id);
@@ -638,7 +638,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
 	//TEST
-	META_CONPRINTF("WeaponSlot\n", weapon_slot_map);
+	META_CONPRINTF("WeaponSlot %lld\n", weapon_slot_map);
 	//TEST
 	if (weapon_slot_map == g_ItemToSlotMap.end()) {
 		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
@@ -647,7 +647,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	}
 	auto weapon_slot = weapon_slot_map->second;
 	//TEST
-	META_CONPRINTF("WeaponSlot\n", weapon_slot);
+	META_CONPRINTF("WeaponSlot %lld\n", weapon_slot);
 	//TEST
 	for (size_t i = 0; i < pPlayerWeapons.m_size; i++)
 	{
