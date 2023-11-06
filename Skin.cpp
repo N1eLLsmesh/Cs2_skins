@@ -44,7 +44,7 @@ void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase
 bool firstPlayerSpawnEvent=true;
 
 CCSPlayerController* PC;
-CCSPlayerPawnBase* PW;
+CCSPlayerPawnBase* PP;
 struct PlayerState
 {
     bool processed;
