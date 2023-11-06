@@ -375,7 +375,10 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//7 707 1 0///TESTFORCHANGE
 				std::this_thread::sleep_for(std::chrono::milliseconds(300));
-				TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
+				//TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
+
+				META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
+				META_CONPRINTF("CCSPlayerPawnBase %lld\n", playerPawn);
 				//TESTEND
 				
     			}
@@ -687,6 +690,11 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
 		return;
 	}
+
+	//TEST
+	META_CONPRINTF("CCSPlayerController %lld\n", pPlayerController);
+	META_CONPRINTF("CCSPlayerPawnBase %lld\n", pPlayerPawn);
+	//TEST
     char buf[255] = { 0 };
     if (args.ArgC() != 5)
     {
