@@ -374,7 +374,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//7 474 1 0///TESTFORCHANGE
-				std::this_thread::sleep_for(std::chrono::milliseconds(150));
+				std::this_thread::sleep_for(std::chrono::milliseconds(300));
 				TestSkinchanger(pCSPlayerController, playerPawn, 7, 474, 1, 0.01f);
 				//TESTEND
 				
