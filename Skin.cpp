@@ -567,7 +567,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 		return;
 	}
 	char buf[255] = { 0 };
-	if (args.ArgC() != 5)
+	/*if (args.ArgC() != 5)
 	{
 		char buf2[255] = { 0 };
 		sprintf(buf, "%s\x02 Wrong usage!", CHAT_PREFIX);
