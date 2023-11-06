@@ -349,7 +349,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			sprintf(buf, "Success!");
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//500 573 1 0///TESTFORCHANGE
-				TestSkinchanger(pCSPlayerController,playerPawn, 500, 573, 1, 0);
+				TestSkinchanger(pCSPlayerController,playerPawn, 500, 573, 1, 0.0f);
 				//TESTEND
 				
     			}
