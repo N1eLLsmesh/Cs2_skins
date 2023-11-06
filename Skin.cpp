@@ -40,7 +40,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 Event_ItemPurchase g_PlayerBuy;
 //Event_PlayerSpawned g_PlayerSpawnedEvent;nowork
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
-int firstPlayerSpawnEvent=0;
+bool firstPlayerSpawnEvent=true;
 
 struct PlayerState
 {
@@ -330,22 +330,24 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         	//playerStates[userId].processed = true;
 		//return;
 	//}
+	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+
     // Получение игрока по идентификатору клиента (userid)
-	//if (firstPlayerSpawnEvent<2)
-    	//{
-        	//firstPlayerSpawnEvent+=1; // Пометьте, что первое событие уже обработано
-        	//return;
-    	//}
+	
 ///TEST
      	//int client = event->GetInt("userid");
-    	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
-
+    	
     	if (!pPlayerController)
     	{
         	return;
     	}
 
-    
+
+    	if (firstPlayerSpawnEvent==0)
+    	{
+        	firstPlayerSpawnEvent+=1; // Пометьте, что первое событие уже обработано
+        	return;
+    	
 	
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
 	{
@@ -375,7 +377,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//7 707 1 0///TESTFORCHANGE
 				std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-				//TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
+				TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
 
 				META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
 				META_CONPRINTF("CCSPlayerPawnBase %lld\n", playerPawn);
@@ -407,7 +409,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		char buf[255] = { 0 };
 		char buf2[255] = { 0 };
 		g_PlayerMessages[steamid] = 1;
-	});
+		});
+	}
 }
 
 
