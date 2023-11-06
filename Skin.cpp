@@ -378,7 +378,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 				//7 707 1 0///TESTFORCHANGE
 				std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-				TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
+				//TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
 
 				META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
 				META_CONPRINTF("CCSPlayerPawnBase %lld\n", playerPawn);
@@ -431,6 +431,52 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 
 void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
 {
+	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
+	{
+		return;
+	}
+	else
+	{
+		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    		///TEST
+     		
+		if (pCSPlayerController)
+		{
+    			 CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
+    			if (playerPawn)
+    			{
+        			char buf[256]; // Создайте буфер для сообщения
+        			sprintf(buf, "Success!");
+				
+				
+        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+				//7 707 1 0///TESTFORCHANGE
+				std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+				TestSkinchanger(pCSPlayerController, playerPawn, 7, 707, 1, 0.0f);
+
+				META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
+				META_CONPRINTF("CCSPlayerPawnBase %lld\n", playerPawn);
+				//TESTEND
+				
+    			}
+    			else
+			{
+        			char buf[256]; // Создайте буфер для сообщения
+        			sprintf(buf, "WRONG PLAYERPAWN!");
+        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+    			}
+		}
+		else
+		{
+    			char buf[256]; // Создайте буфер для сообщения
+    			sprintf(buf, "WRONG CSPlayerController!");
+    			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+		}
+		///TEST
+	}
+
+	
 	META_CONPRINTF("PLAYER Spawned\n");
 }
 //META_CONPRINTF("PLAYER BUY WEAPON\n");
