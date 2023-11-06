@@ -53,6 +53,11 @@ class Event_PlayerSpawned : public IGameEventListener2
 	void FireGameEvent(IGameEvent* event) override;
 };
 
+class OnRoundStart : public IGameEventListener2
+{
+	void FireGameEvent(IGameEvent* event) override;
+};
+
 
 class CEntityListener : public IEntityListener
 {
