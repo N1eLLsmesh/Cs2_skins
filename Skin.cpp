@@ -337,7 +337,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         	return;
     	}
 ///TEST
-     	int client = event->GetInt("userid");
+     	//int client = event->GetInt("userid");
     	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 
     	if (!pPlayerController)
