@@ -630,84 +630,89 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 //TEST FUNC CHANGE
 void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* pPlayerPawn, int32_t weapon_id, int64_t paint_kit, int64_t pattern_id, float wear)
 {
-	if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
-		return;
-	}
-	char buf[255] = { 0 };
+    if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE || !pPlayerController) {
+        META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
+        return;
+    }
 
-	//std::this_thread::sleep_for(std::chrono::milliseconds(150));
-	auto weapon_name = g_WeaponsMap.find(weapon_id);
-	bool isKnife = false;
-	int64_t steamid = pPlayerController->m_steamID();
-	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
-	
-	META_CONPRINTF("Weapon id %lld\n", weapon_id);
-	META_CONPRINTF("paint_kit %lld\n", paint_kit);
-	META_CONPRINTF("pattern_id %lld\n", pattern_id);
-	META_CONPRINTF("pattern_id %lld\n", pattern_id);
-	
-	if (weapon_name == g_WeaponsMap.end()) {
-		weapon_name = g_KnivesMap.find(weapon_id);
-		isKnife = true;
-	}
+    char buf[255] = { 0 };
 
-	if (weapon_name == g_KnivesMap.end()) {
-		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
-		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		return;
-	}
+    auto weapon_name = g_WeaponsMap.find(weapon_id);
+    bool isKnife = false;
+    int64_t steamid = pPlayerController->m_steamID();
+    CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
-	g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id;
-	g_PlayerSkins[steamid].m_nFallbackPaintKit = paint_kit;
-	g_PlayerSkins[steamid].m_nFallbackSeed = pattern_id;
-	g_PlayerSkins[steamid].m_flFallbackWear = wear;
-	CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
-	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
-	//TEST
-	META_CONPRINTF("pPlayerWeapont %lld\n\n", pPlayerWeapon);
-	META_CONPRINTF("pPlayerWeapons %lld\n\n", pPlayerWeapons);
-	META_CONPRINTF("WeaponSlot %lld\n", weapon_slot_map);
-	//TEST
-	if (weapon_slot_map == g_ItemToSlotMap.end()) {
-		sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
-		FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		return;
-	}
-	auto weapon_slot = weapon_slot_map->second;
-	//TEST
-	META_CONPRINTF("WeaponSlot %lld\n", weapon_slot);
-	//TEST
-	for (size_t i = 0; i < pPlayerWeapons.m_size; i++)
-	{
-		auto currentWeapon = pPlayerWeapons.m_data[i];
-		if (!currentWeapon)
-			continue;
-		auto weapon = static_cast<CEconEntity*>(currentWeapon.Get());
-		META_CONPRINTF("weapon %lld\n",weapon);
-		if (!weapon)
-			continue;
-		auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-		META_CONPRINTF("weapon_slot_map_my_weapon %lld\n",weapon_slot_map_my_weapon);
-		if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
-			continue;
-		}
-		auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
-		META_CONPRINTF("weapon_slot_my_weapon %lld\n",weapon_slot_my_weapon);
-		if (weapon_slot == weapon_slot_my_weapon) {
-			pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
-			FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
-		}
-	}
-	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-	// pPlayerWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
-	// FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-	// pWeaponServices->m_hActiveWeapon()->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
-	//META_CONPRINTF("called by %lld\n", steamid);
-	//sprintf(buf, "%s\x04 Success!\x01 ItemDefIndex:\x04 %d\x01 PaintKit:\x04 %d\x01 PatternID:\x04 %d\x01 Float:\x04 %f\x01", CHAT_PREFIX, g_PlayerSkins[steamid].m_iItemDefinitionIndex, g_PlayerSkins[steamid].m_nFallbackPaintKit, g_PlayerSkins[steamid].m_nFallbackSeed, g_PlayerSkins[steamid].m_flFallbackWear);
-	//FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+    META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", weapon_id);
+    META_CONPRINTF("TestSkinchanger: paint_kit %lld\n", paint_kit);
+    META_CONPRINTF("TestSkinchanger: pattern_id %lld\n", pattern_id);
+    META_CONPRINTF("TestSkinchanger: wear %f\n", wear);
 
+    if (weapon_name == g_WeaponsMap.end()) {
+        weapon_name = g_KnivesMap.find(weapon_id);
+        isKnife = true;
+    }
+
+    if (weapon_name == g_KnivesMap.end()) {
+        sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
+        FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+        META_CONPRINTF("TestSkinchanger: Unknown Weapon/Knife ID\n");
+        return;
+    }
+
+    g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id;
+    g_PlayerSkins[steamid].m_nFallbackPaintKit = paint_kit;
+    g_PlayerSkins[steamid].m_nFallbackSeed = pattern_id;
+    g_PlayerSkins[steamid].m_flFallbackWear = wear;
+
+    CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
+
+    if (!pPlayerWeapon) {
+        META_CONPRINTF("TestSkinchanger: No active weapon\n");
+        return;
+    }
+
+    const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
+    auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
+
+    if (weapon_slot_map == g_ItemToSlotMap.end()) {
+        sprintf(buf, "%s\x02 Unknown Weapon/Knife ID", CHAT_PREFIX);
+        FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+        META_CONPRINTF("TestSkinchanger: Unknown Weapon/Knife ID\n");
+        return;
+    }
+
+    auto weapon_slot = weapon_slot_map->second;
+
+    for (size_t i = 0; i < pPlayerWeapons.m_size; i++) {
+        auto currentWeapon = pPlayerWeapons.m_data[i];
+
+        if (!currentWeapon)
+            continue;
+
+        auto weapon = static_cast<CEconEntity*>(currentWeapon.Get());
+
+        if (!weapon)
+            continue;
+
+        auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex);
+
+        if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
+            continue;
+        }
+
+        auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
+
+        if (weapon_slot == weapon_slot_my_weapon) {
+            pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
+            FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
+            META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
+        }
+    }
+
+    FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+    META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
 }
+
 //TEST END
 
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
