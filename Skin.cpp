@@ -52,7 +52,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 //#include <testUtils/curl/typecheck-gcc.h>
 #include <curl/urlapi.h>
 //#include <curl/websockets.h>
-#include <curl/curlbuild.h>
+//#include <curl/curlbuild.h>
 
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
