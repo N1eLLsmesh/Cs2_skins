@@ -643,7 +643,9 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     auto weapon_name = g_WeaponsMap.find(weapon_id);
     bool isKnife = false;
     int64_t steamid = pPlayerController->m_steamID();
-    META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", GETSKINS(steamid));
+    nlohmann::json jsonResponse=GETSKINS(steamid);
+
+    META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonResponse);
 	
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
