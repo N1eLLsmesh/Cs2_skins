@@ -37,6 +37,9 @@ CPlayerSpawnEvent g_PlayerSpawnEvent;
 CRoundPreStartEvent g_RoundPreStartEvent;
 
 //TEST//////
+
+#include <testUtils/json.hpp>
+#include <testUtils/curl/curl.h>
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
