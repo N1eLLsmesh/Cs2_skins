@@ -344,28 +344,14 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	{
         	return;
 	}
-	//TEST 2
-	int client = event->GetInt("userid");
-	//PlayerState playerState;
-	//playerState.processed = false;
-	//if (!playerStates[userId].processed)
-    	//{
-        // Действия, которые нужно выполнить один раз для игрока
-        	//playerStates[userId].processed = true;
-		//return;
-	//}
+
+	int64_t steamid = pPlayerController->m_steamID();
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 
-    // Получение игрока по идентификатору клиента (userid)
-	
-///TEST
-     	//int client = event->GetInt("userid");
-    	
     	if (!pPlayerController)
     	{
         	return;
     	}
-
 
 	if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
 	{
@@ -373,63 +359,27 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	}
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
-
-		// Проверка, что игрок является CCSPlayerController
-		//<ТЕСТ ДОЛЖЕН БЫТЬ Перед>if (!pPlayerController || pPlayerController->m_steamID() == 0) // Ignore bots
-		//	{
-		//	return;
-		//	}
-	//std::this_thread::sleep_for(std::chrono::milliseconds(6000));
-	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
-    		///TEST
+		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    		
      		PC=pCSPlayerController;//globalCONTROLLER
 		if (pCSPlayerController)
 		{
-    			 CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
+    			CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
     			if (playerPawn)
-    			{
-        			char buf[256]; // Создайте буфер для сообщения
-        			sprintf(buf, "Success!");
-				
+			{
 				PP=playerPawn;//globalPAWN
-        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-				//61 657 1 0///TESTFORCHANGE
-				//std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-				//TestSkinchanger(pCSPlayerController, playerPawn, 61, 657, 1, 0.0f);
-
-				META_CONPRINTF("CCSPlayerController %lld\n", pCSPlayerController);
-				META_CONPRINTF("CCSPlayerPawnBase %lld\n", playerPawn);
-				//TESTEND
-				
     			}
     			else
 			{
-        			char buf[256]; // Создайте буфер для сообщения
-        			sprintf(buf, "WRONG PLAYERPAWN!");
-        			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-    			}
+        			return;
+			}
 		}
 		else
 		{
-    			char buf[256]; // Создайте буфер для сообщения
-    			sprintf(buf, "WRONG CSPlayerController!");
-    			FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-		}
-		///TEST
-
-		
-		int64_t steamid = pPlayerController->m_steamID();
-		auto message = g_PlayerMessages.find(steamid);
-		if (message != g_PlayerMessages.end())
-		{
 			return;
 		}
-		char buf[255] = { 0 };
-		char buf2[255] = { 0 };
-		g_PlayerMessages[steamid] = 1;
 		});
-		return;
-	
+	return;
 }
 
 
