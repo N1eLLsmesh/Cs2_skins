@@ -661,12 +661,38 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
     //nlohmann::json jsonResponse=GETSKINS(steamid);
 	
-    std::string jsonString = GETSKINS(steamid).dump();
+    //std::string jsonString = GETSKINS(steamid).dump();
+	//TEST API STATE
+	nlohmann::json jsonResponse=GETSKINS(steamid);
+	int skin_id = 0;
+        float skin_float = 0.0f;
+        int seed = 0;
+        std::string nametag = "NULL";
+        int side = 0;
+        bool stattrak = false;
+        int weapon_id_API = 0;
+        int stattrak_count = 0;
+    for (const auto& entry : jsonResponse) {
+        skin_id = entry["skin_id"];
+        skin_float = entry["float"];
+        seed = entry["seed"];
+        nametag = entry["nametag"];
+        side = entry["side"];
+        stattrak = entry["stattrak"];
+        weapon_id_API = entry["weapon_id"];
+        stattrak_count = entry["stattrak_count"];
+    }
+    g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id_API;
+    g_PlayerSkins[steamid].m_nFallbackPaintKit = skin_id;
+    g_PlayerSkins[steamid].m_nFallbackSeed = seed;
+    g_PlayerSkins[steamid].m_flFallbackWear = skin_float;
+
+	
     META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
 
     sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
     FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-	
+    //TEST END
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
     META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", weapon_id);
@@ -686,11 +712,12 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
         return;
     }
 
-    g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id;
-    g_PlayerSkins[steamid].m_nFallbackPaintKit = paint_kit;
-    g_PlayerSkins[steamid].m_nFallbackSeed = pattern_id;
-    g_PlayerSkins[steamid].m_flFallbackWear = wear;
+    //g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id;
+    //g_PlayerSkins[steamid].m_nFallbackPaintKit = paint_kit;
+    //g_PlayerSkins[steamid].m_nFallbackSeed = pattern_id;
+   //g_PlayerSkins[steamid].m_flFallbackWear = wear;
 
+	
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
 
     if (!pPlayerWeapon) {
