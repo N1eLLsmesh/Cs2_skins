@@ -645,10 +645,10 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     bool isKnife = false;
     int64_t steamid = pPlayerController->m_steamID();
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
-    //nlohmann::json jsonResponse=GETSKINS(steamid);
+    nlohmann::json jsonResponse=GETSKINS(steamid);
 	
-    //std::string jsonString = GETSKINS(steamid).dump();
-    //META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
+    std::string jsonString = GETSKINS(steamid).dump();
+    META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
 	
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
@@ -734,12 +734,12 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 
 //TEST FUNC GETSKINS
 
-//size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
-	//size_t total_size = size * nmemb;
-	//std::string* response = static_cast<std::string*>(userp);
-	//response->append(static_cast<char*>(contents), total_size);
-	//return total_size;
-//}
+size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
+	size_t total_size = size * nmemb;
+	std::string* response = static_cast<std::string*>(userp);
+	response->append(static_cast<char*>(contents), total_size);
+	return total_size;
+}
 
 nlohmann::json GETSKINS(int64_t steamid64) {
 	CURL* curl;
@@ -756,7 +756,7 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 		std::string response;
 
 		// Устанавливаем URL для GET запроса
-		std::string url = "https://cstrigon.net/api/user_get_skins/" + steamid;
+		std::string url = "https://api.cstrigon.net/api/v1/get_skins/" + steamid;
 		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 
 		// Устанавливаем функцию обратного вызова для записи данных
