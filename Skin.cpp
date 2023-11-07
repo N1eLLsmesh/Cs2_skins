@@ -767,14 +767,10 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 		res = curl_easy_perform(curl);
 
 		// Проверяем результат выполнения
-		if (res == CURLE_OK) {
-			jsonResponse = nlohmann::json::parse(response); // Парсим JSON из ответа
-			
-			META_CONPRINTF("OKEY PARCE %lld\n");
-		}
-		else {
-			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-			META_CONPRINTF("NOT OKEY PARCE %lld\n");
+		if (jsonResponse.accept(response)) {
+    			META_CONPRINTF("JSON успешно разобран: %lld\n", steamid64);
+		} else {
+    			META_CONPRINTF("Ошибка при разборе JSON: %lld\n", steamid64);
 		}
 
 		// Освобождаем ресурсы
