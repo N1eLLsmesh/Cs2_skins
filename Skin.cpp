@@ -49,7 +49,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 #include <testUtils/curl/options.h>
 #include <testUtils/curl/stdcheaders.h>
 #include <testUtils/curl/system.h>
-#include <testUtils/curl/typecheck-gcc.h>
+//#include <testUtils/curl/typecheck-gcc.h>
 #include <testUtils/curl/urlapi.h>
 #include <testUtils/curl/websockets.h>
 
