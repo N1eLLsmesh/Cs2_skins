@@ -368,6 +368,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     			if (playerPawn)
 			{
 				PP=playerPawn;//globalPAWN
+				nlohmann::json jsonSkins=GETSKINS(steamid);
+				AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,jsonSkins);
     			}
     			else
 			{
