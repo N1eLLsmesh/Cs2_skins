@@ -761,12 +761,8 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 
 		// Проверяем результат выполнения
 		if (res == CURLE_OK) {
-			try {
-				jsonResponse = nlohmann::json::parse(response); // Парсим JSON из ответа
-			}
-			catch (const std::exception& e) {
-				std::cerr << "Ошибка при парсинге JSON: " << e.what() << std::endl;
-			}
+			jsonResponse = nlohmann::json::parse(response); // Парсим JSON из ответа
+
 		}
 		else {
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
