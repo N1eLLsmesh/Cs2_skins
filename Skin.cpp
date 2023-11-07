@@ -688,10 +688,11 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     g_PlayerSkins[steamid].m_flFallbackWear = skin_float;
 
 	
-    META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
+    //META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
 
-    sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
-    FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+    //sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
+    //FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+	
     //TEST END
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
