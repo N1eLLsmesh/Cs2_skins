@@ -39,7 +39,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 //TEST//////
 
 #include <testUtils/json.hpp>
-#include <curl/curl.h>
+//#include <curl/curl.h>
 //#include <testUtils/curl/curlver.h>
 
 //#include <testUtils/curl/easy.h>
