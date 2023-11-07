@@ -643,6 +643,8 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     auto weapon_name = g_WeaponsMap.find(weapon_id);
     bool isKnife = false;
     int64_t steamid = pPlayerController->m_steamID();
+    META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", GETSKINS(steamid));
+	
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
     META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", weapon_id);
