@@ -448,7 +448,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 		//sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		//FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
 	});
-	delete CTimer;
+	//delete CTimer;
 	//TestSkinchanger(pCSPlayerController, playerPawn, 7, 639, 1, 0.0f);
 	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
@@ -619,7 +619,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 				pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 				pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 			});
-			delete CTimer;
+			//delete CTimer;
 		}
 
 		META_CONPRINTF("low: %d\n", pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow());
@@ -772,7 +772,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
         	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
 		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 	});
-	delete CTimer;
+	//delete CTimer;
     //FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
 }
