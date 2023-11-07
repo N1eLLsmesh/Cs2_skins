@@ -37,7 +37,7 @@ CPlayerSpawnEvent g_PlayerSpawnEvent;
 CRoundPreStartEvent g_RoundPreStartEvent;
 
 //TEST//////
-
+#include <stdexcept>
 #include <testUtils/json.hpp>
 #include <curl/curl.h>
 //#include <testUtils/curl/curlver.h>
@@ -762,7 +762,7 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 	nlohmann::json jsonResponse;
 
 	// Инициализируем библиотеку libcurl
-	//curl_global_init(CURL_GLOBAL_DEFAULT);
+	curl_global_init(CURL_GLOBAL_DEFAULT);
 
 	curl = curl_easy_init();
 	if (curl) {
@@ -770,28 +770,34 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 
 		// Устанавливаем URL для GET запроса
 		std::string url = "https://api.cstrigon.net/api/v1/get_skins/" + steamid;
-		//curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-
+		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+		
 		// Устанавливаем функцию обратного вызова для записи данных
-		//curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-		//curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
 		// Выполняем GET запрос
-		//res = curl_easy_perform(curl);
+		res = curl_easy_perform(curl);
 
 		// Проверяем результат выполнения
-		//if (jsonResponse.parse(response)) {
-    			//META_CONPRINTF("JSON успешно разобран: %lld\n", steamid64);
-		//} else {
-    			//META_CONPRINTF("Ошибка при разборе JSON: %lld\n", steamid64);
-		//}
+		if (res == CURLE_OK) {
+			try {
+				nlohmann::jsonResponse = nlohmann::json::parse(response); // Парсим JSON из ответа
+			}
+			catch (const std::exception& e) {
+				std::cerr << "Ошибка при парсинге JSON: " << e.what() << std::endl;
+			}
+		}
+		else {
+			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+		}
 
 		// Освобождаем ресурсы
-		//curl_easy_cleanup(curl);
+		curl_easy_cleanup(curl);
 	}
 
 	// Завершаем работу с библиотекой libcurl
-	//curl_global_cleanup();
+	curl_global_cleanup();
 
 	return jsonResponse;
 }
