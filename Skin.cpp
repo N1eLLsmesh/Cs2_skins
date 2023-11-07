@@ -39,7 +39,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 //TEST//////
 
 #include <testUtils/json.hpp>
-//#include <curl/curl.h>
+#include <curl/curl.h>
 //#include <testUtils/curl/curlver.h>
 
 //#include <testUtils/curl/easy.h>
@@ -755,7 +755,7 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
 }
 
 nlohmann::json GETSKINS(int64_t steamid64) {
-	CURL* curl=curl_easy_init();
+	CURL* curl;
 	CURLcode res;
 
 	std::string steamid = std::to_string(steamid64);
