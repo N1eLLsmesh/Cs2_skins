@@ -663,6 +663,9 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	
     std::string jsonString = GETSKINS(steamid).dump();
     META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
+
+    sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
+    FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 	
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
