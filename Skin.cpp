@@ -424,7 +424,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
     	CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 	//7 639 1 0
 	
-	new CTimer(1.0f, false, false, [pCSPlayerController, playerPawn]() {
+	new CTimer(0.15f, false, false, [pCSPlayerController, playerPawn]() {
         TestSkinchanger(pCSPlayerController, playerPawn, 7, 639, 1, 0.0f);
 		//sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		//FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
