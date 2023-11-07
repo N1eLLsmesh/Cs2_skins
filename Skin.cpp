@@ -646,8 +646,9 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     int64_t steamid = pPlayerController->m_steamID();
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
     //nlohmann::json jsonResponse=GETSKINS(steamid);
-    std::string jsonString = GETSKINS(steamid).dump();
-    META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
+	
+    //std::string jsonString = GETSKINS(steamid).dump();
+    //META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
 	
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
