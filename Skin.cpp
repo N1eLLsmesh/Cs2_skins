@@ -734,12 +734,12 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
 	return total_size;
 }
 
-json GETSKINS(int64_t steamid64) {
+nlohmann::json GETSKINS(int64_t steamid64) {
 	CURL* curl;
 	CURLcode res;
 
 	std::string steamid = std::to_string(steamid64);
-	json jsonResponse;
+	nlohmann::json jsonResponse;
 
 	// Инициализируем библиотеку libcurl
 	curl_global_init(CURL_GLOBAL_DEFAULT);
@@ -762,7 +762,7 @@ json GETSKINS(int64_t steamid64) {
 		// Проверяем результат выполнения
 		if (res == CURLE_OK) {
 			try {
-				jsonResponse = json::parse(response); // Парсим JSON из ответа
+				nlohmann::jsonResponse = nlohmann::json::parse(response); // Парсим JSON из ответа
 			}
 			catch (const std::exception& e) {
 				std::cerr << "Ошибка при парсинге JSON: " << e.what() << std::endl;
