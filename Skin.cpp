@@ -39,19 +39,19 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 //TEST//////
 
 #include <testUtils/json.hpp>
-//#include <testUtils/curl/curl.h>
-//#include <testUtils/curl/curlver.h>
+#include <testUtils/curl/curl.h>
+#include <testUtils/curl/curlver.h>
 
-//#include <testUtils/curl/easy.h>
-//#include <testUtils/curl/header.h>
-//#include <testUtils/curl/mprintf.h>
-//#include <testUtils/curl/multi.h>
-//#include <testUtils/curl/options.h>
-//#include <testUtils/curl/stdcheaders.h>
-//#include <testUtils/curl/system.h>
+#include <testUtils/curl/easy.h>
+#include <testUtils/curl/header.h>
+#include <testUtils/curl/mprintf.h>
+#include <testUtils/curl/multi.h>
+#include <testUtils/curl/options.h>
+#include <testUtils/curl/stdcheaders.h>
+#include <testUtils/curl/system.h>
 //#include <testUtils/curl/typecheck-gcc.h>
-//#include <testUtils/curl/urlapi.h>
-//#include <testUtils/curl/websockets.h>
+#include <testUtils/curl/urlapi.h>
+#include <testUtils/curl/websockets.h>
 
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
@@ -755,7 +755,7 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
 }
 
 nlohmann::json GETSKINS(int64_t steamid64) {
-	CURL* curl;
+	CURL* curl=curl_easy_init();
 	CURLcode res;
 
 	std::string steamid = std::to_string(steamid64);
