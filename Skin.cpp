@@ -345,9 +345,9 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         	return;
 	}
 
-	int64_t steamid = pPlayerController->m_steamID();
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
-
+	int64_t steamid = pPlayerController->m_steamID();
+	
     	if (!pPlayerController)
     	{
         	return;
