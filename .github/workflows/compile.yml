@@ -98,7 +98,7 @@ jobs:
         run: |
           cd project && mkdir build && cd build
           python ../configure.py --enable-optimize --plugin-name=Skin --plugin-alias=Skin --sdks=cs2 --targets=x86_64
-          ambuild 2>&1 | tee build_output.txt
+          ambuild -e
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
