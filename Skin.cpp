@@ -44,6 +44,7 @@ Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
+nlohmann::json GETSKINS(int64_t steamid64);
 bool firstPlayerSpawnEvent=true;
 
 CCSPlayerController* PC;
