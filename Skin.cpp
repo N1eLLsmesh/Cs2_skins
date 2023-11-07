@@ -644,6 +644,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     auto weapon_name = g_WeaponsMap.find(weapon_id);
     bool isKnife = false;
     int64_t steamid = pPlayerController->m_steamID();
+    META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
     //nlohmann::json jsonResponse=GETSKINS(steamid);
     std::string jsonString = GETSKINS(steamid).dump();
     META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
@@ -767,10 +768,12 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 		// Проверяем результат выполнения
 		if (res == CURLE_OK) {
 			jsonResponse = nlohmann::json::parse(response); // Парсим JSON из ответа
-
+			
+			META_CONPRINTF("OKEY PARCE %lld\n");
 		}
 		else {
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+			META_CONPRINTF("NOT OKEY PARCE %lld\n");
 		}
 
 		// Освобождаем ресурсы
