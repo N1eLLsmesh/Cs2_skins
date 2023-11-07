@@ -42,8 +42,8 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 #include <curl/curl.h>
 //#include <testUtils/curl/curlver.h>
 
-//#include <testUtils/curl/easy.h>
-//#include <testUtils/curl/header.h>
+#include <curl/easy.h>
+//#include <curl/header.h>
 //#include <testUtils/curl/mprintf.h>
 //#include <testUtils/curl/multi.h>
 //#include <testUtils/curl/options.h>
