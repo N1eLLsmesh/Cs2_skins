@@ -645,7 +645,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     bool isKnife = false;
     int64_t steamid = pPlayerController->m_steamID();
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
-    nlohmann::json jsonResponse=GETSKINS(steamid);
+    //nlohmann::json jsonResponse=GETSKINS(steamid);
 	
     std::string jsonString = GETSKINS(steamid).dump();
     META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
@@ -767,7 +767,7 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 		res = curl_easy_perform(curl);
 
 		// Проверяем результат выполнения
-		if (jsonResponse.accept(response)) {
+		if (jsonResponse.parse(response)) {
     			META_CONPRINTF("JSON успешно разобран: %lld\n", steamid64);
 		} else {
     			META_CONPRINTF("Ошибка при разборе JSON: %lld\n", steamid64);
