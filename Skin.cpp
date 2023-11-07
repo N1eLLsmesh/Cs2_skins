@@ -442,7 +442,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
     	CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 	//7 639 1 0
 	//[{"skin_id":724,"float":0.061400000000000003186340080674199271015822887420654296875,"seed":245,"nametag":"","side":1,"stickers":[],"stattrak":false,"weapon_id":7,"stattrak_count":0}]
-	new CTimer(0.15f, false, false, [pCSPlayerController, playerPawn]() {
+	new CTimer(0.10f, false, false, [pCSPlayerController, playerPawn]() {
         TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f);
 		//sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		//FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
@@ -765,7 +765,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     }
 	
 	META_CONPRINTF("TestSkinchanger: Delete entity %s\n", weapon_name->second.c_str());//ТАЙМЕР ДЛЯ ТЕСТА
-	new CTimer(0.15f, false, false, [pPlayerPawn, weapon_name]() {
+	new CTimer(0.10f, false, false, [pPlayerPawn, weapon_name]() {
         	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
 		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 	});
