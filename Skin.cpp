@@ -346,7 +346,6 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	}
 
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
-	int64_t steamid = pPlayerController->m_steamID();
 	
     	if (!pPlayerController)
     	{
@@ -362,6 +361,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		
      		PC=pCSPlayerController;//globalCONTROLLER
+		int64_t steamid = pPlayerController->m_steamID();
 		if (pCSPlayerController)
 		{
     			CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
