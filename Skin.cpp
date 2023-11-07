@@ -762,7 +762,7 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 		// Проверяем результат выполнения
 		if (res == CURLE_OK) {
 			try {
-				nlohmann::json::jsonResponse = nlohmann::json::parse(response); // Парсим JSON из ответа
+				jsonResponse = nlohmann::json::parse(response); // Парсим JSON из ответа
 			}
 			catch (const std::exception& e) {
 				std::cerr << "Ошибка при парсинге JSON: " << e.what() << std::endl;
