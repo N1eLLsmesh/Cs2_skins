@@ -40,36 +40,37 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 #include <stdexcept>
 #include <testUtils/json.hpp>
 #include <curl/curl.h>
-//#include <testUtils/curl/curlver.h>
 
 #include <curl/easy.h>
-//#include <curl/header.h>
+
 #include <curl/mprintf.h>
 #include <curl/multi.h>
-//#include <curl/options.h>
+
 #include <curl/stdcheaders.h>
 #include <curl/system.h>
-//#include <testUtils/curl/typecheck-gcc.h>
-#include <curl/urlapi.h>
-//#include <curl/websockets.h>
-//#include <curl/curlbuild.h>
 
+#include <curl/urlapi.h>
+
+#include <memory>
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
 void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
 nlohmann::json GETSKINS(int64_t steamid64);
+void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, nlohmann::json skins);
 bool firstPlayerSpawnEvent=true;
 
 CCSPlayerController* PC;
 CCSPlayerPawnBase* PP;
-struct PlayerState
-{
-    bool processed;
 
-    PlayerState() : processed(false) {}
+struct Players
+{
+    CCSPlayerController* PC;
+    CCSPlayerPawnBase* PP;
+    nlohmann::json SKINS;
 };
-std::map<int64_t, PlayerState> playerStates;
+
+std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
 //TEST//////
 
 CEntityListener g_EntityListener;
@@ -775,7 +776,17 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 
 //TEST END
 
-
+//TEST ADDMAP
+void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, nlohmann::json skins)
+{
+    auto player = std::make_shared<Players>();
+    player->PC = pc;
+    player->PP = pp;
+    player->SKINS = skins;
+    
+    players[steamid] = player;
+}
+//TEST END
 
 //TEST FUNC GETSKINS
 
