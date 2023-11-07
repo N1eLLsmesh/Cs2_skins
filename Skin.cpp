@@ -723,6 +723,68 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 
 //TEST END
 
+
+
+//TEST FUNC GETSKINS
+
+size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
+	size_t total_size = size * nmemb;
+	std::string* response = static_cast<std::string*>(userp);
+	response->append(static_cast<char*>(contents), total_size);
+	return total_size;
+}
+
+json GETSKINS(int64_t steamid64) {
+	CURL* curl;
+	CURLcode res;
+
+	std::string steamid = std::to_string(steamid64);
+	json jsonResponse;
+
+	// Инициализируем библиотеку libcurl
+	curl_global_init(CURL_GLOBAL_DEFAULT);
+
+	curl = curl_easy_init();
+	if (curl) {
+		std::string response;
+
+		// Устанавливаем URL для GET запроса
+		std::string url = "https://cstrigon.net/api/user_get_skins/" + steamid;
+		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+
+		// Устанавливаем функцию обратного вызова для записи данных
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+		// Выполняем GET запрос
+		res = curl_easy_perform(curl);
+
+		// Проверяем результат выполнения
+		if (res == CURLE_OK) {
+			try {
+				jsonResponse = json::parse(response); // Парсим JSON из ответа
+			}
+			catch (const std::exception& e) {
+				std::cerr << "Ошибка при парсинге JSON: " << e.what() << std::endl;
+			}
+		}
+		else {
+			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+		}
+
+		// Освобождаем ресурсы
+		curl_easy_cleanup(curl);
+	}
+
+	// Завершаем работу с библиотекой libcurl
+	curl_global_cleanup();
+
+	return jsonResponse;
+}
+
+//TEST END
+
+
 CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
 		return;
