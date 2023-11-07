@@ -708,8 +708,13 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
             META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
         }
     }
-
-    FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+	
+	META_CONPRINTF("TestSkinchanger: Delete entity %s\n", weapon_name->second.c_str());//ТАЙМЕР ДЛЯ ТЕСТА
+	new CTimer(1f, false, false, [pPlayerPawn, weapon_name]() {
+        	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
+		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+	});
+    //FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
 }
 
