@@ -40,6 +40,19 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 
 #include <testUtils/json.hpp>
 #include <testUtils/curl/curl.h>
+#include <testUtils/curl/curlver.h>
+
+#include <testUtils/curl/easy.h>
+#include <testUtils/curl/header.h>
+#include <testUtils/curl/mprintf.h>
+#include <testUtils/curl/multi.h>
+#include <testUtils/curl/options.h>
+#include <testUtils/curl/stdcheaders.h>
+#include <testUtils/curl/system.h>
+#include <testUtils/curl/typecheck-gcc.h>
+#include <testUtils/curl/urlapi.h>
+#include <testUtils/curl/websockets.h>
+
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
