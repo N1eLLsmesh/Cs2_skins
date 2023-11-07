@@ -337,10 +337,10 @@ class MMSPluginConfig(object):
     # Platform-specifics
     if cxx.target.platform == 'linux':
       cxx.defines += ['_LINUX', 'POSIX', '_FILE_OFFSET_BITS=64']
-      if cxx.family == 'gcc':
-        cxx.linkflags += ['-static-libgcc']
-      elif cxx.family == 'clang':
-        cxx.linkflags += ['-lgcc_eh']
+    if cxx.family == 'gcc':
+        cxx.linkflags += ['-static-libgcc', '-lcurl']
+    elif cxx.family == 'clang':
+        cxx.linkflags += ['-lgcc_eh', '-lcurl']
     elif cxx.target.platform == 'mac':
       cxx.defines += ['OSX', '_OSX', 'POSIX']
 
