@@ -694,7 +694,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
         if (!weapon)
             continue;
 
-        auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex);
+        auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 
         if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
             continue;
