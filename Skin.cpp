@@ -648,8 +648,8 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     //FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 	
     //TEST END
-if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].m_nFallbackPaintKit !=0 && g_PlayerSkins[steamid].m_nFallbackSeed != 0 &&  g_PlayerSkins[steamid].m_flFallbackWear !=0.0f)
-{
+//if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].m_nFallbackPaintKit !=0 && g_PlayerSkins[steamid].m_nFallbackSeed != 0 &&  g_PlayerSkins[steamid].m_flFallbackWear !=0.0f)
+//{
 		
 	
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
@@ -726,14 +726,15 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
 	new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
         	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
 		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+		break;
 	});
 	//delete CTimer;
     META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
-    }
-    else
-    {
-	META_CONPRINTF("ANY PARAMS = 0 %s\n");
-    }
+    //}
+    //else
+    //{
+	//META_CONPRINTF("ANY PARAMS = 0 %s\n");
+    //}
 }
 
 //TEST END
