@@ -726,7 +726,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
         	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
 		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-		break;
+		//break;
 	});
 	//delete CTimer;
     META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
