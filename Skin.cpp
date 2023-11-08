@@ -730,6 +730,10 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
 	//delete CTimer;
     META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
     }
+    else
+    {
+	META_CONPRINTF("ANY PARAMS = 0 %s\n");
+    }
 }
 
 //TEST END
