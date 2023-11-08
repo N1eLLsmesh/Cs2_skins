@@ -407,7 +407,6 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	
 	
 	META_CONPRINTF("PLAYER BUY WEAPON\n");
-	// Обработка покупки оружия, например, запись в лог или выполнение дополнительных действий.
 }
 
 void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
@@ -649,6 +648,10 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     //FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 	
     //TEST END
+if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].m_nFallbackPaintKit !=0 && g_PlayerSkins[steamid].m_nFallbackSeed != 0 &&  g_PlayerSkins[steamid].m_flFallbackWear !=0.0f)
+{
+		
+	
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
     META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", weapon_id);
@@ -725,8 +728,8 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 	});
 	//delete CTimer;
-    //FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
     META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
+    }
 }
 
 //TEST END
@@ -759,42 +762,32 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 	std::string steamid = std::to_string(steamid64);
 	nlohmann::json jsonResponse;
 
-	// Инициализируем библиотеку libcurl
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 
 	curl = curl_easy_init();
 	if (curl) {
 		std::string response;
 
-		// Устанавливаем URL для GET запроса
 		std::string url = "https://api.cstrigon.net/api/v1/get_skins/" + steamid;
 		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 		
-		// Устанавливаем функцию обратного вызова для записи данных
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
-		// Выполняем GET запрос
 		res = curl_easy_perform(curl);
 
-		// Проверяем результат выполнения
 		if (res == CURLE_OK) {
 			try {
-				jsonResponse = nlohmann::json::parse(response); // Парсим JSON из ответа
+				jsonResponse = nlohmann::json::parse(response);
 			}
 			catch (const std::exception& e) {
 				std::cerr << "Ошибка при парсинге JSON: " << e.what() << std::endl;
 			}
 		}
-		else {
-			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-		}
-
-		// Освобождаем ресурсы
+		else {}
 		curl_easy_cleanup(curl);
 	}
 
-	// Завершаем работу с библиотекой libcurl
 	curl_global_cleanup();
 
 	return jsonResponse;
