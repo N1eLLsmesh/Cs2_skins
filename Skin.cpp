@@ -391,22 +391,27 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	const char* weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
-	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
-    	CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
-	//7 639 1 0
-	//[{"skin_id":724,"float":0.061400000000000003186340080674199271015822887420654296875,"seed":245,"nametag":"","side":1,"stickers":[],"stattrak":false,"weapon_id":7,"stattrak_count":0}]
-	new CTimer(0.15f, false, false, [pCSPlayerController, playerPawn]() {
-        TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f);
+	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
+	{
+	
+		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
+		//7 639 1 0
+		//[{"skin_id":724,"float":0.061400000000000003186340080674199271015822887420654296875,"seed":245,"nametag":"","side":1,"stickers":[],"stattrak":false,"weapon_id":7,"stattrak_count":0}]
+		new CTimer(0.15f, false, false, [pCSPlayerController, playerPawn]() {
+        	TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f);
 		//sprintf(buf, "%s Timer executed", CHAT_PREFIX);
 		//FnUTIL_ClientPrintAll(3, buf,nullptr, nullptr, nullptr, nullptr);
-	});
+		});
+	
 	//delete CTimer;
 	//TestSkinchanger(pCSPlayerController, playerPawn, 7, 639, 1, 0.0f);
 	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
 	
-	META_CONPRINTF("PLAYER BUY WEAPON\n");
+		META_CONPRINTF("PLAYER BUY WEAPON\n");
+	});
 }
 
 void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
