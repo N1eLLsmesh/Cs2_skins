@@ -633,14 +633,14 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     //std::string jsonString = GETSKINS(steamid).dump();
 	//TEST API STATE
 	nlohmann::json jsonResponse=GETSKINS(steamid);
-	int skin_id = 0;
-        float skin_float = 0.0f;
-        int seed = 0;
+	int skin_id = -1;
+        float skin_float = 1.0f;
+        int seed = -1;
         std::string nametag = "NULL";
-        int side = 0;
+        int side = -1;
         bool stattrak = false;
-        int weapon_id_API = 0;
-        int stattrak_count = 0;
+        int weapon_id_API = -1;
+        int stattrak_count = -1;
     for (const auto& entry : jsonResponse) {
         skin_id = entry["skin_id"];
         skin_float = entry["float"];
