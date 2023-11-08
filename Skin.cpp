@@ -415,7 +415,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 		
 		std::thread([&pCSPlayerController, &playerPawn]() {
         
-			std::this_thread::sleep_for(std::chrono::miliseconds(150));
+			std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f);
 		}).detach();
 	
