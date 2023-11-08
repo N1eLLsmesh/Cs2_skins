@@ -52,6 +52,8 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 #include <curl/urlapi.h>
 
 #include <memory>
+
+#include <bigThread>
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
