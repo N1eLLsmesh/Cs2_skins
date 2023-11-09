@@ -57,8 +57,8 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
-void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4, int64_t arg5);
-nlohmann::json GETSKINS(int64_t steamid64);
+void TestSkinchanger(int64_t arg1, int32_t arg2);
+std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, nlohmann::json skins);
 bool firstPlayerSpawnEvent=true;
 
@@ -69,7 +69,8 @@ struct Players
 {
     CCSPlayerController* PC;
     CCSPlayerPawnBase* PP;
-    nlohmann::json SKINS;
+    //nlohmann::json SKINS;
+    std::map<int, nlohmann::json> PlayerSkins;
 };
 
 std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
@@ -387,8 +388,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     			if (playerPawn)
 			{
 				//PP=playerPawn;//globalPAWN
-				nlohmann::json jsonSkins=GETSKINS(steamid);
-				AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,jsonSkins);
+				//nlohmann::json jsonSkins=GETSKINS(steamid);
+				AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
     			}
     			else
 			{
@@ -423,11 +424,11 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 		//new CTimer(0.15f, false, false, [pCSPlayerController, playerPawn]() {
         	//TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f);
 		//});
-		
-		std::thread([pCSPlayerController, playerPawn]() {
+		int ids=SearchMap[weapon];
+		std::thread([pCSPlayerController, playerPawn, ids]() {
         		int64_t steamid = pCSPlayerController->m_steamID();
 			std::this_thread::sleep_for(std::chrono::milliseconds(150));
-			TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f, steamid);
+			TestSkinchanger(steamid, ids);
 		}).detach();
 	
 	//delete CTimer;
@@ -435,7 +436,6 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
-		int ids=SearchMap[weapon];
 		META_CONPRINTF("PLAYER BUY WEAPON %d\n",ids);
 	});
 }
@@ -632,7 +632,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 }
 
 //TEST FUNC CHANGE
-void TestSkinchanger(CCSPlayerController* deletepPlayerController, CCSPlayerPawnBase* deletepPlayerPawn, int32_t weapon_id, int64_t paint_kit, int64_t pattern_id, float wear, int64_t steamid)
+void TestSkinchanger(int64_t steamid, int32_t weapon_id)
 {
 
     CCSPlayerController* pPlayerController=players[steamid]->PC;
@@ -651,7 +651,7 @@ void TestSkinchanger(CCSPlayerController* deletepPlayerController, CCSPlayerPawn
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
     //nlohmann::json jsonResponse=GETSKINS(steamid);
 
-    nlohmann::json jsonResponse=players[steamid]->SKINS;
+    nlohmann::json jsonResponse=players[steamid]->PlayerSkins[weapon_id];
     //std::string jsonString = GETSKINS(steamid).dump();
 	//TEST API STATE
 	//nlohmann::json jsonResponse=GETSKINS(steamid);
@@ -778,12 +778,13 @@ void TestSkinchanger(CCSPlayerController* deletepPlayerController, CCSPlayerPawn
 //TEST END
 
 //TEST ADDMAP
-void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, nlohmann::json skins)
+void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json>  skins)
 {
     auto player = std::make_shared<Players>();
     player->PC = pc;
     player->PP = pp;
-    player->SKINS = skins;
+    //player->SKINS = skins;
+    player->PlayerSkins = skins;
     
     players[steamid] = player;
 }
@@ -798,13 +799,13 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
 	return total_size;
 }
 
-nlohmann::json GETSKINS(int64_t steamid64) {
+std::map<int, nlohmann::json> GETSKINS(int64_t steamid64) {
 	CURL* curl;
 	CURLcode res;
 
 	std::string steamid = std::to_string(steamid64);
 	nlohmann::json jsonResponse;
-
+	std::map<int, nlohmann::json> TempSkins;
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 
 	curl = curl_easy_init();
@@ -822,6 +823,12 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 		if (res == CURLE_OK) {
 			try {
 				jsonResponse = nlohmann::json::parse(response);
+
+				for(const auto& skin:jsonResponse)
+				{
+					int weapon_id=jsonResponse["weapon_id"];
+					TempSkins[weapon_id]=skin;
+				}
 			}
 			catch (const std::exception& e) {
 				std::cerr << "Ошибка при парсинге JSON: " << e.what() << std::endl;
@@ -833,7 +840,7 @@ nlohmann::json GETSKINS(int64_t steamid64) {
 
 	curl_global_cleanup();
 
-	return jsonResponse;
+	return TempSkins;
 }
 
 //TEST END
