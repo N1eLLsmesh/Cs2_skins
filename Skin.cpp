@@ -409,7 +409,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
 	//const 
-	std::string weapon = event->GetString("weapon");
+	int weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController,weapon=weapon]()
@@ -436,7 +436,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
 	
-		META_CONPRINTF("PLAYER BUY WEAPON %lld\n",weapon.c_str());
+		META_CONPRINTF("PLAYER BUY WEAPON %d\n",weapon);
 	});
 }
 
@@ -645,7 +645,7 @@ void TestSkinchanger(CCSPlayerController* deletepPlayerController, CCSPlayerPawn
 
     char buf[255] = { 0 };
 
-    auto weapon_name = g_WeaponsMap.find(weapon_id);
+   // auto weapon_name = g_WeaponsMap.find(weapon_id);
     bool isKnife = false;
     //int64_t steamid = pPlayerController->m_steamID();
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
@@ -673,6 +673,7 @@ void TestSkinchanger(CCSPlayerController* deletepPlayerController, CCSPlayerPawn
         weapon_id_API = entry["weapon_id"];
         stattrak_count = entry["stattrak_count"];
     }
+    auto weapon_name = g_WeaponsMap.find(weapon_id_API);
     g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id_API;
     g_PlayerSkins[steamid].m_nFallbackPaintKit = skin_id;
     g_PlayerSkins[steamid].m_nFallbackSeed = seed;
