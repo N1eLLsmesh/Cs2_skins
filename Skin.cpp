@@ -697,7 +697,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	weapon_id_API = weaponData["weapon_id"];
 	stattrak_count = weaponData["stattrak_count"];
 	} else {
-	// Обработка случая, когда 'weapon_id' не найден
+	return;
 	}
 	
     auto weapon_name = g_WeaponsMap.find(weapon_id_API);
