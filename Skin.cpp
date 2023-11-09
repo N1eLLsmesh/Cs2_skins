@@ -655,6 +655,10 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     std::map<int, nlohmann::json> Temp=players[steamid]->PlayerSkins;
     nlohmann::json jsonResponse=Temp[weapon_id];
     std::string jsonString = jsonResponse.dump();
+	
+	 sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
+    FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+	
 	META_CONPRINTF("JSON %lld\n", jsonString.c_str());
 	//TEST API STATE
 	//nlohmann::json jsonResponse=GETSKINS(steamid);
@@ -685,8 +689,8 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	
     //META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
 
-    sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
-    FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
+    //sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
+   //FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 	
     //TEST END
 //if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].m_nFallbackPaintKit !=0 && g_PlayerSkins[steamid].m_nFallbackSeed != 0 &&  g_PlayerSkins[steamid].m_flFallbackWear !=0.0f)
