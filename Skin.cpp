@@ -351,7 +351,7 @@ void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 {
 	//if (!firstPlayerSpawnEvent)
-	{
+	//{
 		
         	//return;
 		
@@ -402,6 +402,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		});
 	return;
 }
+
 
 
 
