@@ -431,7 +431,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
 	
-		META_CONPRINTF("PLAYER BUY WEAPON %lld\n",weapon);
+		META_CONPRINTF("PLAYER BUY WEAPON %lld\n",weapon.c_str());
 	});
 }
 
