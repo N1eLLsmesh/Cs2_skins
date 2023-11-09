@@ -692,10 +692,10 @@ void TestSkinchanger(int64_t steamid, int32_t weapon_id)
 	
     CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 
-    META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", weapon_id);
-    META_CONPRINTF("TestSkinchanger: paint_kit %lld\n", paint_kit);
-    META_CONPRINTF("TestSkinchanger: pattern_id %lld\n", pattern_id);
-    META_CONPRINTF("TestSkinchanger: wear %f\n", wear);
+    META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", weapon_id_API);
+    META_CONPRINTF("TestSkinchanger: paint_kit %lld\n", skin_id);
+    META_CONPRINTF("TestSkinchanger: pattern_id %lld\n", seed);
+    META_CONPRINTF("TestSkinchanger: wear %f\n", skin_float);
 
     if (weapon_name == g_WeaponsMap.end()) {
         weapon_name = g_KnivesMap.find(weapon_id);
