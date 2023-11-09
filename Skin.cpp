@@ -389,7 +389,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 			{
 				//PP=playerPawn;//globalPAWN
 				//nlohmann::json jsonSkins=GETSKINS(steamid);
-				AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
+				std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
+				AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,Temp);
     			}
     			else
 			{
