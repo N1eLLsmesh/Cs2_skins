@@ -350,12 +350,12 @@ void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 {
-	if (!firstPlayerSpawnEvent)
+	//if (!firstPlayerSpawnEvent)
 	{
 		
-        	return;
+        	//return;
 		
-	}
+	//}
 
 	firstPlayerSpawnEvent=false;
 	if (!g_pGameRules)//TEST
@@ -379,14 +379,14 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	{
 		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		
-     		PC=pCSPlayerController;//globalCONTROLLER
+     		//PC=pCSPlayerController;//globalCONTROLLER
 		int64_t steamid = pPlayerController->m_steamID();
 		if (pCSPlayerController)
 		{
     			CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
     			if (playerPawn)
 			{
-				PP=playerPawn;//globalPAWN
+				//PP=playerPawn;//globalPAWN
 				nlohmann::json jsonSkins=GETSKINS(steamid);
 				AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,jsonSkins);
     			}
