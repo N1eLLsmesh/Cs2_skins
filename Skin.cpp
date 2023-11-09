@@ -350,16 +350,20 @@ void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 {
-	//if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
-	//{
-        	//return;
-	//}
+	if (!firstPlayerSpawnEvent)
+	{
+		
+        	return;
+		
+	}
 
+	firstPlayerSpawnEvent=false;
 	if (!g_pGameRules)//TEST
 	{
         	return;
 	}
 
+	
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	
     	if (!pPlayerController)
@@ -454,6 +458,7 @@ void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
 void OnRoundStart::FireGameEvent(IGameEvent* event) 
 {
 	//TestSkinchanger(PC, PP, 61, 657, 1, 0.0f);
+	firstPlayerSpawnEvent=true;
     	META_CONPRINTF("RoundStarted\n");
 }
 
