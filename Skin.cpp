@@ -635,7 +635,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
     //nlohmann::json jsonResponse=GETSKINS(steamid);
 
-    nlohmann::json jsonResponse=players[steamid]->SKINS();
+    nlohmann::json jsonResponse=players[steamid]->SKINS;
     //std::string jsonString = GETSKINS(steamid).dump();
 	//TEST API STATE
 	//nlohmann::json jsonResponse=GETSKINS(steamid);
