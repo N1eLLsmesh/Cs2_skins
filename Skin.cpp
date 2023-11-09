@@ -654,7 +654,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     //nlohmann::json jsonResponse=GETSKINS(steamid);
     std::map<int, nlohmann::json> Temp=players[steamid]->PlayerSkins;
     auto it=Temp.find(weapon_id);
-    nlohmann::json jsonResponse = it->second;
+    nlohmann::json jsonResponse = Temp[weapon_id];
     std::string jsonString = jsonResponse.dump();
 	
 	 sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
@@ -671,7 +671,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
         bool stattrak = false;
         int weapon_id_API = -1;
         int stattrak_count = -1;
-    for (const auto& entry : jsonResponse) {
+    for (const auto& entry : Temp[weapon_id]) {
         skin_id = entry["skin_id"];
         skin_float = entry["float"];
         seed = entry["seed"];
