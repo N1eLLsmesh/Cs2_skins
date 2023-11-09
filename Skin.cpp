@@ -635,7 +635,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 //TEST FUNC CHANGE
 void TestSkinchanger(int64_t steamid, int weapon_id)
 {
-
+    if(weapon_id==0)
+    {
+	    return;
+    }
     CCSPlayerController* pPlayerController=players[steamid]->PC;
     CCSPlayerPawnBase* pPlayerPawn=players[steamid]->PP;
 	
