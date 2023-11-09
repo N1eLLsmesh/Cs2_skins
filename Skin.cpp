@@ -409,7 +409,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
 	//const 
-	int weapon = event->GetInt("weapon");
+	const std::string weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController,weapon=weapon]()
@@ -435,8 +435,8 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
-	
-		META_CONPRINTF("PLAYER BUY WEAPON %d\n",weapon);
+		int ids=SearchMap[weapon];
+		META_CONPRINTF("PLAYER BUY WEAPON %d\n",ids);
 	});
 }
 
