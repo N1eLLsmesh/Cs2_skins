@@ -57,7 +57,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
-void TestSkinchanger(int64_t arg1, int32_t arg2);
+void TestSkinchanger(int64_t arg1, int arg2);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins);
 bool firstPlayerSpawnEvent=true;
@@ -633,7 +633,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 }
 
 //TEST FUNC CHANGE
-void TestSkinchanger(int64_t steamid, int32_t weapon_id)
+void TestSkinchanger(int64_t steamid, int weapon_id)
 {
 
     CCSPlayerController* pPlayerController=players[steamid]->PC;
