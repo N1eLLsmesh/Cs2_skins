@@ -74,7 +74,7 @@ struct Players
 
 std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
 
-std::unordered_map<std::string, int> SearchMap;
+std::map<std::string, int> SearchMap;
 //TEST//////
 
 CEntityListener g_EntityListener;
