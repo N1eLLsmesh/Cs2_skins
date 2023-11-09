@@ -59,7 +59,7 @@ Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
 void TestSkinchanger(int64_t arg1, int32_t arg2);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
-void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, nlohmann::json skins);
+void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins);
 bool firstPlayerSpawnEvent=true;
 
 CCSPlayerController* PC;
@@ -779,7 +779,7 @@ void TestSkinchanger(int64_t steamid, int32_t weapon_id)
 //TEST END
 
 //TEST ADDMAP
-void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json>  skins)
+void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins)
 {
     auto player = std::make_shared<Players>();
     player->PC = pc;
