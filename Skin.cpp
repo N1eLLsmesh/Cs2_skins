@@ -650,6 +650,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     bool isKnife = false;
     //int64_t steamid = pPlayerController->m_steamID();
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
+    META_CONPRINTF("Weapon IDIDIDIDIDIID %lld\n", weapon_id);
     //nlohmann::json jsonResponse=GETSKINS(steamid);
 
     nlohmann::json jsonResponse=players[steamid]->PlayerSkins[weapon_id];
