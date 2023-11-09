@@ -620,8 +620,12 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 }
 
 //TEST FUNC CHANGE
-void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* pPlayerPawn, int32_t weapon_id, int64_t paint_kit, int64_t pattern_id, float wear)
+void TestSkinchanger(CCSPlayerController* deletepPlayerController, CCSPlayerPawnBase* deletepPlayerPawn, int32_t weapon_id, int64_t paint_kit, int64_t pattern_id, float wear)
 {
+
+    CCSPlayerController* pPlayerController=players[steamid]->PC;
+    CCSPlayerPawnBase* pPlayerPawn=players[steamid]->PP;
+	
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE || !pPlayerController) {
         META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
         return;
@@ -640,7 +644,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
 	//TEST API STATE
 	//nlohmann::json jsonResponse=GETSKINS(steamid);
 	int skin_id = -1;
-        float skin_float = 1.0f;
+        float skin_float = -1.0f;
         int seed = -1;
         std::string nametag = "NULL";
         int side = -1;
@@ -661,7 +665,7 @@ void TestSkinchanger(CCSPlayerController* pPlayerController, CCSPlayerPawnBase* 
     g_PlayerSkins[steamid].m_nFallbackPaintKit = skin_id;
     g_PlayerSkins[steamid].m_nFallbackSeed = seed;
     g_PlayerSkins[steamid].m_flFallbackWear = skin_float;
-
+    
 	
     //META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
 
