@@ -671,16 +671,32 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
         bool stattrak = false;
         int weapon_id_API = -1;
         int stattrak_count = -1;
-    for (const auto& entry : Temp[weapon_id]) {
-        skin_id = entry["skin_id"];
-        skin_float = entry["float"];
-        seed = entry["seed"];
-        nametag = entry["nametag"];
-        side = entry["side"];
-        stattrak = entry["stattrak"];
-        weapon_id_API = entry["weapon_id"];
-        stattrak_count = entry["stattrak_count"];
-    }
+	
+   // for (const auto& entry : Temp[weapon_id]) {
+        //skin_id = entry["skin_id"];
+        //skin_float = entry["float"];
+        //seed = entry["seed"];
+       // nametag = entry["nametag"];
+        //side = entry["side"];
+        //stattrak = entry["stattrak"];
+        //weapon_id_API = entry["weapon_id"];
+        //stattrak_count = entry["stattrak_count"];
+    //}
+	auto it = Temp.find(weapon_id);
+	if (it != Temp.end()) {
+	nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
+	skin_id = weaponData["skin_id"];
+	skin_float = weaponData["float"];
+	seed = weaponData["seed"];
+	nametag = weaponData["nametag"];
+	side = weaponData["side"];
+	stattrak = weaponData["stattrak"];
+	weapon_id_API = weaponData["weapon_id"];
+	stattrak_count = weaponData["stattrak_count"];
+	} else {
+	// Обработка случая, когда 'weapon_id' не найден
+	}
+	
     auto weapon_name = g_WeaponsMap.find(weapon_id_API);
     g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id_API;
     g_PlayerSkins[steamid].m_nFallbackPaintKit = skin_id;
