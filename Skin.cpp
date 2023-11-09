@@ -426,7 +426,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
         	//TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f);
 		//});
 		int ids=SearchMap[weapon];
-		std::thread([pCSPlayerController, playerPawn, ids]() {
+		std::thread([pCSPlayerController, playerPawn, ids=ids]() {
         		int64_t steamid = pCSPlayerController->m_steamID();
 			std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			TestSkinchanger(steamid, ids);
