@@ -829,7 +829,7 @@ std::map<int, nlohmann::json> GETSKINS(int64_t steamid64) {
 
 				for(const auto& skin:jsonResponse)
 				{
-					int weapon_id=jsonResponse["weapon_id"];
+					int weapon_id=skin["weapon_id"];
 					TempSkins[weapon_id]=skin;
 				}
 			}
