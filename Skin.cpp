@@ -654,7 +654,8 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     //nlohmann::json jsonResponse=GETSKINS(steamid);
 
     nlohmann::json jsonResponse=players[steamid]->PlayerSkins[weapon_id];
-    //std::string jsonString = GETSKINS(steamid).dump();
+    std::string jsonString = jsonResponse.dump();
+	META_CONPRINTF("JSON %lld\n", jsonString.c_str());
 	//TEST API STATE
 	//nlohmann::json jsonResponse=GETSKINS(steamid);
 	int skin_id = -1;
