@@ -57,7 +57,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
-void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4);
+void TestSkinchanger(CCSPlayerController* pCSPlayerController, CCSPlayerPawnBase* playerPawn, int32_t arg1, int64_t arg2, int64_t arg3, float arg4, int64_t arg5);
 nlohmann::json GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, nlohmann::json skins);
 bool firstPlayerSpawnEvent=true;
@@ -414,9 +414,9 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 		//});
 		
 		std::thread([pCSPlayerController, playerPawn]() {
-        
+        		int64_t steamid = pCSPlayerController->m_steamID();
 			std::this_thread::sleep_for(std::chrono::milliseconds(150));
-			TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f);
+			TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f, steamid);
 		}).detach();
 	
 	//delete CTimer;
@@ -620,7 +620,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 }
 
 //TEST FUNC CHANGE
-void TestSkinchanger(CCSPlayerController* deletepPlayerController, CCSPlayerPawnBase* deletepPlayerPawn, int32_t weapon_id, int64_t paint_kit, int64_t pattern_id, float wear)
+void TestSkinchanger(CCSPlayerController* deletepPlayerController, CCSPlayerPawnBase* deletepPlayerPawn, int32_t weapon_id, int64_t paint_kit, int64_t pattern_id, float wear, int64_t steamid)
 {
 
     CCSPlayerController* pPlayerController=players[steamid]->PC;
@@ -635,7 +635,7 @@ void TestSkinchanger(CCSPlayerController* deletepPlayerController, CCSPlayerPawn
 
     auto weapon_name = g_WeaponsMap.find(weapon_id);
     bool isKnife = false;
-    int64_t steamid = pPlayerController->m_steamID();
+    //int64_t steamid = pPlayerController->m_steamID();
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
     //nlohmann::json jsonResponse=GETSKINS(steamid);
 
