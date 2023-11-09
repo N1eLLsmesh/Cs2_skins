@@ -653,7 +653,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     META_CONPRINTF("Weapon IDIDIDIDIDIID %lld\n", weapon_id);
     //nlohmann::json jsonResponse=GETSKINS(steamid);
     std::map<int, nlohmann::json> Temp=players[steamid]->PlayerSkins;
-    auto it=Temp.find(weapon_id);
+    //auto it=Temp.find(weapon_id);
     nlohmann::json jsonResponse = Temp[weapon_id];
     std::string jsonString = jsonResponse.dump();
 	
