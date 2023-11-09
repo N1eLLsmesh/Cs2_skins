@@ -350,7 +350,12 @@ void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 {
-	if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
+	//if (!g_pGameRules || g_pGameRules->m_bWarmupPeriod())
+	//{
+        	//return;
+	//}
+
+	if (!g_pGameRules)//TEST
 	{
         	return;
 	}
@@ -398,7 +403,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
-	const char* weapon = event->GetString("weapon");
+	//const 
+	std::string weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController,weapon=weapon]()
