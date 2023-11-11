@@ -58,8 +58,8 @@ Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
 
-Event_PlayerConnect g_PlayerConnect;
-Event_PlayerDisconnect g_PlayerDisconnect;
+//Event_PlayerConnect g_PlayerConnect;
+//Event_PlayerDisconnect g_PlayerDisconnect;
 
 void TestSkinchanger(int64_t arg1, int arg2);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
