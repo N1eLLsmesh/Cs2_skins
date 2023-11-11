@@ -533,12 +533,13 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	{
 		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
 		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-		TestSkinchanger(steamid, weaponId);
+		
 		META_CONPRINTF( "----------------------------------------------------\n");
 		if(!steamid) {
 			return;
 		}
-
+		TestSkinchanger(steamid, weaponId);
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		auto skin_parm = g_PlayerSkins.find(steamid);
 		if(skin_parm == g_PlayerSkins.end()) {
 			//return;
