@@ -530,7 +530,7 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 {
 	try
 	{
-	int64_t steamid = event->GetInt("networkid_low"); // или "networkid_low" для младших 32 бит SteamID
+	int64_t steamid = event->GetInt("networkid"); // или "networkid_low" для младших 32 бит SteamID
 
 	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
 	//if(steamid!=0)
@@ -554,7 +554,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 	try
 	{
 	//int64_t steamid=event->m_SteamId();
-	int64_t steamid = event->GetInt("networkid_low"); // или "networkid_low" для младших 32 бит SteamID
+	int64_t steamid = event->GetInt("networkid"); // или "networkid_low" для младших 32 бит SteamID
 	//if(steamid!=0)
 	//{
 	//players.erase(steamid);
