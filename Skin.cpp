@@ -311,7 +311,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 		gameeventmanager->AddListener(&g_PlayerBuy, "item_purchase", true);//work
 		gameeventmanager->AddListener(&g_PlayerSpawnedEvent,"player_spawned",true);
 		gameeventmanager->AddListener(&g_RoundStart,"round_start",true);
-		gameeventmanager->AddListener(&g_PlayerConnect,"player/playerconnect",true);//tested
+		gameeventmanager->AddListener(&g_PlayerConnect,"client_put_in_server",true);//tested
 		gameeventmanager->AddListener(&g_PlayerDisconnect,"player/playerdisconnect",true);//tested
 		//test/////////////////////
 		bDone = true;
