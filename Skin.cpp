@@ -907,9 +907,9 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
-		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n");
+		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n", pc->m_iPing());
 
-		if(!pc->IsInGame()){
+		if(pc->m_iPing()){
 			META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
 			players.erase(steamid);
         		break;
