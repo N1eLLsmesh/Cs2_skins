@@ -911,7 +911,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 
 		try
 		{
-			int64_t steamid2 = pCSPlayerController->m_steamID();
+			int64_t steamid2 = pc->m_steamID();
 		}
 		catch(const std::exception& e)
 		{
