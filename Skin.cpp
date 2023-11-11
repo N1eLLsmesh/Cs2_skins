@@ -480,8 +480,7 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 //Event_PlayerDisconnect g_PlayerDisconnect;
 void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 {
-	META_CONPRINTF("PlayerConnect\n");
-	META_CONPRINTF("_____________________________________________");
+	META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
 }
 
 void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
