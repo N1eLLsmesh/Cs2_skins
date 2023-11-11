@@ -691,7 +691,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
         //stattrak_count = entry["stattrak_count"];
     //}
 	auto it = Temp.find(weapon_id);
-	if (it != Temp.end()) {
+	if (it != Temp.end()&& it!=NULL) {
 	nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
 	skin_id = weaponData["skin_id"];
 	skin_float = weaponData["float"];
