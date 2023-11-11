@@ -469,7 +469,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 			
 			//TestSkinchanger(steamid, ids);
 			
-		}).detach();
+		})detach();
 	
 		META_CONPRINTF("PLAYER BUY WEAPON %d\n",ids);
 	});
@@ -881,7 +881,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	{
 	//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
-		std::thread::sleep_for(std::chrono::seconds(5));
+		std::this_thread::sleep_for(std::chrono::seconds(5));
 		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n");
 	}
 }
