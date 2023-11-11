@@ -57,6 +57,10 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
+
+Event_PlayerConnect g_PlayerConnect;
+Event_PlayerDisconnect g_PlayerDisconnect;
+
 void TestSkinchanger(int64_t arg1, int arg2);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins);
@@ -210,6 +214,11 @@ bool Skin::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool lat
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_MEMBER(this, &Skin::StartupServer), true);
 	SH_ADD_HOOK(IServerGameDLL, GameFrame, g_pSource2Server, SH_MEMBER(this, &Skin::GameFrame), true);
 
+	///TEST
+	SH_ADD_HOOK(IGameEventManager2, PlayerConnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerConnect), true);
+   	SH_ADD_HOOK(IGameEventManager2, PlayerDisconnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerDisconnect), true);
+	///TEST
+
 	gameeventmanager = static_cast<IGameEventManager2*>(CallVFunc<IToolGameEventAPI*, 91>(g_pSource2Server));
 
 	ConVar_Register(FCVAR_GAMEDLL);
@@ -243,11 +252,18 @@ bool Skin::Unload(char *error, size_t maxlen)
 	SH_REMOVE_HOOK(IServerGameDLL, GameFrame, g_pSource2Server, SH_MEMBER(this, &Skin::GameFrame), true);
 	SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_MEMBER(this, &Skin::StartupServer), true);
 
+	SH_REMOVE_HOOK(IGameEventManager2, PlayerConnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerConnect), true);
+   	SH_REMOVE_HOOK(IGameEventManager2, PlayerDisconnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerDisconnect), true);
+	
 	gameeventmanager->RemoveListener(&g_PlayerSpawnEvent);
 	gameeventmanager->RemoveListener(&g_RoundPreStartEvent);
 	gameeventmanager->RemoveListener(&g_PlayerBuy);
 	gameeventmanager->RemoveListener(&g_PlayerSpawnedEvent);
 	gameeventmanager->RemoveListener(&g_RoundStart);
+
+	gameeventmanager->RemoveListener(&g_PlayerConnect);
+	gameeventmanager->RemoveListener(&g_PlayerDisconnect);
+	
 	//TEST
 	g_pGameEntitySystem->RemoveListenerEntity(&g_EntityListener);//work
 	//g_pGameEntitySystem->RemoveListenerEntity(&g_PlayerSpawnedEvent);//nowork
@@ -295,7 +311,8 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 		gameeventmanager->AddListener(&g_PlayerBuy, "item_purchase", true);//work
 		gameeventmanager->AddListener(&g_PlayerSpawnedEvent,"player_spawned",true);
 		gameeventmanager->AddListener(&g_RoundStart,"round_start",true);
-		//gameeventmanager->AddListener(&g_PlayerSpawnedEvent, "player_spawned", true);//nowork
+		gameeventmanager->AddListener(&g_PlayerConnect,"player/playerconnect",true);//tested
+		gameeventmanager->AddListener(&g_PlayerDisconnect,"player/playerdisconnect",true);//tested
 		//test/////////////////////
 		bDone = true;
 	}
@@ -457,6 +474,22 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 	//firstPlayerSpawnEvent=true;
     	META_CONPRINTF("RoundStarted\n");
 }
+
+
+//Event_PlayerConnect g_PlayerConnect;
+//Event_PlayerDisconnect g_PlayerDisconnect;
+void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
+{
+	META_CONPRINTF("PlayerConnect\n");
+	META_CONPRINTF(_____________________________________________);
+}
+
+void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
+{
+	META_CONPRINTF("PlayerDisconnect\n");
+	META_CONPRINTF(_____________________________________________);
+}
+
 
 //META_CONPRINTF("PLAYER BUY WEAPON\n");
 //TEST END
@@ -820,13 +853,21 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
 //TEST END
 
+void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
+{
+	while(true)
+	{
+	//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
+	AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
+	}
+}
+
 //TEST ADDMAP
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins)
 {
     auto player = std::make_shared<Players>();
     player->PC = pc;
     player->PP = pp;
-    //player->SKINS = skins;
     player->PlayerSkins = skins;
     
     players[steamid] = player;
