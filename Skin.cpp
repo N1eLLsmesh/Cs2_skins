@@ -409,35 +409,41 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 			{
 				//PP=playerPawn;//globalPAWN
 				//nlohmann::json jsonSkins=GETSKINS(steamid);
-				if (players.find(steamid) != players.end()) {
+				if (players.find(steamid) != players.end()) 
+				{
     				// Игрок существует в вашем контейнере
 
-    				if (!players[steamid]->firstspawn) {
-       				 // Игрок уже был обработан ранее, это не его первое появление
-        			return;
-    				} else {
-        				// Это первое появление игрока
-       				 std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
-       				 AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+    					if (!players[steamid]->firstspawn) 
+					{
+       						 // Игрок уже был обработан ранее, это не его первое появление
+        					return;
+    					} 
+					else 
+					{
+        					// Это первое появление игрока
+       				 		std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
+       					 	AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
 					
-					//std::thread([pCSPlayerController, playerPawn, steamid]() 
-					//{
-						//ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
-						//ThreadUpdate(steamid,pCSPlayerController,playerPawn);
-					//})detach();
+						//std::thread([pCSPlayerController, playerPawn, steamid]() 
+						//{
+							//ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
+							//ThreadUpdate(steamid,pCSPlayerController,playerPawn);
+						//})detach();
 
-					std::thread([pCSPlayerController, playerPawn, steamid]() {
-        		ThreadUpdate(steamid,pCSPlayerController,playerPawn);
-			//std::this_thread::sleep_for(std::chrono::milliseconds(150));
+						std::thread([pCSPlayerController, playerPawn, steamid]() {
+        						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
+							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
-			//TestSkinchanger(steamid, ids);
+							//TestSkinchanger(steamid, ids);
 			
-		})detach();
+						}).detach();
 
-    				}
-				} else {
+    					}
+				} 
+				else 
+				{
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
-				return;
+					return;
 				}
 				
     			}
