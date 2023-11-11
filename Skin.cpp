@@ -421,8 +421,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					else 
 					{
         					// Это первое появление игрока
-       				 		std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
-       					 	AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+       				 		//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
+       					 	//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
 					
 						//std::thread([pCSPlayerController, playerPawn, steamid]() 
 						//{
