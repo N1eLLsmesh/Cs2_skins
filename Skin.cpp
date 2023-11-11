@@ -424,7 +424,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					{
 						//ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
 						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
-					}detach();
+					})detach();
+
     				}
 				} else {
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
