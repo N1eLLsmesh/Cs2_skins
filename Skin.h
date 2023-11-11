@@ -58,6 +58,16 @@ class OnRoundStart : public IGameEventListener2
 	void FireGameEvent(IGameEvent* event) override;
 };
 
+class Event_PlayerConnect : public IGameEventListener2
+{
+	void FireGameEvent(IGameEvent* event) override;
+};
+
+class Event_PlayerDisconnect : public IGameEventListener2
+{
+	void FireGameEvent(IGameEvent* event) override;
+};
+
 
 class CEntityListener : public IEntityListener
 {
