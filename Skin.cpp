@@ -538,8 +538,14 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		if(!steamid) {
 			return;
 		}
+
+		if(weaponId==503)
+		{
+			return;
+		}
+		
 		TestSkinchanger(steamid, weaponId);
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		auto skin_parm = g_PlayerSkins.find(steamid);
 		if(skin_parm == g_PlayerSkins.end()) {
 			//return;
