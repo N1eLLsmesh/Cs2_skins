@@ -917,21 +917,27 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
 {
 	AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
-		
-	while(!players[steamid]->firstspawn)
+	try
 	{
-	//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
+		while(!players[steamid]->firstspawn)
+		{
+		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
 		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n", base);
 
-		if(!pp){
+			if(!pp){
 			META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
 			players.erase(steamid);
         		break;
-		}
-    	}		
+			}
+    		}
+	}
+	catch(const std::exception& e)
+	{
+		META_CONPRINTF("PlayerDisconected\n");
+	}
 }
 
 //TEST ADDMAP
@@ -941,7 +947,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
     player->PC = pc;
     player->PP = pp;
     player->PlayerSkins = skins;
-    //player->firstspawn=false;
+    player->firstspawn=false;
     players[steamid] = player;
 }
 //TEST END
