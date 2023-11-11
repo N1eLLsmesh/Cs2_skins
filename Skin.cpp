@@ -535,7 +535,7 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
 	//if(steamid!=0)
 	//{
-	META_CONPRINTF("Player connected: %s, SteamID: %lld\n", steamid);
+	META_CONPRINTF("Player connected: %s, SteamID: %llu\n", steamid);
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
@@ -561,7 +561,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 	//{
 	//players.erase(steamid);
 	//META_CONPRINTF("PlayerDisconnect\n");
-	META_CONPRINTF("Player Disconected: %s, SteamID: %lld\n",steamid);
+	META_CONPRINTF("Player Disconnected: %s, SteamID: %llu\n", steamid);
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
