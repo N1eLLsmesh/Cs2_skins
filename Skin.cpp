@@ -529,11 +529,21 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 {
 	META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
+	META_CONPRINTF("_____________________________________________");
+	META_CONPRINTF("_____________________________________________");
+	META_CONPRINTF("_____________________________________________");
+	META_CONPRINTF("_____________________________________________");
 }
 
 void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 {
+	//int64_t steamid=event->m_SteamId();
+	int64_t steamid = event->GetInt("userid");
+	players.erase(steamid);
 	META_CONPRINTF("PlayerDisconnect\n");
+	META_CONPRINTF("_____________________________________________");
+	META_CONPRINTF("_____________________________________________");
+	META_CONPRINTF("_____________________________________________");
 	META_CONPRINTF("_____________________________________________");
 }
 
@@ -905,7 +915,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 {
 	AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		
-	while(true)
+	while(!players[steamid]->firstspawn)
 	{
 	//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
@@ -928,7 +938,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
     player->PC = pc;
     player->PP = pp;
     player->PlayerSkins = skins;
-    player->firstspawn=false;
+    //player->firstspawn=false;
     players[steamid] = player;
 }
 //TEST END
