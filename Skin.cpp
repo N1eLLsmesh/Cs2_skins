@@ -454,7 +454,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 							//TestSkinchanger(steamid, ids);
 			
 						}).detach();
-					return;
+					//return;
 				}
 				
     			}
@@ -947,14 +947,14 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
-		CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
+		//CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
 		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n", base);
 
-			if(!pp){
-			META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
-			players.erase(steamid);
-        		break;
-			}
+			//if(!pp){
+			//META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
+			//players.erase(steamid);
+        		//break;
+			//}
     		}
 	}
 	catch(const std::exception& e)
