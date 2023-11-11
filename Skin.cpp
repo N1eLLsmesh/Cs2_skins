@@ -902,7 +902,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
 void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
 {
-	while(!players[steamid]->firstspawn)
+	while(true)
 	{
 	//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
