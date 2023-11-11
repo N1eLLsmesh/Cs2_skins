@@ -728,6 +728,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE || !pPlayerController) {
         META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
+	    
         return;
     }
 
@@ -901,13 +902,20 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
 void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
 {
-	while(true)
+	while(!players[steamid]->firstspawn)
 	{
 	//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n");
-	}
+
+		if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE || !pPlayerController) 
+		{
+        	META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
+			players.erase(steamid);
+        	break;
+		}
+    	}		
 }
 
 //TEST ADDMAP
