@@ -443,7 +443,10 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				else 
 				{
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
-					return;
+					std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
+       					AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+					
+					//return;
 				}
 				
     			}
