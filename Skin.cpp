@@ -421,21 +421,15 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
     		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 		//7 639 1 0
 		//[{"skin_id":724,"float":0.061400000000000003186340080674199271015822887420654296875,"seed":245,"nametag":"","side":1,"stickers":[],"stattrak":false,"weapon_id":7,"stattrak_count":0}]
-		
-		//new CTimer(0.15f, false, false, [pCSPlayerController, playerPawn]() {
-        	//TestSkinchanger(pCSPlayerController, playerPawn, 7, 724, 245, 0.061400000000000003186340080674199271015822887420654296875f);
-		//});
+
 		int ids=SearchMap[weapon];
 		std::thread([pCSPlayerController, playerPawn, ids=ids]() {
         		int64_t steamid = pCSPlayerController->m_steamID();
 			std::this_thread::sleep_for(std::chrono::milliseconds(150));
-			TestSkinchanger(steamid, ids);
+			
+			//TestSkinchanger(steamid, ids);
+			
 		}).detach();
-	
-	//delete CTimer;
-	//TestSkinchanger(pCSPlayerController, playerPawn, 7, 639, 1, 0.0f);
-	//CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
-	//CBasePlayerPawn* =pPlayerController=>m_hPawn;
 	
 		META_CONPRINTF("PLAYER BUY WEAPON %d\n",ids);
 	});
