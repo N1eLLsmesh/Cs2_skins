@@ -64,6 +64,8 @@ OnRoundStart g_RoundStart;
 void TestSkinchanger(int64_t arg1, int arg2);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins);
+
+void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp);
 bool firstPlayerSpawnEvent=true;
 
 CCSPlayerController* PC;
@@ -75,6 +77,7 @@ struct Players
     CCSPlayerPawnBase* PP;
     //nlohmann::json SKINS;
     std::map<int, nlohmann::json> PlayerSkins;
+    bool firstspawn=true;
 };
 
 std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
@@ -406,8 +409,28 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 			{
 				//PP=playerPawn;//globalPAWN
 				//nlohmann::json jsonSkins=GETSKINS(steamid);
-				std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
-				AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,Temp);
+				if (players.find(steamid) != players.end()) {
+    				// Игрок существует в вашем контейнере
+
+    				if (!players[steamid]->firstspawn) {
+       				 // Игрок уже был обработан ранее, это не его первое появление
+        			return;
+    				} else {
+        				// Это первое появление игрока
+       				 std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
+       				 AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+					
+					std::thread([pCSPlayerController, playerPawn, steamid]() 
+					{
+						//ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
+						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
+					}detach();
+    				}
+				} else {
+    				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
+				return;
+				}
+				
     			}
     			else
 			{
@@ -857,7 +880,9 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	while(true)
 	{
 	//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
-	AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
+		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
+		std::thread::sleep_for(std::chrono::seconds(5));
+		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n");
 	}
 }
 
@@ -868,7 +893,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
     player->PC = pc;
     player->PP = pp;
     player->PlayerSkins = skins;
-    
+    player->firstspawn=false;
     players[steamid] = player;
 }
 //TEST END
