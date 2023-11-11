@@ -533,6 +533,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	{
 		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
 		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+		TestSkinchanger(steamid, weaponId);
 		META_CONPRINTF( "----------------------------------------------------\n");
 		if(!steamid) {
 			return;
@@ -561,7 +562,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("itemID2: %d\n", itemID2);
 
 		
-		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = 7;//skin_parm->second.m_iItemDefinitionIndex;
+		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = g_iItemIDHigh;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = -1;
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = g_iItemIDHigh++;
@@ -573,9 +574,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		//[{"skin_id":724,"float":0.061400000000000003186340080674199271015822887420654296875,"seed":245,"nametag":"","side":1,"stickers":[],"stattrak":false,"weapon_id":7,"stattrak_count":0}]
 		//ONLYTEST
-		pCEconEntityWeapon->m_nFallbackPaintKit() = 724;//skin_parm->second.m_nFallbackPaintKit;
-		pCEconEntityWeapon->m_nFallbackSeed() = 245;//skin_parm->second.m_nFallbackSeed;
-		pCEconEntityWeapon->m_flFallbackWear() = 0.0614f;//skin_parm->second.m_flFallbackWear;
+		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
+		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
+		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
 		//TEST
 		
 		// pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
@@ -779,7 +780,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
         if (weapon_slot == weapon_slot_my_weapon) {
             pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
-            FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
+            //FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
             META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
         }
     }
@@ -787,7 +788,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	META_CONPRINTF("TestSkinchanger: Delete entity %s\n", weapon_name->second.c_str());//ТАЙМЕР ДЛЯ ТЕСТА
 	new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
         	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+		//FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 		//break;
 	});
 	//delete CTimer;
