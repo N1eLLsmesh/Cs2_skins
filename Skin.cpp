@@ -416,8 +416,8 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     					if (!players[steamid]->firstspawn) 
 					{
        						 // Игрок уже был обработан ранее, это не его первое появление
-						std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
-       						AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+						//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
+       						//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
         					return;
     					} 
 					else 
@@ -445,15 +445,15 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				else 
 				{
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
-					std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
-       					AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
-					//std::thread([pCSPlayerController, playerPawn, steamid]() {
-        						//ThreadUpdate(steamid,pCSPlayerController,playerPawn);
+					//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
+       					//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+					std::thread([pCSPlayerController, playerPawn, steamid]() {
+        						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
 							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
-							//TestSkinchanger(steamid, ids);
+							TestSkinchanger(steamid, ids);
 			
-						//}).detach();
+						}).detach();
 					return;
 				}
 				
