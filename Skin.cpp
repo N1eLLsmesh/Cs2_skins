@@ -531,12 +531,14 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 	int64_t steamid = event->GetInt("xuid"); // или "networkid_low" для младших 32 бит SteamID
 
 	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
-
+	if(steamid!=0||steamid!=NULL)
+	{
 	META_CONPRINTF("Player connected: %s, SteamID: %", steamid);
 	META_CONPRINTF("_____________________________________________");
 	META_CONPRINTF("_____________________________________________");
 	META_CONPRINTF("_____________________________________________");
 	META_CONPRINTF("_____________________________________________");
+	}
 	
 }
 
@@ -544,7 +546,8 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 {
 	//int64_t steamid=event->m_SteamId();
 	int64_t steamid = event->GetInt("xuid");  // или "networkid_low" для младших 32 бит SteamID
-
+	if(steamid!=0||steamid!=NULL)
+	{
 	players.erase(steamid);
 	META_CONPRINTF("PlayerDisconnect\n");
 	META_CONPRINTF("Player Disconected: %s, SteamID: %",steamid);
@@ -552,6 +555,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 	META_CONPRINTF("_____________________________________________");
 	META_CONPRINTF("_____________________________________________");
 	META_CONPRINTF("_____________________________________________");
+	}
 	
 }
 
