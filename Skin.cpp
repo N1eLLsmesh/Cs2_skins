@@ -252,8 +252,8 @@ bool Skin::Unload(char *error, size_t maxlen)
 	SH_REMOVE_HOOK(IServerGameDLL, GameFrame, g_pSource2Server, SH_MEMBER(this, &Skin::GameFrame), true);
 	SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_MEMBER(this, &Skin::StartupServer), true);
 
-	SH_REMOVE_HOOK(IGameEventManager2, PlayerConnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerConnect), true);
-   	SH_REMOVE_HOOK(IGameEventManager2, PlayerDisconnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerDisconnect), true);
+	//SH_REMOVE_HOOK(IGameEventManager2, PlayerConnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerConnect), true);
+   	//SH_REMOVE_HOOK(IGameEventManager2, PlayerDisconnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerDisconnect), true);
 	
 	gameeventmanager->RemoveListener(&g_PlayerSpawnEvent);
 	gameeventmanager->RemoveListener(&g_RoundPreStartEvent);
