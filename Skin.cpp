@@ -539,12 +539,15 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 {
 	//int64_t steamid=event->m_SteamId();
 	int64_t steamid = event->GetInt("userid");
+	if(steamid!=0)
+	{
 	players.erase(steamid);
 	META_CONPRINTF("PlayerDisconnect\n");
 	META_CONPRINTF("_____________________________________________");
 	META_CONPRINTF("_____________________________________________");
 	META_CONPRINTF("_____________________________________________");
 	META_CONPRINTF("_____________________________________________");
+	}
 }
 
 
