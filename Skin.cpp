@@ -530,7 +530,7 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 {
 	try
 	{
-	int64_t steamid = event->GetInt(networkid); // или "networkid_low" для младших 32 бит SteamID
+	int64_t steamid = event->GetInt("networkid"); // или "networkid_low" для младших 32 бит SteamID
 
 	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
 	//if(steamid!=0)
@@ -554,7 +554,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 	try
 	{
 	//int64_t steamid=event->m_SteamId();
-	int64_t steamid = event->GetInt(networkid);  // или "networkid_low" для младших 32 бит SteamID
+	int64_t steamid = event->GetInt("networkid"); // или "networkid_low" для младших 32 бит SteamID
 	//if(steamid!=0)
 	//{
 	//players.erase(steamid);
@@ -948,7 +948,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		//CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
-		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n", base);
+		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n");
 
 			//if(!pp){
 			//META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
