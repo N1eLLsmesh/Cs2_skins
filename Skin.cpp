@@ -451,7 +451,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
 							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
-							TestSkinchanger(steamid, ids);
+							//TestSkinchanger(steamid, ids);
 			
 						}).detach();
 					return;
