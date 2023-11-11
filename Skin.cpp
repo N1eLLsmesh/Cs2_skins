@@ -481,13 +481,13 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 {
 	META_CONPRINTF("PlayerConnect\n");
-	META_CONPRINTF(_____________________________________________);
+	META_CONPRINTF("_____________________________________________");
 }
 
 void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 {
 	META_CONPRINTF("PlayerDisconnect\n");
-	META_CONPRINTF(_____________________________________________);
+	META_CONPRINTF("_____________________________________________");
 }
 
 
