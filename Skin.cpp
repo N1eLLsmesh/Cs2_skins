@@ -528,6 +528,9 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 //Event_PlayerDisconnect g_PlayerDisconnect;
 void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 {
+	try
+	{
+	
 	int64_t steamid = event->GetInt("xuid"); // или "networkid_low" для младших 32 бит SteamID
 
 	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
@@ -539,11 +542,18 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
 	//}
+	}
+	catch(const std::exception& e)
+	{
+		
+	}
 	
 }
 
 void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 {
+	try
+	{
 	//int64_t steamid=event->m_SteamId();
 	int64_t steamid = event->GetInt("xuid");  // или "networkid_low" для младших 32 бит SteamID
 	//if(steamid!=0)
@@ -556,6 +566,11 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
 	//}
+	}
+	catch(const std::exception& e)
+	{
+		
+	}
 	
 }
 
