@@ -215,8 +215,8 @@ bool Skin::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool lat
 	SH_ADD_HOOK(IServerGameDLL, GameFrame, g_pSource2Server, SH_MEMBER(this, &Skin::GameFrame), true);
 
 	///TEST
-	SH_ADD_HOOK(IGameEventManager2, PlayerConnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerConnect), true);
-   	SH_ADD_HOOK(IGameEventManager2, PlayerDisconnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerDisconnect), true);
+	//SH_ADD_HOOK(IGameEventManager2, Event_PlayerConnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerConnect), true);
+   	//SH_ADD_HOOK(IGameEventManager2, Event_PlayerDisconnect, gameeventmanager, SH_MEMBER(this, &Skin::PlayerDisconnect), true);
 	///TEST
 
 	gameeventmanager = static_cast<IGameEventManager2*>(CallVFunc<IToolGameEventAPI*, 91>(g_pSource2Server));
