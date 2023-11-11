@@ -530,11 +530,14 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 {
 	try
 	{
-	int32_t networkid_low = event->GetInt("networkid_low");
-    	int32_t networkid_high = event->GetInt("networkid");
-    
-    	int64_t steamid = ((int64_t)networkid_high << 32) | networkid_low;
+		const char* networkid_low_str = event->GetString("networkid_low");
+   		 const char* networkid_str = event->GetString("networkid");
 
+    		if (networkid_low_str && networkid_str)
+    		{
+        	int64_t networkid_low = strtoll(networkid_low_str, nullptr, 10);
+        	int64_t networkid = strtoll(networkid_str, nullptr, 10);
+        	int64_t steamid = (networkid << 32) | networkid_low;
 	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
 	//if(steamid!=0)
 	//{
@@ -544,11 +547,13 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
 	//}
+		}
 	}
 	catch(const std::exception& e)
 	{
 		
 	}
+	    
 	
 }
 
@@ -557,10 +562,14 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 	try
 	{
 	//int64_t steamid=event->m_SteamId();
-	int32_t networkid_low = event->GetInt("networkid_low");
-    	int32_t networkid_high = event->GetInt("networkid");
-    
-   	 int64_t steamid = ((int64_t)networkid_high << 32) | networkid_low; // или "networkid_low" для младших 32 бит SteamID
+		const char* networkid_low_str = event->GetString("networkid_low");
+   		 const char* networkid_str = event->GetString("networkid");
+
+    		if (networkid_low_str && networkid_str)
+    		{
+			int64_t networkid_low = strtoll(networkid_low_str, nullptr, 10);
+        	int64_t networkid = strtoll(networkid_str, nullptr, 10);
+       	 	int64_t steamid = (networkid << 32) | networkid_low;
 	//if(steamid!=0)
 	//{
 	//players.erase(steamid);
@@ -571,6 +580,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
 	//}
+		}
 	}
 	catch(const std::exception& e)
 	{
