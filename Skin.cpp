@@ -265,7 +265,7 @@ bool Skin::Unload(char *error, size_t maxlen)
 	gameeventmanager->RemoveListener(&g_RoundStart);
 
 	gameeventmanager->RemoveListener(&g_PlayerConnect);
-	хgameeventmanager->RemoveListener(&g_PlayerDisconnect);
+	gameeventmanager->RemoveListener(&g_PlayerDisconnect);
 	
 	//TEST
 	g_pGameEntitySystem->RemoveListenerEntity(&g_EntityListener);//work
