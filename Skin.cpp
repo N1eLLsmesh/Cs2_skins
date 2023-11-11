@@ -666,10 +666,10 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     std::string jsonString;
 	try
 	{
-    std::map<int, nlohmann::json> Temp=players[steamid]->PlayerSkins;
+   Temp=players[steamid]->PlayerSkins;
     //auto it=Temp.find(weapon_id);
-    nlohmann::json jsonResponse = Temp[weapon_id];
-    std::string jsonString = jsonResponse.dump();
+    jsonResponse = Temp[weapon_id];
+    jsonString = jsonResponse.dump();
 	}
 	catch(const std::exception& e)
 	{
