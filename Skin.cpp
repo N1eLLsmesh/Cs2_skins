@@ -660,21 +660,14 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
     META_CONPRINTF("Weapon IDIDIDIDIDIID %lld\n", weapon_id);
     //nlohmann::json jsonResponse=GETSKINS(steamid);
-	    std::map<int, nlohmann::json> Temp;
     //auto it=Temp.find(weapon_id);
-    nlohmann::json jsonResponse;
-    std::string jsonString;
-	try
-	{
-   Temp=players[steamid]->PlayerSkins;
+
+
+
+   std::map<int, nlohmann::json> Temp=players[steamid]->PlayerSkins;
     //auto it=Temp.find(weapon_id);
-    jsonResponse = Temp[weapon_id];
-    jsonString = jsonResponse.dump();
-	}
-	catch(const std::exception& e)
-	{
-			
-	}
+    nlohmann::json jsonResponse = Temp[weapon_id];
+    std::string jsonString = jsonResponse.dump();
 	
 	 sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
     FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
@@ -701,19 +694,26 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
         //weapon_id_API = entry["weapon_id"];
         //stattrak_count = entry["stattrak_count"];
     //}
-	auto it = Temp.find(weapon_id);
-	if (it != Temp.end()) {
-	nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
-	skin_id = weaponData["skin_id"];
-	skin_float = weaponData["float"];
-	seed = weaponData["seed"];
-	nametag = weaponData["nametag"];
-	side = weaponData["side"];
-	stattrak = weaponData["stattrak"];
-	weapon_id_API = weaponData["weapon_id"];
-	stattrak_count = weaponData["stattrak_count"];
-	} else {
-	return;
+	try
+	{
+		auto it = Temp.find(weapon_id);
+		if (it != Temp.end()) {
+		nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
+		skin_id = weaponData["skin_id"];
+		skin_float = weaponData["float"];
+		seed = weaponData["seed"];
+		nametag = weaponData["nametag"];
+		side = weaponData["side"];
+		stattrak = weaponData["stattrak"];
+		weapon_id_API = weaponData["weapon_id"];
+		stattrak_count = weaponData["stattrak_count"];
+		} else {
+		return;
+		}
+	}
+	catch(const std::exception& e)
+	{
+		META_CONPRINTF("ERRROR %lld\n");
 	}
 	
     auto weapon_name = g_WeaponsMap.find(weapon_id_API);
