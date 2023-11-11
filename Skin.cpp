@@ -58,8 +58,8 @@ Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
 
-//Event_PlayerConnect g_PlayerConnect;
-//Event_PlayerDisconnect g_PlayerDisconnect;
+Event_PlayerConnect g_PlayerConnect;
+Event_PlayerDisconnect g_PlayerDisconnect;
 
 void TestSkinchanger(int64_t arg1, int arg2);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
@@ -264,8 +264,8 @@ bool Skin::Unload(char *error, size_t maxlen)
 	gameeventmanager->RemoveListener(&g_PlayerSpawnedEvent);
 	gameeventmanager->RemoveListener(&g_RoundStart);
 
-	//gameeventmanager->RemoveListener(&g_PlayerConnect);
-	//gameeventmanager->RemoveListener(&g_PlayerDisconnect);
+	gameeventmanager->RemoveListener(&g_PlayerConnect);
+	хgameeventmanager->RemoveListener(&g_PlayerDisconnect);
 	
 	//TEST
 	g_pGameEntitySystem->RemoveListenerEntity(&g_EntityListener);//work
@@ -314,8 +314,8 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 		gameeventmanager->AddListener(&g_PlayerBuy, "item_purchase", true);//work
 		gameeventmanager->AddListener(&g_PlayerSpawnedEvent,"player_spawned",true);
 		gameeventmanager->AddListener(&g_RoundStart,"round_start",true);
-		//gameeventmanager->AddListener(&g_PlayerConnect,"client_put_in_server",true);//tested
-		//gameeventmanager->AddListener(&g_PlayerDisconnect,"player/playerdisconnect",true);//tested
+		gameeventmanager->AddListener(&g_PlayerConnect,"player_connect",true);//tested
+		gameeventmanager->AddListener(&g_PlayerDisconnect,"player_disconnect",true);//tested
 		//test/////////////////////
 		bDone = true;
 	}
@@ -526,16 +526,16 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 
 //Event_PlayerConnect g_PlayerConnect;
 //Event_PlayerDisconnect g_PlayerDisconnect;
-//void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
-//{
-	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
-//}
+void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
+{
+	META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
+}
 
-//void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
-//{
-//	META_CONPRINTF("PlayerDisconnect\n");
-//	META_CONPRINTF("_____________________________________________");
-//}
+void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
+{
+	META_CONPRINTF("PlayerDisconnect\n");
+	META_CONPRINTF("_____________________________________________");
+}
 
 
 //META_CONPRINTF("PLAYER BUY WEAPON\n");
