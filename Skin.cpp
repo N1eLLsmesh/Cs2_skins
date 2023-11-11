@@ -543,9 +543,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		if(skin_parm->second.m_iItemDefinitionIndex == -1 || skin_parm->second.m_nFallbackPaintKit == -1 || skin_parm->second.m_nFallbackSeed == -1 || skin_parm->second.m_flFallbackWear == -1) {
-			continue;
-		}
+		//if(skin_parm->second.m_iItemDefinitionIndex == -1 || skin_parm->second.m_nFallbackPaintKit == -1 || skin_parm->second.m_nFallbackSeed == -1 || skin_parm->second.m_flFallbackWear == -1) {
+			//return;
+		//}
 
 		uint64_t temp_itemID = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID();
 		uint32_t temp_itemIDLow = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow();
