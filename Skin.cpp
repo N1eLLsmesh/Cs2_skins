@@ -896,7 +896,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	{
 	//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
-		std::this_thread::sleep_for(std::chrono::seconds(5));
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n");
 	}
 }
