@@ -484,7 +484,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 			
 			//TestSkinchanger(steamid, ids);
 			
-		})detach();
+		}).detach();
 	
 		META_CONPRINTF("PLAYER BUY WEAPON %d\n",ids);
 	});
