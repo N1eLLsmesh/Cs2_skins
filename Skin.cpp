@@ -573,7 +573,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		//[{"skin_id":724,"float":0.061400000000000003186340080674199271015822887420654296875,"seed":245,"nametag":"","side":1,"stickers":[],"stattrak":false,"weapon_id":7,"stattrak_count":0}]
 		//ONLYTEST
-		pCEconEntityWeapon->m_nFallbackPaintKit() = 724//skin_parm->second.m_nFallbackPaintKit;
+		pCEconEntityWeapon->m_nFallbackPaintKit() = 724;//skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = 245;//skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = 0.0614f;//skin_parm->second.m_flFallbackWear;
 		//TEST
