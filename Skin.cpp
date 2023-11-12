@@ -430,6 +430,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
 					//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
        					//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+					AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 					std::thread([pCSPlayerController, playerPawn, steamid]() {
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
 							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
@@ -944,7 +945,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
 void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
 {
-	AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
+	//AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 	try
 	{
 		//while (players.find(steamid) != players.end())
