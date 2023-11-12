@@ -959,9 +959,10 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 		{
 			 {
                 		std::lock_guard<std::mutex> lock(playersMutex);
-                		if (!players[steamid].firstspawn) {
-		                    break;
-               	 		}
+                		if (players.find(steamid) == players.end()) {
+                    		// Игрок был удален, выход из цикла
+                    		break;
+                		}
             		}
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
