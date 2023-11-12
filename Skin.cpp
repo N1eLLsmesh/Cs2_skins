@@ -572,8 +572,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
     	return;
 	}
         uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
-	{
-            std::lock_guard<std::mutex> lock(playersMutex);
+	
             players[steamid].firstspawn = false;
             auto it = players.find(steamid);
             if (it != players.end()) {
@@ -581,7 +580,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
                 players.erase(it);
 		META_CONPRINTF("ERASE STRUCT\n");
             }
-        }
+        
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
     } catch (const std::exception& e) {
         // Обработка ошибок
@@ -996,8 +995,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 }
 
 void ClearPlayer(int64_t steamid) {
-    std::lock_guard<std::mutex> lock(playersMutex);
-    
+
     auto it = players.find(steamid);
     if (it != players.end()) {
         META_CONPRINTF("CLEAR STRUCT\n");
