@@ -948,7 +948,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	try
 	{
 		//while (players.find(steamid) != players.end())
-		while(players[steamid]->firstspwn)
+		while(players[steamid]->firstspawn)
 		{
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
