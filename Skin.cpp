@@ -526,12 +526,33 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 
 //Event_PlayerConnect g_PlayerConnect;
 //Event_PlayerDisconnect g_PlayerDisconnect;
+uint32_t ExtractNumber(const std::string& input) {
+    std::regex pattern("\\[U:1:(\\d+)\\]");
+    std::smatch match;
+
+    if (std::regex_match(input, match, pattern)) {
+        return std::stoi(match[1]);
+    }
+
+    return 0;
+}
+
+uint64_t ConvertToSteamID(const std::string& networkID, const std::string& networkIDLow) {
+    uint32_t highPart = ExtractNumber(networkID);
+    uint32_t lowPart = std::stoi(networkIDLow);
+
+    uint64_t steamID = (static_cast<uint64_t>(highPart) << 32) | lowPart;
+
+    return steamID;
+}
 void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 {
 	try
 	{
 		
-        	uint64_t steamid = event->GetUint64("xuid");
+        	std::string netid = event->GetString("networkid");
+		std::string netidlow = event->GetString("networkid_low");
+		  uint64_t steamID = ConvertToSteamID(netid, netidlow);
 	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
 	//if(steamid!=0)
 	//{
@@ -551,12 +572,16 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 	
 }
 
+
+
 void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 {
 	try
 	{
 	//int64_t steamid=event->m_SteamId();
-		uint64_t steamid = event->GetUint64("xuid");
+		std::string netid = event->GetString("networkid");
+		std::string netidlow = event->GetString("networkid_low");
+		  uint64_t steamID = ConvertToSteamID(netid, netidlow);
 	//if(steamid!=0)
 	//{
 	//players.erase(steamid);
