@@ -530,27 +530,23 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 //Event_PlayerConnect g_PlayerConnect;
 //Event_PlayerDisconnect g_PlayerDisconnect;
 uint64_t ExtractSteamIDFromNetworkID(const std::string& networkID) {
-    std::regex pattern("\\[U:1:(\\d+)\\]");
-    std::smatch match;
 try {
-    if (std::regex_match(networkID, match, pattern)) {
-        
+        std::regex pattern("\\[U:1:(\\d+)\\]");
+        std::smatch match;
+
+        if (std::regex_match(networkID, match, pattern)) {
             uint32_t accountID = std::stoi(match[1]);
             uint64_t steamID = ((uint64_t)accountID) + 76561197960265728ULL;
             return steamID;
-        } 
-     else {
-        // Логгирование или вывод сообщения об ошибке
-        return 0;
-    	}
-}
-catch (const std::exception& e) {
-            // Обработка ошибок преобразования строки в число
+        } else {
             // Логгирование или вывод сообщения об ошибке
             return 0;
         }
-
-    return 0;
+    } catch (const std::exception& e) {
+        // Обработка ошибок в блоке try
+        // Логгирование или вывод сообщения об ошибке
+        return 0;
+    }
 }
 
 void Event_PlayerConnect::FireGameEvent(IGameEvent* event) {
