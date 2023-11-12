@@ -418,7 +418,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				{
     				// Игрок существует в вашем контейнере
 
-    					if (!players[steamid]->firstspawn) 
+    					if (!players[steamid].firstspawn) 
 					{
         					return;
     					} 
@@ -573,7 +573,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
     	    if (it != players.end())
     		{
 			META_CONPRINTF("ERASE STRUCT\n");
-			players[steamid]->firstspawn=false;
+			players[steamid].firstspawn=false;
        			players.erase(it);
 			
 		}
@@ -769,8 +769,8 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     {
 	    return;
     }
-    CCSPlayerController* pPlayerController=players[steamid]->PC;
-    CCSPlayerPawnBase* pPlayerPawn=players[steamid]->PP;
+    CCSPlayerController* pPlayerController=players[steamid].PC;
+    CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
 	
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE || !pPlayerController) {
         META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
@@ -790,7 +790,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
 
 
-   std::map<int, nlohmann::json> Temp=players[steamid]->PlayerSkins;
+   std::map<int, nlohmann::json> Temp=players[steamid].PlayerSkins;
     //auto it=Temp.find(weapon_id);
     nlohmann::json jsonResponse = Temp[weapon_id];
     std::string jsonString = jsonResponse.dump();
@@ -981,10 +981,10 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 //TEST ADDMAP
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins)
 {
-    auto player = std::make_shared<Players>();
-    player->PC = pc;
-    player->PP = pp;
-    player->PlayerSkins = skins;
+    Players player;
+    player.PC = pc;
+    player.PP = pp;
+    player.PlayerSkins = skins;
     //player->firstspawn=false;
     players[steamid] = player;
 }
