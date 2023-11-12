@@ -951,7 +951,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	try
 	{
 		//while (players.find(steamid) != players.end())
-		while(players.find(steamid) != players.end())
+		while(players[steamid].firstspawn)
 		{
 			//if(!players[steamid]->firstspawn)
 			//{
@@ -969,6 +969,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
         		//break;
 			//}
     		}
+		players[steamid]=NULL;
 		META_CONPRINTF("UPDATESKINS THREAD DELETE %lld\n");
 	}
 	catch(const std::exception& e)
