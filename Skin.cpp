@@ -1001,10 +1001,10 @@ void ClearPlayer(int64_t steamid) {
     if (it != players.end()) {
         META_CONPRINTF("CLEAR STRUCT\n");
         // Очистить данные игрока
-        players[steamod].PC = nullptr;
-        players[steamod].PP = nullptr;
-        players[steamod].PlayerSkins.clear();
-        players[steamod].firstspawn = false;
+        players[steamid].PC = nullptr;
+        players[steamid].PP = nullptr;
+        players[steamid].PlayerSkins.clear();
+        players[steamid].firstspawn = false;
     }
 }
 //TEST END
