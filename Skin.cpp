@@ -531,11 +531,12 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 //Event_PlayerDisconnect g_PlayerDisconnect;
 uint64_t ExtractSteamIDFromNetworkID(const std::string& networkID) {
 try {
-        std::regex pattern("\\[U:1:(\\d+)\\]");
-        std::smatch match;
+        size_t start = networkID.find(":1:") + 3;
+        size_t end = networkID.find("]", start);
 
-        if (std::regex_match(networkID, match, pattern)) {
-            uint32_t accountID = std::stoi(match[1]);
+        if (start != std::string::npos && end != std::string::npos) {
+            std::string accountIDStr = networkID.substr(start, end - start);
+            uint32_t accountID = std::stoi(accountIDStr);
             uint64_t steamID = ((uint64_t)accountID) + 76561197960265728ULL;
             return steamID;
         } else {
