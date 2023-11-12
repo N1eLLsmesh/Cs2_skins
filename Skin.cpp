@@ -573,6 +573,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
 			META_CONPRINTF("ERASE STRUCT\n");
 			players[steamid]->firstspawn=false;
        			players.erase(it->first);
+			players.erase(it->second);
 		}
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
     } catch (const std::exception& e) {
