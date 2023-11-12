@@ -545,7 +545,7 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event) {
 		}
         uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
 
-        META_CONPRINTF("Player connected: %s, SteamID: %llu\n", netid.c_str(), steamid);
+        META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
     } catch (const std::exception& e) {
         // Обработка ошибок
     }
@@ -569,6 +569,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
 	    auto it = players.find(steamid);
     	    if (it != players.end())
     		{
+			META_CONPRINTF("ERASE STRUCT\n");
        			players.erase(it);
 		}
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
