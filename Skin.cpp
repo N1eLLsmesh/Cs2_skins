@@ -87,6 +87,7 @@ struct Players
 
 //std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
 std::map<int64_t, Players> players;//TEST DYNAMIC MASSIVE
+std::mutex playersMutex;
 
 std::map<std::string, int> SearchMap;
 //TEST//////
