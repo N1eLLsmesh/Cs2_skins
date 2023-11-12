@@ -431,6 +431,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
 					//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
        					//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+					META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
 					std::thread([pCSPlayerController, playerPawn, steamid]() {
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
