@@ -548,8 +548,13 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event) {
         if (isBot) {
             return;
         }
-
+	
         std::string netid = event->GetString("networkid");
+	    if (netid == "BOT")
+		{
+	    // Это бот, выполните соответствующие действия
+    			return;
+		}
         uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
 
         META_CONPRINTF("Player connected: %s, SteamID: %llu\n", netid.c_str(), steamid);
