@@ -418,30 +418,10 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
     					if (!players[steamid]->firstspawn) 
 					{
-       						 // Игрок уже был обработан ранее, это не его первое появление
-						//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
-       						//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
         					return;
     					} 
 					else 
 					{
-        					// Это первое появление игрока
-       				 		//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
-       					 	//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
-					
-						//std::thread([pCSPlayerController, playerPawn, steamid]() 
-						//{
-							//ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
-							//ThreadUpdate(steamid,pCSPlayerController,playerPawn);
-						//})detach();
-
-						//std::thread([pCSPlayerController, playerPawn, steamid]() {
-        						//ThreadUpdate(steamid,pCSPlayerController,playerPawn);
-							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
-			
-							//TestSkinchanger(steamid, ids);
-			
-						//}).detach();
 
     					}
 				} 
@@ -979,6 +959,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
         		//break;
 			//}
     		}
+		META_CONPRINTF("UPDATESKINS THREAD DELETE %lld\n");
 	}
 	catch(const std::exception& e)
 	{
