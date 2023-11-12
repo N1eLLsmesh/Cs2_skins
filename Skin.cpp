@@ -437,6 +437,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
        					//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
 					META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
+					firstPlayerSpawnEvent=false;
 					std::thread([pCSPlayerController, playerPawn, steamid]() {
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
 							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
@@ -956,7 +957,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	try
 	{
 		//while (players.find(steamid) != players.end())
-		while(true)
+		while(players[steamid].firstspawn)
 		{
 			if(players[steamid].PC==nullptr)
 			{
@@ -975,7 +976,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
         		//break;
 			//}
     		}
-		
+		 ClearPlayer(steamid);
 		META_CONPRINTF("UPDATESKINS THREAD DELETE %lld\n");
 	}
 	catch(const std::exception& e)
@@ -987,11 +988,20 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 //TEST ADDMAP
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins)
 {
-    Players player;
+	Players player;
+	if(players[steamid].PC==nullptr&& !firstPlayerSpawnEvent)
+	{
+		player.firstspawn=false;
+	}
+	else
+	{
+		 player.firstspawn=true;
+	}
+		
     player.PC = pc;
     player.PP = pp;
     player.PlayerSkins = skins;
-    //player->firstspawn=false;
+    //player->firstspawn=true;
     players[steamid] = player;
 }
 
