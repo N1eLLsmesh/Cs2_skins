@@ -566,6 +566,11 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
         }
 
         std::string netid = event->GetString("networkid");
+	if (netid == "BOT")
+	{
+	    // Это бот, выполните соответствующие действия
+    	return;
+	}
         uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
 
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
