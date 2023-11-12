@@ -565,7 +565,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
     	return;
 	}
         uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
-
+	players[steamid]->firstspawn=false;
 	    auto it = players.find(steamid);
     	    if (it != players.end())
     		{
