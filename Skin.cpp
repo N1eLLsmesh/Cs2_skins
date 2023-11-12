@@ -969,7 +969,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
         		//break;
 			//}
     		}
-		players[steamid]=NULL;
+		
 		META_CONPRINTF("UPDATESKINS THREAD DELETE %lld\n");
 	}
 	catch(const std::exception& e)
