@@ -570,7 +570,8 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
     	    if (it != players.end())
     		{
 			META_CONPRINTF("ERASE STRUCT\n");
-       			players.erase(it);
+			players[steamid]->firstspawn=true;
+       			//players.erase(it);
 		}
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
     } catch (const std::exception& e) {
@@ -946,7 +947,8 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 	try
 	{
-		while (players.find(steamid) != players.end())
+		//while (players.find(steamid) != players.end())
+		while(players[steamid]->firstspwn)
 		{
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
@@ -975,7 +977,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
     player->PC = pc;
     player->PP = pp;
     player->PlayerSkins = skins;
-    player->firstspawn=false;
+    //player->firstspawn=false;
     players[steamid] = player;
 }
 //TEST END
