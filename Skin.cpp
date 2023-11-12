@@ -570,7 +570,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
     	    if (it != players.end())
     		{
 			META_CONPRINTF("ERASE STRUCT\n");
-			players[steamid]->firstspawn=true;
+			players[steamid]->firstspawn=false;
        			//players.erase(it);
 		}
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
@@ -950,12 +950,16 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 		//while (players.find(steamid) != players.end())
 		while(players[steamid]->firstspawn)
 		{
+			if(!players[steamid]->firstspawn)
+			{
+				break;
+			}
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		//CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
 		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n");
-
+		
 			//if(!pp){
 			//META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
 			//players.erase(steamid);
