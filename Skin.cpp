@@ -421,15 +421,29 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				if (players.find(steamid) != players.end()) 
 				{
     				// Игрок существует в вашем контейнере
-
-    					if (!players[steamid].firstspawn) 
+					if(players[steamid].PC==nullptr)
 					{
-        					return;
-    					} 
-					else 
-					{
+						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
+						state[steamid]=true;
+						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
+						//firstPlayerSpawnEvent=false;
+						state[steamid]=false;
+						std::thread([pCSPlayerController, playerPawn, steamid]() {
+        						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
+							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
+			
+							//TestSkinchanger(steamid, ids);
+			
+						}).detach();
+					}
+    					//if (!players[steamid].firstspawn) 
+					//{
+        					//return;
+    					//} 
+					//else 
+					//{
 
-    					}
+    					//}
 				} 
 				else 
 				{
