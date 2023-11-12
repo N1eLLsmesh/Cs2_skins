@@ -576,8 +576,8 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
             players[steamid].firstspawn = false;
             auto it = players.find(steamid);
             if (it != players.end()) {
-                META_CONPRINTF("ERASE STRUCT\n");
                 players.erase(it);
+		META_CONPRINTF("ERASE STRUCT\n");
             }
         }
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
