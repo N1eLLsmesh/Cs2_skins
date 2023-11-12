@@ -948,12 +948,12 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	try
 	{
 		//while (players.find(steamid) != players.end())
-		while(players[steamid]->firstspawn)
+		while(players.find(steamid) != players.end())
 		{
-			if(!players[steamid]->firstspawn)
-			{
-				break;
-			}
+			//if(!players[steamid]->firstspawn)
+			//{
+				//break;
+			//}
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
