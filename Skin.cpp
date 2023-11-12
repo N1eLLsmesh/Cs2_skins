@@ -559,11 +559,11 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 		}
         	std::string netid = event->GetString("networkid");
 		std::string netidlow = event->GetString("networkid_low");
-		uint64_t steamid = ConvertToSteamID(netid, netidlow);
+		//uint64_t steamid = ConvertToSteamID(netid, netidlow);
 	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
 	//if(steamid!=0)
 	//{
-	META_CONPRINTF("Player connected: %s, SteamID: %llu\n", steamid);
+	META_CONPRINTF("Player connected: %s, SteamID: %llu\n", netidlow);
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
@@ -593,12 +593,12 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 		}
 		std::string netid = event->GetString("networkid");
 		std::string netidlow = event->GetString("networkid_low");
-		uint64_t steamid = ConvertToSteamID(netid, netidlow);
+		//uint64_t steamid = ConvertToSteamID(netid, netidlow);
 	//if(steamid!=0)
 	//{
 	//players.erase(steamid);
 	//META_CONPRINTF("PlayerDisconnect\n");
-	META_CONPRINTF("Player Disconnected: %s, SteamID: %llu\n", steamid);
+	META_CONPRINTF("Player Disconnected: %s, SteamID: %llu\n", netidlow);
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
 	//META_CONPRINTF("_____________________________________________");
