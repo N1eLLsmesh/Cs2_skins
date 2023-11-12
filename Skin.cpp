@@ -57,6 +57,8 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 
 #include <regex>
 #include <cstdint>
+
+#include <mutex>
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
@@ -568,15 +570,15 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
     	return;
 	}
         uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
-	players[steamid].firstspawn=false;
-	    auto it = players.find(steamid);
-    	    if (it != players.end())
-    		{
-			META_CONPRINTF("ERASE STRUCT\n");
-			players[steamid].firstspawn=false;
-       			players.erase(it);
-			
-		}
+	{
+            std::lock_guard<std::mutex> lock(playersMutex);
+            players[steamid].firstspawn = false;
+            auto it = players.find(steamid);
+            if (it != players.end()) {
+                META_CONPRINTF("ERASE STRUCT\n");
+                players.erase(it);
+            }
+        }
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
     } catch (const std::exception& e) {
         // Обработка ошибок
@@ -952,12 +954,14 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	try
 	{
 		//while (players.find(steamid) != players.end())
-		while(players[steamid].firstspawn)
+		while(true)
 		{
-			//if(!players[steamid]->firstspawn)
-			//{
-				//break;
-			//}
+			 {
+                		std::lock_guard<std::mutex> lock(playersMutex);
+                		if (!players[steamid].firstspawn) {
+		                    break;
+               	 		}
+            		}
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
