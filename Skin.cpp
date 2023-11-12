@@ -686,7 +686,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		if(weaponId==503)
+		if(weaponId==59|| weaponId==42)
 		{
 			return;
 		}
