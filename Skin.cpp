@@ -83,7 +83,8 @@ struct Players
     bool firstspawn=true;
 };
 
-std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
+//std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
+std::map<int64_t, Players> players;//TEST DYNAMIC MASSIVE
 
 std::map<std::string, int> SearchMap;
 //TEST//////
@@ -572,8 +573,8 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
     		{
 			META_CONPRINTF("ERASE STRUCT\n");
 			players[steamid]->firstspawn=false;
-       			players.erase(it->first);
-			players.erase(it->second);
+       			players.erase(it);
+			
 		}
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
     } catch (const std::exception& e) {
@@ -972,7 +973,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 	}
 	catch(const std::exception& e)
 	{
-		META_CONPRINTF("PlayerDisconected\n");
+		//META_CONPRINTF("PlayerDisconected\n");
 	}
 }
 
