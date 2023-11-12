@@ -529,90 +529,50 @@ void OnRoundStart::FireGameEvent(IGameEvent* event)
 
 //Event_PlayerConnect g_PlayerConnect;
 //Event_PlayerDisconnect g_PlayerDisconnect;
-uint32_t ExtractNumber(const std::string& input) {
+uint64_t ExtractSteamIDFromNetworkID(const std::string& networkID) {
     std::regex pattern("\\[U:1:(\\d+)\\]");
     std::smatch match;
 
-    if (std::regex_match(input, match, pattern)) {
-        return std::stoi(match[1]);
+    if (std::regex_match(networkID, match, pattern)) {
+        uint32_t accountID = std::stoi(match[1]);
+        uint64_t steamID = ((uint64_t)accountID) + 76561197960265728ULL;
+        return steamID;
     }
 
     return 0;
 }
 
-uint64_t ConvertToSteamID(const std::string& networkID, const std::string& networkIDLow) {
-    uint32_t highPart = ExtractNumber(networkID);
-    uint32_t lowPart = std::stoi(networkIDLow);
+void Event_PlayerConnect::FireGameEvent(IGameEvent* event) {
+    try {
+        bool isBot = event->GetBool("bot");
+        if (isBot) {
+            return;
+        }
 
-    uint64_t steamID = (static_cast<uint64_t>(highPart) << 32) | lowPart;
+        std::string netid = event->GetString("networkid");
+        uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
 
-    return steamID;
-}
-void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
-{
-	try
-	{
-		bool isBot = event->GetBool("bot");
-		if(isBot)
-		{
-			return;
-		}
-        	std::string netid = event->GetString("networkid");
-		std::string netidlow = event->GetString("networkid_low");
-		//uint64_t steamid = ConvertToSteamID(netid, netidlow);
-	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
-	//if(steamid!=0)
-	//{
-	META_CONPRINTF("Player connected: %s, SteamID: %s\n", netid.c_str());
-	//META_CONPRINTF("_____________________________________________");
-	//META_CONPRINTF("_____________________________________________");
-	//META_CONPRINTF("_____________________________________________");
-	//META_CONPRINTF("_____________________________________________");
-	//}
-		
-	}
-	catch(const std::exception& e)
-	{
-		
-	}
-	    
-	
+        META_CONPRINTF("Player connected: %s, SteamID: %llu\n", netid.c_str(), steamid);
+    } catch (const std::exception& e) {
+        // Обработка ошибок
+    }
 }
 
+void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
+    try {
+        bool isBot = event->GetBool("bot");
+        if (isBot) {
+            return;
+        }
 
+        std::string netid = event->GetString("networkid");
+        uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
 
-void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
-{
-	try
-	{
-	//int64_t steamid=event->m_SteamId();
-		bool isBot = event->GetBool("bot");
-		if(isBot)
-		{
-			return;
-		}
-		std::string netid = event->GetString("networkid");
-		std::string netidlow = event->GetString("networkid_low");
-		//uint64_t steamid = ConvertToSteamID(netid, netidlow);
-	//if(steamid!=0)
-	//{
-	//players.erase(steamid);
-	//META_CONPRINTF("PlayerDisconnect\n");
-	META_CONPRINTF("Player Disconnected: , SteamID: %s\n", netid.c_str());
-	//META_CONPRINTF("_____________________________________________");
-	//META_CONPRINTF("_____________________________________________");
-	//META_CONPRINTF("_____________________________________________");
-	//META_CONPRINTF("_____________________________________________");
-	//}
-		
-	}
-	catch(const std::exception& e)
-	{
-		
-	}
-	
+        META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
+    } catch (const std::exception& e) {
+        // Обработка ошибок
+    }
 }
-
 
 //META_CONPRINTF("PLAYER BUY WEAPON\n");
 //TEST END
