@@ -552,10 +552,14 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event)
 {
 	try
 	{
-		
+		bool isBot = event->GetBool("bot");
+		if(isBot)
+		{
+			return;
+		}
         	std::string netid = event->GetString("networkid");
 		std::string netidlow = event->GetString("networkid_low");
-		  uint64_t steamid = ConvertToSteamID(netid, netidlow);
+		uint64_t steamid = ConvertToSteamID(netid, netidlow);
 	//META_CONPRINTF("Player connected: %s\n", event->GetString("name"));
 	//if(steamid!=0)
 	//{
@@ -582,9 +586,14 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event)
 	try
 	{
 	//int64_t steamid=event->m_SteamId();
+		bool isBot = event->GetBool("bot");
+		if(isBot)
+		{
+			return;
+		}
 		std::string netid = event->GetString("networkid");
 		std::string netidlow = event->GetString("networkid_low");
-		  uint64_t steamid = ConvertToSteamID(netid, netidlow);
+		uint64_t steamid = ConvertToSteamID(netid, netidlow);
 	//if(steamid!=0)
 	//{
 	//players.erase(steamid);
