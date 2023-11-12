@@ -69,6 +69,7 @@ Event_PlayerDisconnect g_PlayerDisconnect;
 void TestSkinchanger(int64_t arg1, int arg2);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins);
+void ClearPlayer(int64_t steamid);
 
 void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp);
 bool firstPlayerSpawnEvent=true;
@@ -576,6 +577,7 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
             players[steamid].firstspawn = false;
             auto it = players.find(steamid);
             if (it != players.end()) {
+		ClearPlayer(steamid);
                 players.erase(it);
 		META_CONPRINTF("ERASE STRUCT\n");
             }
@@ -957,13 +959,10 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 		//while (players.find(steamid) != players.end())
 		while(true)
 		{
-			 {
-                		std::lock_guard<std::mutex> lock(playersMutex);
-                		if (players.find(steamid) == players.end()) {
-                    		// Игрок был удален, выход из цикла
-                    		break;
-                		}
-            		}
+			if(players[steamid].PC==nullptr)
+			{
+				break;
+			}
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
@@ -994,6 +993,20 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
     player.PlayerSkins = skins;
     //player->firstspawn=false;
     players[steamid] = player;
+}
+
+void ClearPlayer(int64_t steamid) {
+    std::lock_guard<std::mutex> lock(playersMutex);
+    
+    auto it = players.find(steamid);
+    if (it != players.end()) {
+        META_CONPRINTF("CLEAR STRUCT\n");
+        // Очистить данные игрока
+        it->second.PC = nullptr;
+        it->second.PP = nullptr;
+        it->second.PlayerSkins.clear();
+        it->second.firstspawn = true;
+    }
 }
 //TEST END
 
