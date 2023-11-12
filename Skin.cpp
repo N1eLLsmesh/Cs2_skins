@@ -966,7 +966,8 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		//CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
-		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n");
+			
+		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n", players[steamid].PC);
 		
 			//if(!pp){
 			//META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
