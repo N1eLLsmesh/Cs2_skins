@@ -54,6 +54,9 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 #include <memory>
 
 #include <thread>
+
+#include <regex>
+#include <cstdint>
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
 OnRoundStart g_RoundStart;
