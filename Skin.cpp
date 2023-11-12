@@ -72,7 +72,6 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 void ClearPlayer(int64_t steamid);
 
 void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp);
-bool firstPlayerSpawnEvent=true;
 
 CCSPlayerController* PC;
 CCSPlayerPawnBase* PP;
@@ -88,6 +87,8 @@ struct Players
 
 //std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
 std::map<int64_t, Players> players;//TEST DYNAMIC MASSIVE
+std::map<int64_t, bool> state;//TEST DYNAMIC MASSIVE
+
 std::mutex playersMutex;
 
 std::map<std::string, int> SearchMap;
@@ -436,8 +437,10 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
        					//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
 					META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
+					state[steamid]=true;
 					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
-					firstPlayerSpawnEvent=false;
+					//firstPlayerSpawnEvent=false;
+					state[steamid]=false;
 					std::thread([pCSPlayerController, playerPawn, steamid]() {
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
 							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
@@ -989,7 +992,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins)
 {
 	Players player;
-	if(players[steamid].PC==nullptr&& !firstPlayerSpawnEvent)
+	if(players[steamid].PC==nullptr&& !state[steamid])
 	{
 		player.firstspawn=false;
 	}
