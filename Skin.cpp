@@ -958,10 +958,6 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
 		//break;
 	});
 	//delete CTimer;
-	g_PlayerSkins[steamid].m_iItemDefinitionIndex = -1;
-    	g_PlayerSkins[steamid].m_nFallbackPaintKit = -1;
-    	g_PlayerSkins[steamid].m_nFallbackSeed = -1;
-    	g_PlayerSkins[steamid].m_flFallbackWear = -1.0f;
     META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
     }
     else
