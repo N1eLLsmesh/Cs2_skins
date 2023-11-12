@@ -534,9 +534,18 @@ uint64_t ExtractSteamIDFromNetworkID(const std::string& networkID) {
     std::smatch match;
 
     if (std::regex_match(networkID, match, pattern)) {
-        uint32_t accountID = std::stoi(match[1]);
-        uint64_t steamID = ((uint64_t)accountID) + 76561197960265728ULL;
-        return steamID;
+        try {
+            uint32_t accountID = std::stoi(match[1]);
+            uint64_t steamID = ((uint64_t)accountID) + 76561197960265728ULL;
+            return steamID;
+        } catch (const std::exception& e) {
+            // Обработка ошибок преобразования строки в число
+            // Логгирование или вывод сообщения об ошибке
+            return 0;
+        }
+    } else {
+        // Логгирование или вывод сообщения об ошибке
+        return 0;
     }
 
     return 0;
