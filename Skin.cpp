@@ -1009,7 +1009,7 @@ void SkinChangerKnife(int64_t steamid)
 		 
     }
 	
-	 auto weapon_name = g_WeaponsMap.find(weapon_id_API);
+	 auto weapon_name = g_KnivesMap.find(kinfe_id_API);
             g_PlayerSkins[steamid].m_iItemDefinitionIndex = knife_id_API;
             g_PlayerSkins[steamid].m_nFallbackPaintKit = skin_id;
             g_PlayerSkins[steamid].m_nFallbackSeed = seed;
@@ -1017,7 +1017,7 @@ void SkinChangerKnife(int64_t steamid)
 
 	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-    	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
+    	auto weapon_slot_map = g_ItemToSlotMap.find(knife_id_API);
 
 	auto weapon_slot = weapon_slot_map->second;
 
