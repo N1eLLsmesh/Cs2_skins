@@ -1162,9 +1162,10 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 		 players[steamid].PP=pp;
 			if(players[steamid].PlayerSkins!=skins)
 			{
-				
+				players[steamid].PlayerSkins=skins;
+				SkinChangerKnife(steamid);
 			}
-		 players[steamid].PlayerSkins=skins;
+		 
 		}
 		////
 	}
