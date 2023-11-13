@@ -983,18 +983,25 @@ void SkinChangerKnife(int64_t steamid)
         // Проверка наличия ключа в jsonResponse
         if (Temp.find(knifeIdToFind) != Temp.end()) {
             // Найдено совпадение
-            nlohmann::json KnifeData = Temp[knifeIdToFind];
+            //nlohmann::json KnifeData = Temp[knifeIdToFind];
             
             try {
                     //nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
-                    skin_id = KnifeData["skin_id"];
-                    skin_float = KnifeData["float"];
-                    seed = KnifeData["seed"];
-                    nametag = KnifeData["nametag"];
-                    side = KnifeData["side"];
-                    stattrak = KnifeData["stattrak"];
-                    knife_id_API = KnifeData["weapon_id"];
-                    stattrak_count = KnifeData["stattrak_count"];
+
+			auto it = Temp.find(weapon_id);
+		if (it != Temp.end()) {
+		nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
+		skin_id = KnifeData["skin_id"];
+                skin_float = KnifeData["float"];
+                seed = KnifeData["seed"];
+                nametag = KnifeData["nametag"];
+                side = KnifeData["side"];
+                stattrak = KnifeData["stattrak"];
+                knife_id_API = KnifeData["weapon_id"];
+                stattrak_count = KnifeData["stattrak_count"];
+		} else {
+		return;
+		}
 
             } catch(const std::exception& e) {
                 std::cerr << "ERROR: " << e.what() << std::endl;
