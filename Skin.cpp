@@ -988,7 +988,7 @@ void SkinChangerKnife(int64_t steamid)
             try {
                     //nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
 
-			auto it = Temp.find(weapon_id);
+			auto it = Temp.find(knifeIdToFind);
 		if (it != Temp.end()) {
 		nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
 		skin_id = KnifeData["skin_id"];
