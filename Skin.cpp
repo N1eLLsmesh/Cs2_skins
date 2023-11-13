@@ -960,7 +960,7 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
     }
 }
 
-void SkinChangerKnife(int64_t steamid, int weapon_id)
+void SkinChangerKnife(int64_t steamid, int knife_id_API)
 {
 	CCSPlayerController* pPlayerController = players[steamid].PC;
 CCSPlayerPawnBase* pPlayerPawn = players[steamid].PP;
