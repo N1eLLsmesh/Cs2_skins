@@ -689,6 +689,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		if(g_KnivesMap.find(weaponId)!=g_KnivesMap.end())
    		{
+			META_CONPRINTF( "ENTITYYYYYY ============== KNIFEEEEEEEEEEEEEEEE\n");
 			SkinChangerKnife(steamid);
 			return;
     		}
