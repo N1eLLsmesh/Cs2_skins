@@ -250,9 +250,10 @@ bool Skin::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool lat
 	g_ItemToSlotMap = { {59, 0},{42, 0},{526, 0},{508, 0},{500, 0},{514, 0},{515, 0},{512, 0},{505, 0},{506, 0},{509, 0},{516, 0},{520, 0},{522, 0},{523, 0},{519, 0},{503, 0},{517, 0},{518, 0},{521, 0},{525, 0},{507, 0}, {42, 0}, {59, 0}, {32, 1}, {61, 1}, {1, 1}, {3, 1}, {2, 1}, {36, 1}, {63, 1}, {64, 1}, {30, 1}, {4, 1}, {14, 2}, {17, 2}, {23, 2}, {33, 2}, {28, 2}, {35, 2}, {19, 2}, {26, 2}, {29, 2}, {24, 2}, {25, 2}, {27, 2}, {34, 2}, {8, 3}, {9, 3}, {10, 3}, {60, 3}, {16, 3}, {38, 3}, {40, 3}, {7, 3}, {11, 3}, {13, 3}, {39, 3} };
 
 	//Test MAP
-	SearchMap = {{"weapon_bizon", 26},{"weapon_mac10", 17},{"weapon_mp9", 34},{"weapon_p90", 19},{"weapon_ump45", 24},{"weapon_ak47", 7},{"weapon_aug", 8},{"weapon_famas", 10},{"weapon_galilar", 13},{"weapon_m4a1", 16},{"weapon_m4a1_silencer", 60},{"weapon_sg556", 39},{"weapon_awp", 9},{"weapon_g3sg1", 11},{"weapon_scar20", 38},{"weapon_ssg08", 40},{"weapon_mag7", 27},{"weapon_nova", 35},{"weapon_sawedoff", 29},{"weapon_xm1014", 25},{"weapon_m249", 14},{"weapon_negev", 28},{"weapon_deagle", 1},{"weapon_elite", 2},{"weapon_fiveseven", 3},{"weapon_glock", 4},{"weapon_hkp2000", 32},{"weapon_p250", 36},{"weapon_tec9", 30},{"weapon_usp_silencer", 61},{"weapon_cz75a", 63},{"weapon_revolver", 64},{"weapon_mp5sd", 23},{"weapon_mp7", 33}
-	g_GlovesMap={{5031,"Driving gloves"}};	
-};
+	SearchMap = {{"weapon_bizon", 26},{"weapon_mac10", 17},{"weapon_mp9", 34},{"weapon_p90", 19},{"weapon_ump45", 24},{"weapon_ak47", 7},{"weapon_aug", 8},{"weapon_famas", 10},{"weapon_galilar", 13},{"weapon_m4a1", 16},{"weapon_m4a1_silencer", 60},{"weapon_sg556", 39},{"weapon_awp", 9},{"weapon_g3sg1", 11},{"weapon_scar20", 38},{"weapon_ssg08", 40},{"weapon_mag7", 27},{"weapon_nova", 35},{"weapon_sawedoff", 29},{"weapon_xm1014", 25},{"weapon_m249", 14},{"weapon_negev", 28},{"weapon_deagle", 1},{"weapon_elite", 2},{"weapon_fiveseven", 3},{"weapon_glock", 4},{"weapon_hkp2000", 32},{"weapon_p250", 36},{"weapon_tec9", 30},{"weapon_usp_silencer", 61},{"weapon_cz75a", 63},{"weapon_revolver", 64},{"weapon_mp5sd", 23},{"weapon_mp7", 33}};
+	
+	
+	g_GlovesMap={{5031,"Driving gloves"}, {5033,"Motorcycle gloves"}};
 	//TESTEND
 	
 
@@ -998,7 +999,7 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
 
 	    	if(zxczxc)
     		{
-	    		zxczxc=false
+	    		zxczxc=false;
 			META_CONPRINTF("GLOVESSSSSSSSSSSSSSSSSSSSSSSSSSSSS %s\n");
 	    		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), g_GlovesMap[5031].c_str(), nullptr, nullptr, nullptr, nullptr);    
 	    		return;
