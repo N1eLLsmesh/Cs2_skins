@@ -724,9 +724,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		uint64_t temp_itemID = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID();
-		uint32_t temp_itemIDLow = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow();
-		uint32_t temp_itemIDHigh = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh();
+		uint64_t newItemID = 16384;
+		uint32_t newItemIDLow = newItemID & 0xFFFFFFFF;
+		uint32_t newItemIDHigh = newItemID >> 32;
 
 		// Combine the itemIDLow and itemIDHigh
 		uint64_t itemID2 = temp_itemIDLow | (static_cast<uint64_t>(temp_itemIDHigh) << 32);
