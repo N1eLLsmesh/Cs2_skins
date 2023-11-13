@@ -966,16 +966,68 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
     }
 }
 
-void SkinChangerKnife(int64_t steamid, int knife_id_API)
+void SkinChangerKnife(int64_t steamid, int weaponid)
 {
 	CCSPlayerController* pPlayerController = players[steamid].PC;
 CCSPlayerPawnBase* pPlayerPawn = players[steamid].PP;
 
 CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
+
+int knife_id_API = -1;
+for (const auto& entry : g_KnivesMap) {
+	int knifeIdToFind = entry.first;
+	META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
+	const std::string& knifeName = entry.second;
+
+	// Проверка наличия ключа в jsonResponse
+	if (Temp.find(knifeIdToFind) != Temp.end()) {
+		// Найдено совпадение
+		//nlohmann::json KnifeData = Temp[knifeIdToFind];
+
+		try {
+			//nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
+
+			auto it = Temp.find(knifeIdToFind);
+
+			nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
+			//skin_id = KnifeData["skin_id"];
+			//META_CONPRINTF("SKINIDDDDDDDD %lld\n", skin_id);
+			//skin_float = KnifeData["float"];
+			//META_CONPRINTF("skin_float %lld\n", skin_float);
+			//seed = KnifeData["seed"];
+			//META_CONPRINTF("seed %lld\n", seed);
+			//nametag = KnifeData["nametag"];
+			//side = KnifeData["side"];
+			//META_CONPRINTF("side %lld\n", side);
+			//stattrak = KnifeData["stattrak"];
+			//META_CONPRINTF("stattrak %lld\n", stattrak);
+			knife_id_API = KnifeData["weapon_id"];
+			META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
+			//stattrak_count = KnifeData["stattrak_count"];
+			//META_CONPRINTF("stattrak_count %lld\n", stattrak_count);
+
+			//META_CONPRINTF("KNIFEIDDDDDDD %lld\n", knife_id_API);
+			break;
+
+		}
+		catch (const std::exception& e) {
+			std::cerr << "ERROR: " << e.what() << std::endl;
+			// Обработка ошибок при парсинге JSON
+			return;
+		}
+	}
+	else {
+		// Не найдено совпадение
+		std::cout << "Knife with id " << knifeIdToFind << " not found." << std::endl;
+	}
+
+}
+
 auto weapon_slot_map = g_ItemToSlotMap.find(knife_id_API);
 auto weapon_name = g_KnivesMap.find(knife_id_API);
 auto weapon_slot = weapon_slot_map->second;
+	
 
 for (size_t i = 0; i < pPlayerWeapons.m_size; i++) {
 	auto currentWeapon = pPlayerWeapons.m_data[i];
