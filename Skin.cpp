@@ -1053,7 +1053,7 @@ void SkinChangerKnife(int64_t steamid)
             pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
 		new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
             FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
-            META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
+            //META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
 		});
         }
     }
