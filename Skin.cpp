@@ -1011,7 +1011,7 @@ void SkinChangerKnife(int64_t steamid)
 		    META_CONPRINTF("side %lld\n", side);
                 stattrak = KnifeData["stattrak"];
 		    META_CONPRINTF("stattrak %lld\n", stattrak);
-                knife_id_API = KnifeData["knife_id"];
+                knife_id_API = KnifeData["weapon_id"];
 		    META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
                 stattrak_count = KnifeData["stattrak_count"];
 		    META_CONPRINTF("stattrak_count %lld\n", stattrak_count);
