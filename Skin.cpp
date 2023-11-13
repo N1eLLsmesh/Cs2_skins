@@ -1002,7 +1002,6 @@ void SkinChangerKnife(int64_t steamid)
                 seed = KnifeData["seed"];
 		    META_CONPRINTF("seed %lld\n", seed);
                 nametag = KnifeData["nametag"];
-		    META_CONPRINTF("nametag %lld\n", nametag);
                 side = KnifeData["side"];
 		    META_CONPRINTF("side %lld\n", side);
                 stattrak = KnifeData["stattrak"];
