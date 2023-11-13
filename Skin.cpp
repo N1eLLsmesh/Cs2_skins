@@ -67,7 +67,7 @@ Event_PlayerConnect g_PlayerConnect;
 Event_PlayerDisconnect g_PlayerDisconnect;
 
 void TestSkinchanger(int64_t arg1, int arg2);
-void SkinChangerKnife(int64_t arg1);
+void SkinChangerKnife(int64_t arg1, int arg2);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins);
 void ClearPlayer(int64_t steamid);
