@@ -792,7 +792,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     }
     if(weapon_id==59|| weapon_id==42)
     {
-	    		std::thread([steamid, weaponid]() {
+	    		std::thread([steamid, weapon_id]() {
         		SkinChangerKnife(steamid,weapon_id);
 			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 			//TestSkinchanger(steamid, ids);
@@ -973,7 +973,7 @@ CCSPlayerPawnBase* pPlayerPawn = players[steamid].PP;
 
 CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-
+std::map<int, nlohmann::json> Temp=players[steamid].PlayerSkins;
 int knife_id_API = -1;
 for (const auto& entry : g_KnivesMap) {
 	int knifeIdToFind = entry.first;
