@@ -905,7 +905,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	{
 		META_CONPRINTF("ERRROR %lld\n");
 	}
-	if(weapon_id_API==-1)
+	if(weapon_id_API=-1)
 	{
 		return;
 	}
@@ -1077,7 +1077,7 @@ for (const auto& entry : g_KnivesMap) {
 	}
 
 }
-if(int knife_id_API==-1)
+if(int knife_id_API=-1)
 {
 	return;
 }
