@@ -155,8 +155,8 @@ std::map<uint64_t, int> g_PlayerMessages;
 uint32_t g_iItemIDHigh = 16384;
 
 
-std::map<int,std::string> g_GlovesMap;
-bool zxczxc=false;
+//std::map<int,std::string> g_GlovesMap;
+//bool zxczxc=false;
 
 class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
@@ -253,7 +253,7 @@ bool Skin::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool lat
 	SearchMap = {{"weapon_bizon", 26},{"weapon_mac10", 17},{"weapon_mp9", 34},{"weapon_p90", 19},{"weapon_ump45", 24},{"weapon_ak47", 7},{"weapon_aug", 8},{"weapon_famas", 10},{"weapon_galilar", 13},{"weapon_m4a1", 16},{"weapon_m4a1_silencer", 60},{"weapon_sg556", 39},{"weapon_awp", 9},{"weapon_g3sg1", 11},{"weapon_scar20", 38},{"weapon_ssg08", 40},{"weapon_mag7", 27},{"weapon_nova", 35},{"weapon_sawedoff", 29},{"weapon_xm1014", 25},{"weapon_m249", 14},{"weapon_negev", 28},{"weapon_deagle", 1},{"weapon_elite", 2},{"weapon_fiveseven", 3},{"weapon_glock", 4},{"weapon_hkp2000", 32},{"weapon_p250", 36},{"weapon_tec9", 30},{"weapon_usp_silencer", 61},{"weapon_cz75a", 63},{"weapon_revolver", 64},{"weapon_mp5sd", 23},{"weapon_mp7", 33}};
 	
 	
-	g_GlovesMap={{5031,"Driving gloves"}, {5033,"Motorcycle gloves"}};
+	//g_GlovesMap={{5031,"Driving gloves"}, {5033,"Motorcycle gloves"}};
 	//TESTEND
 	
 
@@ -532,7 +532,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
         		int64_t steamid = pCSPlayerController->m_steamID();
 			std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
-			TestSkinchanger(steamid, 5031);
+			//TestSkinchanger(steamid, 5031);
 			
 		}).detach();
 	
@@ -836,10 +836,10 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	return;
     }
 
-    if(weapon_id==5031)
-    {
-	    zxczxc=true;
-    }
+   // if(weapon_id==5031)
+    //{
+	//    zxczxc=true;
+   // }
 
 //[{"skin_id":10069,"float":0.000100000000000000004792173602385929598312941379845142364501953125,"seed":0,"nametag":"","side":0,"stickers":[],"stattrak":false,"stattrak_count":0,"type":"glove","weapon_id":5031}]
 	
@@ -1002,13 +1002,13 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
 	//delete CTimer;
     META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
 
-	    	if(zxczxc)
-    		{
-	    		zxczxc=false;
-			META_CONPRINTF("GLOVESSSSSSSSSSSSSSSSSSSSSSSSSSSSS %s\n");
-	    		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), g_GlovesMap[5031].c_str(), nullptr, nullptr, nullptr, nullptr);    
-	    		return;
-    		}
+	    	//if(zxczxc)
+    		//{
+	    		//zxczxc=false;
+			//META_CONPRINTF("GLOVESSSSSSSSSSSSSSSSSSSSSSSSSSSSS %s\n");
+	    		//FnGiveNamedItem(pPlayerPawn->m_pItemServices(), g_GlovesMap[5031].c_str(), nullptr, nullptr, nullptr, nullptr);    
+	    		//return;
+    		//}
     }
     else
     {
@@ -1073,7 +1073,10 @@ for (const auto& entry : g_KnivesMap) {
 	}
 
 }
-
+if(int knife_id_API==-1)
+{
+	return;
+}
 auto weapon_slot_map = g_ItemToSlotMap.find(knife_id_API);
 auto weapon_name = g_KnivesMap.find(knife_id_API);
 auto weapon_slot = weapon_slot_map->second;
