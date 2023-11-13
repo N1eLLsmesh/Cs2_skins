@@ -687,7 +687,11 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		
+		if(weaponId==59|| weaponId==42)
+   		{
+			SkinChangerKnife(steamid);
+			return;
+    		}
 		TestSkinchanger(steamid, weaponId);
 		//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		auto skin_parm = g_PlayerSkins.find(steamid);
@@ -789,11 +793,11 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     {
 	    return;
     }
-    if(weapon_id==59|| weapon_id==42)
-    {
-	SkinChangerKnife(steamid);
-	return;
-    }
+    //if(weapon_id==59|| weapon_id==42)
+    //{
+	//SkinChangerKnife(steamid);
+	//return;
+    //}
     CCSPlayerController* pPlayerController=players[steamid].PC;
     CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
 	
