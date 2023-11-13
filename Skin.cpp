@@ -701,18 +701,20 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
+	int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
+	int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+	TestSkinchanger(steamid, weaponId);
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
 	{
-		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
-		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+		
 		
 		META_CONPRINTF( "----------------------------------------------------\n");
 		if(!steamid) {
 			return;
 		}
 
-
-		TestSkinchanger(steamid, weaponId);
+		
+		
 		
 		//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		auto skin_parm = g_PlayerSkins.find(steamid);
@@ -819,7 +821,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     {
 	    		std::thread([steamid, weapon_id]() {
 				std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-        		//SkinChangerKnife(steamid,weapon_id);
+        		SkinChangerKnife(steamid,weapon_id);
 			
 			//TestSkinchanger(steamid, ids);
 			
