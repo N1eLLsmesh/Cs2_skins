@@ -965,7 +965,7 @@ void SkinChangerKnife(int64_t steamid)
     	CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
 	std::map<int, nlohmann::json> Temp=players[steamid].PlayerSkins;
     	//auto it=Temp.find(weapon_id);
-    	nlohmann::json jsonResponse = Temp[weapon_id];
+    	//nlohmann::json jsonResponse = Temp[weapon_id];
     	//std::string jsonString = jsonResponse.dump();
 	int skin_id = -1;
         float skin_float = -1.0f;
@@ -981,9 +981,9 @@ void SkinChangerKnife(int64_t steamid)
         const std::string& knifeName = entry.second;
 
         // Проверка наличия ключа в jsonResponse
-        if (jsonResponse.find(knifeIdToFind) != jsonResponse.end()) {
+        if (jsonResponse.find(knifeIdToFind) != Temp.end()) {
             // Найдено совпадение
-            nlohmann::json knifeData = jsonResponse[knifeIdToFind];
+            nlohmann::json knifeData = Temp[knifeIdToFind];
             
             try {
                     //nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
