@@ -983,7 +983,7 @@ void SkinChangerKnife(int64_t steamid)
         // Проверка наличия ключа в jsonResponse
         if (jsonResponse.find(knifeIdToFind) != Temp.end()) {
             // Найдено совпадение
-            nlohmann::json knifeData = Temp[knifeIdToFind];
+            nlohmann::json KnifeData = Temp[knifeIdToFind];
             
             try {
                     //nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
