@@ -732,9 +732,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		//uint64_t itemID2 = temp_itemIDLow | (static_cast<uint64_t>(temp_itemIDHigh) << 32);
 
 		// print out all 4 values
-		META_CONPRINTF("temp_itemID: %d\n", temp_itemID);
-		META_CONPRINTF("temp_itemIDLow: %d\n", temp_itemIDLow);
-		META_CONPRINTF("temp_itemIDHigh: %d\n", temp_itemIDHigh);
+		//META_CONPRINTF("temp_itemID: %d\n", temp_itemID);
+		//META_CONPRINTF("temp_itemIDLow: %d\n", temp_itemIDLow);
+		//META_CONPRINTF("temp_itemIDHigh: %d\n", temp_itemIDHigh);
 		//META_CONPRINTF("itemID2: %d\n", itemID2);
 
 		
