@@ -687,23 +687,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		if(weaponId==59|| weaponId==42)
-   		{
-			META_CONPRINTF( "ENTITYYYYYY ============== KNIFEEEEEEEEEEEEEEEE\n");
-					std::thread([steamid]() {
-        		
-			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-			
-			//TestSkinchanger(steamid, ids);
-			SkinChangerKnife(steamid);
-			}).detach();
-			
-			return;
-    		}
-		else
-		{
+
 		TestSkinchanger(steamid, weaponId);
-		}
+		
 		//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		auto skin_parm = g_PlayerSkins.find(steamid);
 		if(skin_parm == g_PlayerSkins.end()) {
@@ -804,11 +790,11 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     {
 	    return;
     }
-    //if(weapon_id==59|| weapon_id==42)
-    //{
-	//SkinChangerKnife(steamid);
-	//return;
-    //}
+    if(weapon_id==59|| weapon_id==42)
+    {
+	SkinChangerKnife(steamid,weapon_id);
+	return;
+    }
     CCSPlayerController* pPlayerController=players[steamid].PC;
     CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
 	
@@ -974,122 +960,53 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
     }
 }
 
-void SkinChangerKnife(int64_t steamid)
+void SkinChangerKnife(int64_t steamid, int weapon_id)
 {
-	CCSPlayerController* pPlayerController=players[steamid].PC;
-    	CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
-	std::map<int, nlohmann::json> Temp=players[steamid].PlayerSkins;
-    	//auto it=Temp.find(weapon_id);
-    	//nlohmann::json jsonResponse = Temp[weapon_id];
-    	//std::string jsonString = jsonResponse.dump();
-	int skin_id = -1;
-        float skin_float = -1.0f;
-        int seed = -1;
-        std::string nametag = "NULL";
-        int side = -1;
-        bool stattrak = false;
-        int knife_id_API = -1;
-        int stattrak_count = -1;
-	
-	 for (const auto& entry : g_KnivesMap) {
-        int knifeIdToFind = entry.first;
-		 META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
-        const std::string& knifeName = entry.second;
+	CCSPlayerController* pPlayerController = players[steamid].PC;
+CCSPlayerPawnBase* pPlayerPawn = players[steamid].PP;
 
-        // Проверка наличия ключа в jsonResponse
-        if (Temp.find(knifeIdToFind) != Temp.end()) {
-            // Найдено совпадение
-            //nlohmann::json KnifeData = Temp[knifeIdToFind];
-            
-            try {
-                    //nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
+CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
+const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
+auto weapon_slot_map = g_ItemToSlotMap.find(knife_id_API);
 
-			auto it = Temp.find(knifeIdToFind);
+auto weapon_slot = weapon_slot_map->second;
 
-		nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
-		skin_id = KnifeData["skin_id"];
-		    META_CONPRINTF("SKINIDDDDDDDD %lld\n", skin_id);
-                skin_float = KnifeData["float"];
-		    META_CONPRINTF("skin_float %lld\n", skin_float);
-                seed = KnifeData["seed"];
-		    META_CONPRINTF("seed %lld\n", seed);
-                nametag = KnifeData["nametag"];
-                side = KnifeData["side"];
-		    META_CONPRINTF("side %lld\n", side);
-                stattrak = KnifeData["stattrak"];
-		    META_CONPRINTF("stattrak %lld\n", stattrak);
-                knife_id_API = KnifeData["weapon_id"];
-		    META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
-                stattrak_count = KnifeData["stattrak_count"];
-		    META_CONPRINTF("stattrak_count %lld\n", stattrak_count);
+for (size_t i = 0; i < pPlayerWeapons.m_size; i++) {
+	auto currentWeapon = pPlayerWeapons.m_data[i];
 
-			META_CONPRINTF("KNIFEIDDDDDDD %lld\n", knife_id_API);
-		    break;
+	if (!currentWeapon)
+		continue;
 
-            } catch(const std::exception& e) {
-                std::cerr << "ERROR: " << e.what() << std::endl;
-                // Обработка ошибок при парсинге JSON
-		    return;
-            }
-        } else {
-            // Не найдено совпадение
-            std::cout << "Knife with id " << knifeIdToFind << " not found." << std::endl;
-        }
-		 
-    }
+	auto weapon = static_cast<CEconEntity*>(currentWeapon.Get());
 
+	if (!weapon)
+		continue;
 
+	auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 
-	
-	
-	 auto weapon_name = g_KnivesMap.find(knife_id_API);
-            g_PlayerSkins[steamid].m_iItemDefinitionIndex = knife_id_API;
-            g_PlayerSkins[steamid].m_nFallbackPaintKit = skin_id;
-            g_PlayerSkins[steamid].m_nFallbackSeed = seed;
-            g_PlayerSkins[steamid].m_flFallbackWear = skin_float;
+	if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
+		continue;
+	}
 
-	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
-	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-    	auto weapon_slot_map = g_ItemToSlotMap.find(knife_id_API);
+	auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
 
-	auto weapon_slot = weapon_slot_map->second;
+	if (weapon_slot == weapon_slot_my_weapon) {
+		pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
+		new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name, currentWeapon]() {
+			FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
+			//META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
+			});
+	}
+}
 
-    for (size_t i = 0; i < pPlayerWeapons.m_size; i++) {
-        auto currentWeapon = pPlayerWeapons.m_data[i];
-
-        if (!currentWeapon)
-            continue;
-
-        auto weapon = static_cast<CEconEntity*>(currentWeapon.Get());
-
-        if (!weapon)
-            continue;
-
-        auto weapon_slot_map_my_weapon = g_ItemToSlotMap.find(weapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
-
-        if (weapon_slot_map_my_weapon == g_ItemToSlotMap.end()) {
-            continue;
-        }
-
-        auto weapon_slot_my_weapon = weapon_slot_map_my_weapon->second;
-
-        if (weapon_slot == weapon_slot_my_weapon) {
-            pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
-		new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name,currentWeapon]() {
-            FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
-            //META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
-		});
-        }
-    }
-	
-	META_CONPRINTF("TestSkinchanger: Delete entity %s\n", weapon_name->second.c_str());//ТАЙМЕР ДЛЯ ТЕСТА
-	new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
-        	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
-		FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-		//break;
+META_CONPRINTF("TestSkinchanger: Delete entity %s\n", weapon_name->second.c_str());//ТАЙМЕР ДЛЯ ТЕСТА
+new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
+	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
+	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
+	//break;
 	});
-	//delete CTimer;
-    META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
+//delete CTimer;
+META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
 }
 
 //TEST END
