@@ -687,7 +687,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		if(g_KnifesMap.Find(weaponId)!=g_KnifesMap.end)
+		if(g_KnivesMap.Find(weaponId)!=g_KnivesMap.end())
    		{
 			SkinChangerKnife(steamid);
 			return;
