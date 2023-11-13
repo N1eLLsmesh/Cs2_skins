@@ -1077,7 +1077,7 @@ for (const auto& entry : g_KnivesMap) {
 	}
 
 }
-if(int knife_id_API<0)
+if(knife_id_API<0)
 {
 	return;
 }
