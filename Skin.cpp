@@ -1009,7 +1009,7 @@ void SkinChangerKnife(int64_t steamid)
 		 
     }
 	
-	 auto weapon_name = g_KnivesMap.find(kinfe_id_API);
+	 auto weapon_name = g_KnivesMap.find(knife_id_API);
             g_PlayerSkins[steamid].m_iItemDefinitionIndex = knife_id_API;
             g_PlayerSkins[steamid].m_nFallbackPaintKit = skin_id;
             g_PlayerSkins[steamid].m_nFallbackSeed = seed;
