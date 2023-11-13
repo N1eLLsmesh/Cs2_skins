@@ -993,21 +993,26 @@ void SkinChangerKnife(int64_t steamid)
                     //nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
 
 			auto it = Temp.find(knifeIdToFind);
-		if (it != Temp.end()) {
+
 		nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
 		skin_id = KnifeData["skin_id"];
+		    META_CONPRINTF("SKINIDDDDDDDD %lld\n", skin_id);
                 skin_float = KnifeData["float"];
+		    META_CONPRINTF("skin_float %lld\n", skin_float);
                 seed = KnifeData["seed"];
+		    META_CONPRINTF("seed %lld\n", seed);
                 nametag = KnifeData["nametag"];
+		    META_CONPRINTF("nametag %lld\n", nametag);
                 side = KnifeData["side"];
+		    META_CONPRINTF("side %lld\n", side);
                 stattrak = KnifeData["stattrak"];
-                knife_id_API = KnifeData["weapon_id"];
+		    META_CONPRINTF("stattrak %lld\n", stattrak);
+                knife_id_API = KnifeData["knife_id"];
+		    META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
                 stattrak_count = KnifeData["stattrak_count"];
+		    META_CONPRINTF("stattrak_count %lld\n", stattrak_count);
 
 			META_CONPRINTF("KNIFEIDDDDDDD %lld\n", knife_id_API);
-		} else {
-		return;
-		}
 
             } catch(const std::exception& e) {
                 std::cerr << "ERROR: " << e.what() << std::endl;
