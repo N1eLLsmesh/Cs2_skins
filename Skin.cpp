@@ -999,6 +999,8 @@ void SkinChangerKnife(int64_t steamid)
                 stattrak = KnifeData["stattrak"];
                 knife_id_API = KnifeData["weapon_id"];
                 stattrak_count = KnifeData["stattrak_count"];
+
+			META_CONPRINTF("KNIFEIDDDDDDD %lld\n", knife_id_API);
 		} else {
 		return;
 		}
@@ -1049,8 +1051,10 @@ void SkinChangerKnife(int64_t steamid)
 
         if (weapon_slot == weapon_slot_my_weapon) {
             pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
+		new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
             FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
             META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
+		});
         }
     }
 	
