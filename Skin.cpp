@@ -68,7 +68,7 @@ Event_PlayerConnect g_PlayerConnect;
 Event_PlayerDisconnect g_PlayerDisconnect;
 
 void TestSkinchanger(int64_t arg1, int arg2);
-void SkinChangerKnife(int64_t arg1, int arg2);
+void SkinChangerKnife(int64_t arg1);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins);
 void ClearPlayer(int64_t steamid);
@@ -821,7 +821,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     {
 	    		std::thread([steamid, weapon_id]() {
 				std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-        		SkinChangerKnife(steamid,weapon_id);
+        		SkinChangerKnife(steamid);
 			
 			//TestSkinchanger(steamid, ids);
 			
@@ -994,7 +994,7 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
     }
 }
 
-void SkinChangerKnife(int64_t steamid, int weaponid)
+void SkinChangerKnife(int64_t steamid)
 {
 	CCSPlayerController* pPlayerController = players[steamid].PC;
 CCSPlayerPawnBase* pPlayerPawn = players[steamid].PP;
@@ -1160,6 +1160,10 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 		 players[steamid].firstspawn=true;
 		 players[steamid].PC=pc;
 		 players[steamid].PP=pp;
+			if(players[steamid].PlayerSkins!=skins)
+			{
+				
+			}
 		 players[steamid].PlayerSkins=skins;
 		}
 		////
