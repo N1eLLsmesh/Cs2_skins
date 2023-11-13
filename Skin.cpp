@@ -968,7 +968,7 @@ CCSPlayerPawnBase* pPlayerPawn = players[steamid].PP;
 CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 auto weapon_slot_map = g_ItemToSlotMap.find(knife_id_API);
-
+auto weapon_name = g_KnivesMap.find(knife_id_API);
 auto weapon_slot = weapon_slot_map->second;
 
 for (size_t i = 0; i < pPlayerWeapons.m_size; i++) {
