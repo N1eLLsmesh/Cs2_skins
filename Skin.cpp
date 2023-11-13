@@ -981,7 +981,7 @@ void SkinChangerKnife(int64_t steamid)
         const std::string& knifeName = entry.second;
 
         // Проверка наличия ключа в jsonResponse
-        if (jsonResponse.find(knifeIdToFind) != Temp.end()) {
+        if (Temp.find(knifeIdToFind) != Temp.end()) {
             // Найдено совпадение
             nlohmann::json KnifeData = Temp[knifeIdToFind];
             
