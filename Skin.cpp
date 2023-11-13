@@ -731,7 +731,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
-		pCEconEntityWeapon->m_nFallbackStatTrak() = 100;
+		//pCEconEntityWeapon->m_nFallbackStatTrak() = 100;
 		//TEST
 		
 		// pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
@@ -1006,21 +1006,45 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 //TEST ADDMAP
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins)
 {
-	Players player;
+	//Players player;
 	if(players[steamid].PC==nullptr&& !state[steamid])
-	{
+	{	Players player;
 		player.firstspawn=false;
+	 //
+	 	player.PC = pc;
+    		player.PP = pp;
+    		player.PlayerSkins = skins;
+    		//player->firstspawn=true;
+    		players[steamid] = player;
+	 //
 	}
 	else
 	{
-		 player.firstspawn=true;
+		///
+		if(!players[steamid].firstspawn)
+		{
+			Players player;
+	 		player.PC = pc;
+    			player.PP = pp;
+    			player.PlayerSkins = skins;
+    			//player->firstspawn=true;
+    			players[steamid] = player;
+		}
+		else
+		{
+		 players[steamid].firstspawn=true;
+		 players[steamid].PC=pc;
+		 players[steamid].PP=pp;
+		 players[steamid].PlayerSkins=skins;
+		}
+		////
 	}
 		
-    player.PC = pc;
-    player.PP = pp;
-    player.PlayerSkins = skins;
+    //player.PC = pc;
+    //player.PP = pp;
+    //player.PlayerSkins = skins;
     //player->firstspawn=true;
-    players[steamid] = player;
+    //players[steamid] = player;
 }
 
 void ClearPlayer(int64_t steamid) {
