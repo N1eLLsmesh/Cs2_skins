@@ -1015,6 +1015,7 @@ void SkinChangerKnife(int64_t steamid)
             g_PlayerSkins[steamid].m_nFallbackSeed = seed;
             g_PlayerSkins[steamid].m_flFallbackWear = skin_float;
 
+	CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 	const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
     	auto weapon_slot_map = g_ItemToSlotMap.find(weapon_id);
 
