@@ -819,7 +819,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     {
 	    		std::thread([steamid, weapon_id]() {
 				std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-        		SkinChangerKnife(steamid,weapon_id);
+        		//SkinChangerKnife(steamid,weapon_id);
 			
 			//TestSkinchanger(steamid, ids);
 			
