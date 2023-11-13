@@ -116,6 +116,7 @@ typedef struct SkinParm
 
 
 #ifdef _WIN32
+typedef void*(FASTCALL* StateChanged_t)(void *networkTransmitComponent, CEntityInstance *ent, int64 offset, int16 a4, int16 a5);
 typedef void*(FASTCALL* SubClassChange_t)(const CCommandContext &context, const CCommand &args);
 typedef void*(FASTCALL* EntityRemove_t)(CGameEntitySystem*, void*, void*,uint64_t);
 typedef void(FASTCALL* GiveNamedItem_t)(void* itemService,const char* pchName, void* iSubType,void* pScriptItem, void* a5,void* a6);
