@@ -905,6 +905,10 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	{
 		META_CONPRINTF("ERRROR %lld\n");
 	}
+	if(weapon_id_API==-1)
+	{
+		return;
+	}
 	
     auto weapon_name = g_WeaponsMap.find(weapon_id_API);
     g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id_API;
