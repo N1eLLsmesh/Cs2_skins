@@ -731,6 +731,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+		pCEconEntityWeapon->m_nFallbackStatTrak() = 100;
 		//TEST
 		
 		// pCEconEntityWeapon->m_OriginalOwnerXuidLow() = -1;
