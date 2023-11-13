@@ -693,7 +693,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		auto skin_parm = g_PlayerSkins.find(steamid);
 		if(skin_parm == g_PlayerSkins.end()) {
-			//return;
+			return;
 		}
 
 		if(skin_parm->second.m_iItemDefinitionIndex == -1 || skin_parm->second.m_nFallbackPaintKit == -1 || skin_parm->second.m_nFallbackSeed == -1 || skin_parm->second.m_flFallbackWear == -1) {
