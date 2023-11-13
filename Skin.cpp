@@ -701,9 +701,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
-	int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
-	int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
-	TestSkinchanger(steamid, weaponId);
+	
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
 	{
 		
@@ -713,7 +711,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		
+		int64_t steamid = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
+		int64_t weaponId = pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex();
+		TestSkinchanger(steamid, weaponId);
 		
 		
 		//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -1078,19 +1078,16 @@ for (size_t i = 0; i < pPlayerWeapons.m_size; i++) {
 
 	if (weapon_slot == weapon_slot_my_weapon) {
 		pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
-		new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name, currentWeapon]() {
 			FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
 			//META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
-			});
+			
 	}
 }
 
 META_CONPRINTF("TestSkinchanger: Delete entity %s\n", weapon_name->second.c_str());//ТАЙМЕР ДЛЯ ТЕСТА
-new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
 	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
 	//break;
-	});
 //delete CTimer;
 META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
 }
