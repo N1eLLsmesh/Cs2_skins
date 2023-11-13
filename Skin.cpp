@@ -985,8 +985,8 @@ void SkinChangerKnife(int64_t steamid)
         int stattrak_count = -1;
 	
 	 for (const auto& entry : g_KnivesMap) {
-        int knifeIdToFind = entry.first;
-        const std::string& knifeName = entry.second;
+        int knifeIdToFind = entry->first;
+        const std::string& knifeName = entry->second;
 
         // Проверка наличия ключа в jsonResponse
         if (Temp.find(knifeIdToFind) != Temp.end()) {
