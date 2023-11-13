@@ -687,10 +687,17 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		if(g_KnivesMap.find(weaponId)!=g_KnivesMap.end())
+		if(weaponId==59|| weaponId==42)
    		{
 			META_CONPRINTF( "ENTITYYYYYY ============== KNIFEEEEEEEEEEEEEEEE\n");
+					std::thread([steamid]() {
+        		
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+			
+			//TestSkinchanger(steamid, ids);
 			SkinChangerKnife(steamid);
+			}).detach();
+			
 			return;
     		}
 		else
@@ -1017,6 +1024,7 @@ void SkinChangerKnife(int64_t steamid)
 		    META_CONPRINTF("stattrak_count %lld\n", stattrak_count);
 
 			META_CONPRINTF("KNIFEIDDDDDDD %lld\n", knife_id_API);
+		    break;
 
             } catch(const std::exception& e) {
                 std::cerr << "ERROR: " << e.what() << std::endl;
