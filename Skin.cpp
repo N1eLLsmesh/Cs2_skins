@@ -67,7 +67,7 @@ Event_PlayerConnect g_PlayerConnect;
 Event_PlayerDisconnect g_PlayerDisconnect;
 
 void TestSkinchanger(int64_t arg1, int arg2);
-void SkinChangerKnife(int64_t arg1)
+void SkinChangerKnife(int64_t arg1);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins);
 void ClearPlayer(int64_t steamid);
@@ -789,7 +789,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     {
 	    return;
     }
-    if(weaponId==59|| weaponId==42)
+    if(weapon_id==59|| weapon_id==42)
     {
 	SkinChangerKnife(steamid);
 	return;
