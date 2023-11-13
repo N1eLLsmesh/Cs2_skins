@@ -1222,8 +1222,8 @@ CON_COMMAND_F(skin, "modify skin", FCVAR_CLIENT_CAN_EXECUTE) {
     if (context.GetPlayerSlot() == -1) {
 		return;
 	}
-    CCSPlayerController* pPlayerController = PC;//(CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1)); тест глобального контроллера 
-    CCSPlayerPawnBase* pPlayerPawn = PP;// pPlayerController->m_hPlayerPawn(); тест глобальной пешки(PAWN)
+    CCSPlayerController* pPlayerController =(CCSPlayerController*)g_pEntitySystem->GetBaseEntity((CEntityIndex)(context.GetPlayerSlot().Get() + 1));
+    CCSPlayerPawnBase* pPlayerPawn = pPlayerController->m_hPlayerPawn();
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE) {
 		return;
 	}
