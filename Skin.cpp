@@ -156,7 +156,7 @@ uint32_t g_iItemIDHigh = 16384;
 
 
 std::map<int,std::string> g_GlovesMap;
-bool zxczxc=true;
+bool zxczxc=false;
 
 class GameSessionConfiguration_t { };
 SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);
@@ -532,7 +532,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
         		int64_t steamid = pCSPlayerController->m_steamID();
 			std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
-			//TestSkinchanger(steamid, ids);
+			TestSkinchanger(steamid, 5031);
 			
 		}).detach();
 	
@@ -834,6 +834,11 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 		}).detach();
 	
 	return;
+    }
+
+    if(weapon_id==5031)
+    {
+	    zxczxc=true;
     }
 
 //[{"skin_id":10069,"float":0.000100000000000000004792173602385929598312941379845142364501953125,"seed":0,"nametag":"","side":0,"stickers":[],"stattrak":false,"stattrak_count":0,"type":"glove","weapon_id":5031}]
