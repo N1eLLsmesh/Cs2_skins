@@ -1026,10 +1026,13 @@ void SkinChangerKnife(int64_t steamid)
         } else {
             // Не найдено совпадение
             std::cout << "Knife with id " << knifeIdToFind << " not found." << std::endl;
-		return;
         }
 		 
     }
+
+
+
+	
 	
 	 auto weapon_name = g_KnivesMap.find(knife_id_API);
             g_PlayerSkins[steamid].m_iItemDefinitionIndex = knife_id_API;
