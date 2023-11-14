@@ -470,13 +470,13 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 						
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 						state[steamid]=true;
-						std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
-						std::map<int, std::vector<nlohmann::json>> TempSkins;
-						for (const auto& skin : tempvec) {
-   	 						int weapon_id = skin["weapon_id"];
-    							TempSkins[weapon_id].push_back(skin);
-						}
-						AddOrUpdatePlayer(steamid,pc,pp,TempSkins);
+						//std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
+						//std::map<int, std::vector<nlohmann::json>> TempSkins;
+						//for (const auto& skin : tempvec) {
+   	 						//int weapon_id = skin["weapon_id"];
+    							//TempSkins[weapon_id].push_back(skin);
+						//}
+						AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 						//firstPlayerSpawnEvent=false;
 						state[steamid]=false;
 						std::thread([pCSPlayerController, playerPawn, steamid]() {
@@ -516,13 +516,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					
 					META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 					state[steamid]=true;
-					std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
-						std::map<int, std::vector<nlohmann::json>> TempSkins;
-						for (const auto& skin : tempvec) {
-   	 						int weapon_id = skin["weapon_id"];
-    							TempSkins[weapon_id].push_back(skin);
-						}
-					AddOrUpdatePlayer(steamid,pc,pp,TempSkins);
+					AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 					//firstPlayerSpawnEvent=false;
 					state[steamid]=false;
 					std::thread([pCSPlayerController, playerPawn, steamid]() {
@@ -1194,13 +1188,13 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
     			teamnum=pSCBaseEntity->m_iTeamNum();
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 			//GETSKINS(steamid);
-			std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
-			std::map<int, std::vector<nlohmann::json>> TempSkins;
-			for (const auto& skin : tempvec) {
-   	 			int weapon_id = skin["weapon_id"];
-    				TempSkins[weapon_id].push_back(skin);
-			}
-		AddOrUpdatePlayer(steamid,pc,pp,TempSkins);
+			//std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
+			//std::map<int, std::vector<nlohmann::json>> TempSkins;
+			//for (const auto& skin : tempvec) {
+   	 			//int weapon_id = skin["weapon_id"];
+    				//TempSkins[weapon_id].push_back(skin);
+			//}
+		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		//CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
 			
