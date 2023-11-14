@@ -923,10 +923,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		skin_parm->second.m_flFallbackWear = -1;
 
 		META_CONPRINTF( "----------------------------------------------------\n");
-
+		}
 	});
+	
 }
-
 //TEST FUNC CHANGE
 void TestSkinchanger(int64_t steamid, int weapon_id)
 {
