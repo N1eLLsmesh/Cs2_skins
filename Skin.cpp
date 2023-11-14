@@ -931,7 +931,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				//stattrak_count = weaponData["stattrak_count"];
 			//}
 		return;
-		}
+		
 	}
 	catch(const std::exception& e)
 	{
