@@ -913,6 +913,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				stattrak = weaponData["stattrak"];
 				weapon_id_API = weaponData["weapon_id"];
 				stattrak_count = weaponData["stattrak_count"];
+					META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n");
 					break;
 				}
 				else
