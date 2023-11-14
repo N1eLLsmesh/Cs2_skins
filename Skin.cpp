@@ -88,6 +88,8 @@ struct Players
     bool firstspawn=true;
 };
 
+uint8_t teamnum;
+
 //std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
 std::map<int64_t, Players> players;//TEST DYNAMIC MASSIVE
 std::map<int64_t, bool> state;//TEST DYNAMIC MASSIVE
@@ -457,6 +459,13 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					{
 						//CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
 						
+						SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
+    						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
+    						teamnum=pSCBaseEntity->m_iTeamNum();
+    						META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
+    						META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
+
+
 						
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 						state[steamid]=true;
@@ -471,6 +480,12 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 			
 						}).detach();
 					}
+					
+						SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
+    						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
+    						teamnum=pSCBaseEntity->m_iTeamNum();
+    						META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
+    						META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
     					//if (!players[steamid].firstspawn) 
 					//{
         					//return;
@@ -485,6 +500,13 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
 					//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
        					//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+
+					SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
+    						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
+    					teamnum=pSCBaseEntity->m_iTeamNum();
+    					META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
+    					META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
+					
 					META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 					state[steamid]=true;
 					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
@@ -841,7 +863,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
     CCSPlayerController* pPlayerController=players[steamid].PC;
     CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
-    SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
+    //SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
     //SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     //uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
     //META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
@@ -905,7 +927,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 			{
 				nlohmann::json& weaponData = it.second; // Ссылка на json для удобства
 				side = weaponData["side"];
-				uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
+				//uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
 				META_CONPRINTF("side: %lld, teamnum: %lld\n", side, teamnum);
 				if (side == teamnum || side == 0) {
             			skin_id = weaponData["skin_id"];
