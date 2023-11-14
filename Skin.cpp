@@ -70,7 +70,7 @@ Event_PlayerDisconnect g_PlayerDisconnect;
 
 void TestSkinchanger(int64_t arg1, int arg2);
 void SkinChangerKnife(int64_t arg1);
-std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
+std::map<int, std::vector<nlohmann::json>> GETSKINS(int64_t steamid64);
 void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, std::vector<nlohmann::json>> skins);
 void ClearPlayer(int64_t steamid);
 
@@ -1286,7 +1286,7 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
 	return total_size;
 }
 
-std::map<int, nlohmann::json> GETSKINS(int64_t steamid64) {
+std::map<int, std::vector<nlohmann::json>> GETSKINS(int64_t steamid64) {
 	CURL* curl;
 	CURLcode res;
 
