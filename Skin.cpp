@@ -454,6 +454,17 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     				// Игрок существует в вашем контейнере
 					if(players[steamid].PC==nullptr)
 					{
+						CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
+
+   						if (pBaseEntity)
+    						{
+        						META_CONPRINTF("Player ENTITY: %llu\n", pBaseEntity);
+    						}
+						else
+						{
+							META_CONPRINTF("Player ENTITY: NULL\n");
+						}
+						
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 						state[steamid]=true;
 						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
@@ -601,7 +612,7 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event) {
 		}
         uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
 
-        META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
+        META_CONPRINTF("Player Connected: , SteamID: %llu\n", steamid);
     } catch (const std::exception& e) {
         // Обработка ошибок
     }
@@ -708,23 +719,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
 	
-	int64_t steamidtestentity = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
-		
-
-	CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pEntity);
-   	if (pBaseEntity && steamidtestentity)
-    	{
-		META_CONPRINTF( "----------------------------------------------------\n\n\n\n\n");
-		META_CONPRINTF( "PLAYER ENTITY %lld\n", steamidtestentity);
-		META_CONPRINTF( "----------------------------------------------------\n\n\n\n\n");
-        	// Это игрок (CBasePlayer)
-        	// Ваш код обработки здесь
-    	}
-    	else
-    	{
-		META_CONPRINTF( "NOT PLAYER ENTITY\n");
-        	// Это не игрок
-    	}
 	
 	
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
