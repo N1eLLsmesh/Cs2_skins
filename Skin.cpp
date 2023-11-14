@@ -821,68 +821,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		// pCEconEntityWeapon->m_OriginalOwnerXuidHigh() = -1;
 
 		//????????????????????????????????????????????????????
-		auto sticker_parm = g_PlayerStickers.find(steamid);
-		//if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
-		bool zxc=false;
-		if(zxc) {
-				// Work in progress
-				if (sticker_parm->second.stickerDefIndex1 != 0) {
-					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113 + 1 * 4, sticker_parm->second.stickerDefIndex1);
-					if (sticker_parm->second.stickerWear1 != 0) {
-						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(114 + 1 * 4, sticker_parm->second.stickerWear1);
-					}
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1);
-					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear1);
-				}
 
-				if (sticker_parm->second.stickerDefIndex2 != 0) {
-					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(117 + 2 * 4, sticker_parm->second.stickerDefIndex2);
-					if (sticker_parm->second.stickerWear2 != 0) {
-						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(118 + 2 * 4, sticker_parm->second.stickerWear2);
-					}
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2);
-					META_CONPRINTF("sticker_parm->second.stickerWear2: %f\n", sticker_parm->second.stickerWear2);
-				}
-
-				if (sticker_parm->second.stickerDefIndex3 != 0) {
-					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(121 + 3 * 4, sticker_parm->second.stickerDefIndex3);
-					if (sticker_parm->second.stickerWear3 != 0) {
-						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(122 + 3 * 4, sticker_parm->second.stickerWear3);
-					}
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3);
-					META_CONPRINTF("sticker_parm->second.stickerWear3: %f\n", sticker_parm->second.stickerWear3);
-				
-
-				if (sticker_parm->second.stickerDefIndex4 != 0) {
-					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125 + 4 * 4, sticker_parm->second.stickerDefIndex4);
-					if (sticker_parm->second.stickerWear4 != 0) {
-						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(126 + 4 * 4, sticker_parm->second.stickerWear4);
-					}
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4);
-					META_CONPRINTF("sticker_parm->second.stickerWear4: %f\n", sticker_parm->second.stickerWear4);
-				}
-
-
-
-				sticker_parm->second.stickerDefIndex1 = 0;
-				sticker_parm->second.stickerDefIndex2 = 0;
-				sticker_parm->second.stickerDefIndex3 = 0;
-				sticker_parm->second.stickerDefIndex4 = 0;
-				sticker_parm->second.stickerWear1 = 0;
-				sticker_parm->second.stickerWear2 = 0;
-				sticker_parm->second.stickerWear3 = 0;
-				sticker_parm->second.stickerWear4 = 0;
-
-				META_CONPRINTF("m_AttributeList().m_Attributes().Count(): %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().m_Attributes.Count());
-			}
-
-			if (DEBUG_OUTPUT) { META_CONPRINTF("After Stickers\n"); }
-			
 			pBasePlayerWeapon-> m_CBodyComponent ()-> m_pSceneNode ()-> GetSkeletonInstance ()-> m_modelState (). m_MeshGroupMask () = 2 ;
-
-			if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()) {
-				pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-			}
 		//????????????????????????????????????????????????????
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iAccountID() = 9727743;
 
