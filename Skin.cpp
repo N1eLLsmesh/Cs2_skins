@@ -1197,8 +1197,8 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 			{
 				break;
 			}
-
-			SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pc);
+			CBasePlayerController* cbpc= dynamic_cast<CBasePlayerController*>(pc)
+			SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(cbpc);
     			//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     			teamnum=pSCBaseEntity->m_iTeamNum();
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
