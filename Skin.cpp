@@ -1303,7 +1303,7 @@ std::map<int, nlohmann::json> GETSKINS(int64_t steamid64) {
 
 	std::string steamid = std::to_string(steamid64);
 	nlohmann::json jsonResponse;
-	std::vector<nlohmann::json> TempSkins;
+	std::map<int, std::vector<nlohmann::json>> TempSkins;
 	//std::map<int, nlohmann::json> TempSkins;
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 
