@@ -943,7 +943,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				}
 				else
 				{
-					sidetemp=-1;
+					side=-1;
 					META_CONPRINTF("NOFOUND TEAMNUM AND SIDE %lld\n");
 				}
 			}
