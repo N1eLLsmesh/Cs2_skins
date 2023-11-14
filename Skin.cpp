@@ -913,6 +913,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				stattrak = weaponData["stattrak"];
 				weapon_id_API = weaponData["weapon_id"];
 				stattrak_count = weaponData["stattrak_count"];
+					break;
 				}
 			}
 		}
@@ -930,7 +931,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				//weapon_id_API = weaponData["weapon_id"];
 				//stattrak_count = weaponData["stattrak_count"];
 			//}
-		return;
+		//return;
 		
 	}
 	catch(const std::exception& e)
