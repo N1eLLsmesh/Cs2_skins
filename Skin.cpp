@@ -708,6 +708,25 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
 	
+	int64_t steamidtestentity = pCEconEntityWeapon->m_OriginalOwnerXuidLow() | (static_cast<int64_t>(pCEconEntityWeapon->m_OriginalOwnerXuidHigh()) << 32);
+		
+
+	CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pEntity);
+   	if (pBaseEntity && !steamidtestentity)
+    	{
+		META_CONPRINTF( "----------------------------------------------------\n\n\n\n\n");
+		META_CONPRINTF( "PLAYER ENTITY\n");
+		META_CONPRINTF( "----------------------------------------------------\n\n\n\n\n");
+        	// Это игрок (CBasePlayer)
+        	// Ваш код обработки здесь
+    	}
+    	else
+    	{
+		META_CONPRINTF( "NOT PLAYER ENTITY\n");
+        	// Это не игрок
+    	}
+	
+	
 	g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
 	{
 		
@@ -836,17 +855,17 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     CCSPlayerController* pPlayerController=players[steamid].PC;
     CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
 
-	int index = pPlayerController->entindex(); // Получение индекса игрока
-	CBaseEntity* pEntity = g_pGameRules->GetPlayerByIndex(index);
-	if (pEntity) {
+	//int index = pPlayerController->entindex(); // Получение индекса игрока
+	//CBaseEntity* pEntity = g_pGameRules->GetPlayerByIndex(index);
+	//if (pEntity) {
 		//Сущность игрока
-    		META_CONPRINTF("CBaseEntity %lld\n", index);
+    		//META_CONPRINTF("CBaseEntity %lld\n", index);
 		
-	}
-	else
-	{
-		META_CONPRINTF("NOT CBaseEntity %lld\n");
-	}
+	//}
+	//else
+	//{
+		//META_CONPRINTF("NOT CBaseEntity %lld\n");
+	//}
 	
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE || !pPlayerController) {
         META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
