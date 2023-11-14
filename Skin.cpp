@@ -829,8 +829,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 					if (sticker_parm->second.stickerWear1 != 0) {
 						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(114 + 1 * 4, sticker_parm->second.stickerWear1);
 					}
-					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1); }
-					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear1); }
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1);
+					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear1);
 				}
 
 				if (sticker_parm->second.stickerDefIndex2 != 0) {
@@ -838,8 +838,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 					if (sticker_parm->second.stickerWear2 != 0) {
 						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(118 + 2 * 4, sticker_parm->second.stickerWear2);
 					}
-					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2); }
-					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear2: %f\n", sticker_parm->second.stickerWear2); }
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex2: %d\n", sticker_parm->second.stickerDefIndex2);
+					META_CONPRINTF("sticker_parm->second.stickerWear2: %f\n", sticker_parm->second.stickerWear2);
 				}
 
 				if (sticker_parm->second.stickerDefIndex3 != 0) {
@@ -847,17 +847,17 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 					if (sticker_parm->second.stickerWear3 != 0) {
 						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(122 + 3 * 4, sticker_parm->second.stickerWear3);
 					}
-					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3); }
-					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear3: %f\n", sticker_parm->second.stickerWear3); }
-				}
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex3: %d\n", sticker_parm->second.stickerDefIndex3);
+					META_CONPRINTF("sticker_parm->second.stickerWear3: %f\n", sticker_parm->second.stickerWear3);
+				
 
 				if (sticker_parm->second.stickerDefIndex4 != 0) {
 					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(125 + 4 * 4, sticker_parm->second.stickerDefIndex4);
 					if (sticker_parm->second.stickerWear4 != 0) {
 						pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(126 + 4 * 4, sticker_parm->second.stickerWear4);
 					}
-					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4); }
-					if (DEBUG_OUTPUT) { META_CONPRINTF("sticker_parm->second.stickerWear4: %f\n", sticker_parm->second.stickerWear4); }
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex4: %d\n", sticker_parm->second.stickerDefIndex4);
+					META_CONPRINTF("sticker_parm->second.stickerWear4: %f\n", sticker_parm->second.stickerWear4);
 				}
 
 
@@ -1015,6 +1015,7 @@ try
 		    
 		if (weaponDataList[0].contains("stickers") && !weaponDataList[0]["stickers"].empty()) {
         	// Получение значения стикеров
+			META_CONPRINTF("STICKERS IS FOUND\n");
         		for (const auto& sticker : weaponDataList[0]["stickers"]) {
             		int position = sticker["position"];
 
@@ -1022,18 +1023,27 @@ try
     				case 0:
         				g_PlayerStickers[steamid].stickerDefIndex1 = sticker["id"];
         				g_PlayerStickers[steamid].stickerWear1 = sticker["wear"];
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex1);
+					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear1);
+					
        					break;
     				case 1:
         				g_PlayerStickers[steamid].stickerDefIndex2 = sticker["id"];
         				g_PlayerStickers[steamid].stickerWear2 = sticker["wear"];
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex2);
+					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear2);
         				break;
     				case 2:
         				g_PlayerStickers[steamid].stickerDefIndex3 = sticker["id"];
         				g_PlayerStickers[steamid].stickerWear3 = sticker["wear"];
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex3);
+					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear3);
        	 				break;
     				case 3:
         				g_PlayerStickers[steamid].stickerDefIndex4 = sticker["id"];
         				g_PlayerStickers[steamid].stickerWear4 = sticker["wear"];
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", sticker_parm->second.stickerDefIndex4);
+					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", sticker_parm->second.stickerWear4);
         				break;
     				// Добавьте другие case для других позиций, если необходимо
     				default:
@@ -1045,6 +1055,10 @@ try
             		//std::cout << "Sticker ID: " << id << ", Wear: " << wear << ", Position: " << position << std::endl;
         		}
     		}
+		else
+		{
+			META_CONPRINTF("STICKERS IS NOT FOUND\n");
+		}
 
 		    
                 META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n");
