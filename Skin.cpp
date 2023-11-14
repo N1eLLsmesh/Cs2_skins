@@ -70,7 +70,7 @@ Event_PlayerDisconnect g_PlayerDisconnect;
 void TestSkinchanger(int64_t arg1, int arg2);
 void SkinChangerKnife(int64_t arg1);
 std::map<int, nlohmann::json> GETSKINS(int64_t steamid64);
-void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins);
+void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, std::vector<nlohmann::json>> skins);
 void ClearPlayer(int64_t steamid);
 
 void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp);
@@ -84,7 +84,7 @@ struct Players
     CCSPlayerPawnBase* PP;
     CBaseEntity* PBE;
     //nlohmann::json SKINS;
-    std::map<int, nlohmann::json> PlayerSkins;
+    std::map<int, std::vector<nlohmann::json>> PlayerSkins;
     bool firstspawn=true;
 };
 
@@ -898,91 +898,57 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
 
 
-   std::map<int, nlohmann::json> Temp=players[steamid].PlayerSkins;
-    //auto it=Temp.find(weapon_id);
-    nlohmann::json jsonResponse = Temp[weapon_id];
-    std::string jsonString = jsonResponse.dump();
-	
-	 sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
-    FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
-	
-	META_CONPRINTF("JSON %lld\n", jsonString.c_str());
-	//TEST API STATE
-	//nlohmann::json jsonResponse=GETSKINS(steamid);
-	int skin_id = -1;
-        float skin_float = -1.0f;
-        int seed = -1;
-        std::string nametag = "NULL";
-        int side = -1;
-        bool stattrak = false;
-        int weapon_id_API = -1;
-        int stattrak_count = -1;
+std::map<int, std::vector<nlohmann::json>> Temp = players[steamid].PlayerSkins;
 
-	try
-	{
-		//auto range = Temp.equal_range(weapon_id);
-		for (auto it:Temp) {
-			//skin_id = weaponData["skin_id"];
-			nlohmann::json& weaponData = it.second; // Ссылка на json для удобства
-			skin_id = weaponData["skin_id"];
-			side = static_cast<int>(weaponData["side"]);
-			if(it.first==weapon_id)
-			{
-				side = static_cast<int>(weaponData["side"]);
-				//uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
-				skin_id = weaponData["skin_id"];
-				
-				META_CONPRINTF("side: %lld, teamnum: %lld, skinid: %lld\n", side, teamnum, skin_id);
-				if (side == teamnum || side == 0) {
-					if(it.first==weapon_id)
-					{
-					//side = weaponData["side"];
-            				skin_id = weaponData["skin_id"];
-					skin_float = weaponData["float"];
-					seed = weaponData["seed"];
-					nametag = weaponData["nametag"];
-					stattrak = weaponData["stattrak"];
-					weapon_id_API = weaponData["weapon_id"];
-					stattrak_count = weaponData["stattrak_count"];
-					META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n");
-					break;
-					}
-				}
-				else
-				{
-					//side=0;
-					skin_id = weaponData["skin_id"];
-					META_CONPRINTF("NOFOUND TEAMNUM AND SIDE %lld\n");
-				}
-			}
-			
-			META_CONPRINTF("side: %lld, teamnum: %lld, skinid: %lld\n", side, teamnum, skin_id);
-		}
-		//auto it = Temp.find(weapon_id);
-		
-		//if (it != Temp.end()) {
-			//nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
-			//side = weaponData["side"];
-			//if (side == teamnum || side == 0) {
-            			//skin_id = weaponData["skin_id"];
-				//skin_float = weaponData["float"];
-				//seed = weaponData["seed"];
-				//nametag = weaponData["nametag"];
-				//stattrak = weaponData["stattrak"];
-				//weapon_id_API = weaponData["weapon_id"];
-				//stattrak_count = weaponData["stattrak_count"];
-			//}
-		//return;
-		
-	}
-	catch(const std::exception& e)
-	{
-		META_CONPRINTF("ERRROR %lld\n");
-	}
-	if(weapon_id_API<0)
-	{
-		return;
-	}
+int skin_id = -1;
+float skin_float = -1.0f;
+int seed = -1;
+std::string nametag = "NULL";
+int side = -1;
+bool stattrak = false;
+int weapon_id_API = -1;
+int stattrak_count = -1;
+
+try
+{
+    auto it = Temp.find(weapon_id);
+    if (it != Temp.end())
+    {
+        std::vector<nlohmann::json>& weaponDataList = it->second; // Ссылка на вектор json для удобства
+
+        for (const auto& weaponData : weaponDataList)
+        {
+            side = static_cast<int>(weaponData["side"]);
+            if (side == teamnum || side == 0)
+            {
+                skin_id = weaponData["skin_id"];
+                skin_float = weaponData["float"];
+                seed = weaponData["seed"];
+                nametag = weaponData["nametag"];
+                stattrak = weaponData["stattrak"];
+                weapon_id_API = weaponData["weapon_id"];
+                stattrak_count = weaponData["stattrak_count"];
+                META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n");
+                break;
+            }
+            else
+            {
+                // Если совпадения по side не найдено, установите значения по умолчанию
+                side = -1;
+                skin_id = -1;
+            }
+        }
+    }
+}
+catch (const std::exception& e)
+{
+    META_CONPRINTF("ERROR %lld\n");
+}
+
+if (weapon_id_API < 0)
+{
+    return;
+}
 	
     auto weapon_name = g_WeaponsMap.find(weapon_id_API);
     g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id_API;
@@ -1214,7 +1180,14 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
     			//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     			teamnum=pSCBaseEntity->m_iTeamNum();
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
-		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
+			//GETSKINS(steamid);
+			std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
+			std::map<int, std::vector<nlohmann::json>> TempSkins;
+			for (const auto& skin : tempvec) {
+   	 			int weapon_id = skin["weapon_id"];
+    				TempSkins[weapon_id].push_back(skin);
+			}
+		AddOrUpdatePlayer(steamid,pc,pp,TempSkins);
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		//CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
 			
@@ -1236,7 +1209,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 }
 
 //TEST ADDMAP
-void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, nlohmann::json> skins)
+void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, std::vector<nlohmann::json>> skins)
 {
 	//Players player;
 	if(players[steamid].PC==nullptr&& !state[steamid])
@@ -1317,7 +1290,8 @@ std::map<int, nlohmann::json> GETSKINS(int64_t steamid64) {
 
 	std::string steamid = std::to_string(steamid64);
 	nlohmann::json jsonResponse;
-	std::map<int, nlohmann::json> TempSkins;
+	std::vector<nlohmann::json> TempSkins;
+	//std::map<int, nlohmann::json> TempSkins;
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 
 	curl = curl_easy_init();
@@ -1338,8 +1312,8 @@ std::map<int, nlohmann::json> GETSKINS(int64_t steamid64) {
 
 				for(const auto& skin:jsonResponse)
 				{
-					int weapon_id=skin["weapon_id"];
-					TempSkins[weapon_id]=skin;
+    					int weapon_id = skin["weapon_id"];
+    					TempSkins[weapon_id].push_back(skin);
 				}
 			}
 			catch (const std::exception& e) {
