@@ -479,7 +479,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 						
 						SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
     						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-    						teamnum=pSCBaseEntity->m_iTeamNum();
+    						//teamnum=pSCBaseEntity->m_iTeamNum();
     						META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
     						//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 
@@ -507,7 +507,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					
 						SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
     						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-    						teamnum=pSCBaseEntity->m_iTeamNum();
+    						//teamnum=pSCBaseEntity->m_iTeamNum();
     						META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
     						//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
     					//if (!players[steamid].firstspawn) 
@@ -527,7 +527,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 					SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
     						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-    					teamnum=pSCBaseEntity->m_iTeamNum();
+    					//teamnum=pSCBaseEntity->m_iTeamNum();
     					META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
     					//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 					
