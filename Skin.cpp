@@ -712,10 +712,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		
 
 	CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pEntity);
-   	if (pBaseEntity && !steamidtestentity)
+   	if (pBaseEntity && steamidtestentity)
     	{
 		META_CONPRINTF( "----------------------------------------------------\n\n\n\n\n");
-		META_CONPRINTF( "PLAYER ENTITY %d\n", steamidtestentity);
+		META_CONPRINTF( "PLAYER ENTITY %lld\n", steamidtestentity);
 		META_CONPRINTF( "----------------------------------------------------\n\n\n\n\n");
         	// Это игрок (CBasePlayer)
         	// Ваш код обработки здесь
