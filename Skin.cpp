@@ -922,9 +922,9 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	{
 		auto range = Temp.equal_range(weapon_id);
 		for (auto it = range.first; it != range.second; ++it) {
-			if(it.first==weapon_id)
+			if(it->first==weapon_id)
 			{
-				nlohmann::json& weaponData = it.second; // Ссылка на json для удобства
+				nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
 				side = static_cast<int>(weaponData["side"]);
 				//uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
 				META_CONPRINTF("side: %lld, teamnum: %lld\n", side, teamnum);
