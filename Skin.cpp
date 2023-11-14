@@ -1042,7 +1042,7 @@ try
 			}
 				
             		// Делайте что-то с полученными значениями (например, выводите их)
-            		std::cout << "Sticker ID: " << id << ", Wear: " << wear << ", Position: " << position << std::endl;
+            		//std::cout << "Sticker ID: " << id << ", Wear: " << wear << ", Position: " << position << std::endl;
         		}
     		}
 
