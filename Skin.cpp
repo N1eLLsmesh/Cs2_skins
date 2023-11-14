@@ -905,6 +905,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 			{
 				nlohmann::json& weaponData = it.second; // Ссылка на json для удобства
 				side = weaponData["side"];
+				META_CONPRINTF("side: %lld, teamnum: %lld\n", side, teamnum);
 				if (side == teamnum || side == 0) {
             			skin_id = weaponData["skin_id"];
 				skin_float = weaponData["float"];
