@@ -456,7 +456,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					if(players[steamid].PC==nullptr)
 					{
 						CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
-						int teamnum=pBaseEntity->m_iTeamNum();
+						int teamnum=pBaseEntity->m_iTeamNum;
         					META_CONPRINTF("Player ENTITY: %llu\n", pBaseEntity);
 						META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
