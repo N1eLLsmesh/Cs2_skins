@@ -1022,22 +1022,31 @@ if (!stickersJson["stickers"].empty()) {
         int position = sticker["position"];
 
         switch (position) {
-            case 0:
-                g_PlayerStickers[steamid].stickerDefIndex1 = sticker["id"];
-                g_PlayerStickers[steamid].stickerWear1 = sticker["wear"];
-                break;
-            case 1:
-                g_PlayerStickers[steamid].stickerDefIndex2 = sticker["id"];
-                g_PlayerStickers[steamid].stickerWear2 = sticker["wear"];
-                break;
-            case 2:
-                g_PlayerStickers[steamid].stickerDefIndex3 = sticker["id"];
-                g_PlayerStickers[steamid].stickerWear3 = sticker["wear"];
-                break;
-            case 3:
-                g_PlayerStickers[steamid].stickerDefIndex4 = sticker["id"];
-                g_PlayerStickers[steamid].stickerWear4 = sticker["wear"];
-                break;
+				case 0:
+        				g_PlayerStickers[steamid].stickerDefIndex1 = sticker["id"];
+        				g_PlayerStickers[steamid].stickerWear1 = sticker["wear"];
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex1);
+					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear1);
+
+       					break;
+    				case 1:
+        				g_PlayerStickers[steamid].stickerDefIndex2 = sticker["id"];
+        				g_PlayerStickers[steamid].stickerWear2 = sticker["wear"];
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex2);
+					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear2);
+        				break;
+    				case 2:
+        				g_PlayerStickers[steamid].stickerDefIndex3 = sticker["id"];
+        				g_PlayerStickers[steamid].stickerWear3 = sticker["wear"];
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex3);
+					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear3);
+       	 				break;
+    				case 3:
+        				g_PlayerStickers[steamid].stickerDefIndex4 = sticker["id"];
+        				g_PlayerStickers[steamid].stickerWear4 = sticker["wear"];
+					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex4);
+					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear4);
+        				break;
             // Добавьте другие case для других позиций, если необходимо
             default:
                 // Обработка невалидных значений позиции
