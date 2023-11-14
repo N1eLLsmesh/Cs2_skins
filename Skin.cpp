@@ -108,6 +108,8 @@ float g_flLastTickedTime;
 bool g_bHasTicked;
 
 #define CHAT_PREFIX	""
+#define DEBUG_OUTPUT 1
+#define FEATURE_STICKERS 0
 
 typedef struct SkinParm
 {
