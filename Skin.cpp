@@ -825,26 +825,28 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     }
     if(weapon_id==59|| weapon_id==42)
     {
-	    		std::thread([steamid, weapon_id]() {
-				std::this_thread::sleep_for(std::chrono::milliseconds(150));
+	    	std::thread([steamid, weapon_id]() {
+			std::this_thread::sleep_for(std::chrono::milliseconds(150));
         		SkinChangerKnife(steamid);
-			
-			//TestSkinchanger(steamid, ids);
-			
 		}).detach();
 	
 	return;
     }
 
-   // if(weapon_id==5031)
-    //{
-	//    zxczxc=true;
-   // }
-
-//[{"skin_id":10069,"float":0.000100000000000000004792173602385929598312941379845142364501953125,"seed":0,"nametag":"","side":0,"stickers":[],"stattrak":false,"stattrak_count":0,"type":"glove","weapon_id":5031}]
-	
     CCSPlayerController* pPlayerController=players[steamid].PC;
     CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
+
+	int index = pPlayerController->entindex(); // Получение индекса игрока
+	CBaseEntity* pEntity = g_pGameRules->GetPlayerByIndex(index);
+	if (pEntity) {
+		//Сущность игрока
+    		META_CONPRINTF("CBaseEntity %lld\n", index);
+		
+	}
+	else
+	{
+		META_CONPRINTF("NOT CBaseEntity %lld\n");
+	}
 	
     if (!pPlayerPawn || pPlayerPawn->m_lifeState() != LIFE_ALIVE || !pPlayerController) {
         META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
@@ -1023,7 +1025,7 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
 void SkinChangerKnife(int64_t steamid)
 {
 	CCSPlayerController* pPlayerController = players[steamid].PC;
-CCSPlayerPawnBase* pPlayerPawn = players[steamid].PP;
+	CCSPlayerPawnBase* pPlayerPawn = players[steamid].PP;
 
 CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
