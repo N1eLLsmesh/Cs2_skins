@@ -898,11 +898,14 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
 	try
 	{
-		auto it = Temp.find(weapon_id);
-		if (it != Temp.end()) {
-			nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
-			side = weaponData["side"];
-			if (side == teamnum || side == 0) {
+		//size_t count = Temp.count(weapon_id);
+		for(auto it:Temp)
+		{
+			if(it.first==weapon_id)
+			{
+				nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
+				side = weaponData["side"];
+				if (side == teamnum || side == 0) {
             			skin_id = weaponData["skin_id"];
 				skin_float = weaponData["float"];
 				seed = weaponData["seed"];
@@ -910,7 +913,23 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				stattrak = weaponData["stattrak"];
 				weapon_id_API = weaponData["weapon_id"];
 				stattrak_count = weaponData["stattrak_count"];
+				}
 			}
+		}
+		//auto it = Temp.find(weapon_id);
+		
+		//if (it != Temp.end()) {
+			//nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
+			//side = weaponData["side"];
+			//if (side == teamnum || side == 0) {
+            			//skin_id = weaponData["skin_id"];
+				//skin_float = weaponData["float"];
+				//seed = weaponData["seed"];
+				//nametag = weaponData["nametag"];
+				//stattrak = weaponData["stattrak"];
+				//weapon_id_API = weaponData["weapon_id"];
+				//stattrak_count = weaponData["stattrak_count"];
+			//}
 		return;
 		}
 	}
