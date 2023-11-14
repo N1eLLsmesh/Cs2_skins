@@ -1012,56 +1012,41 @@ try
                 weapon_id_API = weaponData["weapon_id"];
                 stattrak_count = weaponData["stattrak_count"];
 
-		     //nlohmann::json stickersJson = {
-        		//{"stickers", originalJson["stickers"]}
-    		//};
+		     nlohmann::json stickersJson = {
+        		{"stickers", weaponData["stickers"]}
+    		};
 		    
-		if (weaponData[0].contains("stickers") && !weaponData[0]["stickers"].empty()) {
-        	// Получение значения стикеров
-			META_CONPRINTF("STICKERS IS FOUND\n");
-        		for (const auto& sticker : weaponDataList[0]["stickers"]) {
-            		int position = sticker["position"];
+if (!stickersJson["stickers"].empty()) {
+    // Получение значения стикеров
+    for (const auto& sticker : stickersJson["stickers"]) {
+        int position = sticker["position"];
 
-			switch (position) {
-    				case 0:
-        				g_PlayerStickers[steamid].stickerDefIndex1 = sticker["id"];
-        				g_PlayerStickers[steamid].stickerWear1 = sticker["wear"];
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex1);
-					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear1);
-					
-       					break;
-    				case 1:
-        				g_PlayerStickers[steamid].stickerDefIndex2 = sticker["id"];
-        				g_PlayerStickers[steamid].stickerWear2 = sticker["wear"];
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex2);
-					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear2);
-        				break;
-    				case 2:
-        				g_PlayerStickers[steamid].stickerDefIndex3 = sticker["id"];
-        				g_PlayerStickers[steamid].stickerWear3 = sticker["wear"];
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex3);
-					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear3);
-       	 				break;
-    				case 3:
-        				g_PlayerStickers[steamid].stickerDefIndex4 = sticker["id"];
-        				g_PlayerStickers[steamid].stickerWear4 = sticker["wear"];
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex4);
-					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear4);
-        				break;
-    				// Добавьте другие case для других позиций, если необходимо
-    				default:
-        				// Обработка невалидных значений позиции
-        				break;
-			}
-				
-            		// Делайте что-то с полученными значениями (например, выводите их)
-            		//std::cout << "Sticker ID: " << id << ", Wear: " << wear << ", Position: " << position << std::endl;
-        		}
-    		}
-		else
-		{
-			META_CONPRINTF("STICKERS IS NOT FOUND\n");
-		}
+        switch (position) {
+            case 0:
+                g_PlayerStickers[steamid].stickerDefIndex1 = sticker["id"];
+                g_PlayerStickers[steamid].stickerWear1 = sticker["wear"];
+                break;
+            case 1:
+                g_PlayerStickers[steamid].stickerDefIndex2 = sticker["id"];
+                g_PlayerStickers[steamid].stickerWear2 = sticker["wear"];
+                break;
+            case 2:
+                g_PlayerStickers[steamid].stickerDefIndex3 = sticker["id"];
+                g_PlayerStickers[steamid].stickerWear3 = sticker["wear"];
+                break;
+            case 3:
+                g_PlayerStickers[steamid].stickerDefIndex4 = sticker["id"];
+                g_PlayerStickers[steamid].stickerWear4 = sticker["wear"];
+                break;
+            // Добавьте другие case для других позиций, если необходимо
+            default:
+                // Обработка невалидных значений позиции
+                break;
+        }
+    }
+} else {
+    META_CONPRINTF("STICKERS IS NOT FOUND\n");
+}
 
 		    
                 META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n");
