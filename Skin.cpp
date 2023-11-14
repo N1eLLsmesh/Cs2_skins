@@ -458,7 +458,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 						//CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
 						SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
 						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-						//uint8_t teamnum=pBaseEntity->m_iTeamNum();
+						uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
         					//META_CONPRINTF("Player ENTITY: %llu\n", pBaseEntity);
 						//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 						
@@ -467,7 +467,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
 						//firstPlayerSpawnEvent=false;
 						state[steamid]=false;
-						std::thread([pCSPlayerController, playerPawn, steamid, pBaseEntity]() {
+						std::thread([pCSPlayerController, playerPawn, steamid]() {
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
 							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
