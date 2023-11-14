@@ -867,7 +867,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		skin_parm->second.m_flFallbackWear = -1;
 
 		META_CONPRINTF( "----------------------------------------------------\n");
-		}
+		
 	});
 	
 }
