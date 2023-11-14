@@ -926,11 +926,11 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 			if(it.first==weapon_id)
 			{
 				nlohmann::json& weaponData = it.second; // Ссылка на json для удобства
-				int sidetemp = weaponData["side"];
+				side = static_cast<int>(weaponData["side"]);
 				//uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
-				META_CONPRINTF("side: %lld, teamnum: %lld\n", sidetemp, teamnum);
+				META_CONPRINTF("side: %lld, teamnum: %lld\n", side, teamnum);
 				if (sidetemp == teamnum || sidetemp == 0) {
-				side = weaponData["side"];
+				//side = weaponData["side"];
             			skin_id = weaponData["skin_id"];
 				skin_float = weaponData["float"];
 				seed = weaponData["seed"];
@@ -943,9 +943,11 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				}
 				else
 				{
+					sidetemp=-1;
 					META_CONPRINTF("NOFOUND TEAMNUM AND SIDE %lld\n");
 				}
 			}
+			META_CONPRINTF("side: %lld, teamnum: %lld\n", side, teamnum);
 		}
 		//auto it = Temp.find(weapon_id);
 		
