@@ -476,7 +476,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
    	 						//int weapon_id = skin["weapon_id"];
     							//TempSkins[weapon_id].push_back(skin);
 						//}
-						AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
+						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
 						//firstPlayerSpawnEvent=false;
 						state[steamid]=false;
 						std::thread([pCSPlayerController, playerPawn, steamid]() {
@@ -516,7 +516,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					
 					META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 					state[steamid]=true;
-					AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
+					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
 					//firstPlayerSpawnEvent=false;
 					state[steamid]=false;
 					std::thread([pCSPlayerController, playerPawn, steamid]() {
@@ -1074,60 +1074,55 @@ void SkinChangerKnife(int64_t steamid)
 
 CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-std::map<int, nlohmann::json> Temp=players[steamid].PlayerSkins;
-int knife_id_API = -1;
-for (const auto& entry : g_KnivesMap) {
-	int knifeIdToFind = entry.first;
-	META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
-	const std::string& knifeName = entry.second;
+    std::map<int, std::vector<nlohmann::json>>& PlayerSkins = players[steamid].PlayerSkins;
 
-	// Проверка наличия ключа в jsonResponse
-	if (Temp.find(knifeIdToFind) != Temp.end()) {
-		// Найдено совпадение
-		//nlohmann::json KnifeData = Temp[knifeIdToFind];
+    int knife_id_API = -1;
 
-		try {
-			//nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
+    for (const auto& entry : g_KnivesMap) {
+        int knifeIdToFind = entry.first;
+        META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
+        const std::string& knifeName = entry.second;
 
-			auto it = Temp.find(knifeIdToFind);
+        // Проверка наличия ключа в PlayerSkins
+        if (PlayerSkins.find(knifeIdToFind) != PlayerSkins.end()) {
+            // Найдено совпадение
+            try {
+                // Получаем вектор скинов для данного ножа
+                auto& KnifeDataVector = PlayerSkins[knifeIdToFind];
 
-			nlohmann::json& KnifeData = it->second; // Ссылка на json для удобства
-			//skin_id = KnifeData["skin_id"];
-			//META_CONPRINTF("SKINIDDDDDDDD %lld\n", skin_id);
-			//skin_float = KnifeData["float"];
-			//META_CONPRINTF("skin_float %lld\n", skin_float);
-			//seed = KnifeData["seed"];
-			//META_CONPRINTF("seed %lld\n", seed);
-			//nametag = KnifeData["nametag"];
-			//side = KnifeData["side"];
-			//META_CONPRINTF("side %lld\n", side);
-			//stattrak = KnifeData["stattrak"];
-			//META_CONPRINTF("stattrak %lld\n", stattrak);
-			knife_id_API = KnifeData["weapon_id"];
-			META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
-			//stattrak_count = KnifeData["stattrak_count"];
-			//META_CONPRINTF("stattrak_count %lld\n", stattrak_count);
+                // Проходим по каждому элементу вектора
+                for (const auto& KnifeData : KnifeDataVector) {
+                    knife_id_API = KnifeData["weapon_id"];
+                    META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
 
-			//META_CONPRINTF("KNIFEIDDDDDDD %lld\n", knife_id_API);
-			break;
+                    // Добавьте здесь код для обработки найденного скина, если необходимо
+                    // ...
 
-		}
-		catch (const std::exception& e) {
-			std::cerr << "ERROR: " << e.what() << std::endl;
-			// Обработка ошибок при парсинге JSON
-			return;
-		}
-	}
-	else {
-		// Не найдено совпадение
-		std::cout << "Knife with id " << knifeIdToFind << " not found." << std::endl;
-	}
+                    // Выход из цикла, если найденный скин подходит
+                    break;
+                }
 
-}
-if(knife_id_API<0)
-{
-	return;
-}
+                // Если необходимо, добавьте код для обработки найденного скина
+                // ...
+
+                // Выход из цикла для следующего ножа
+                break;
+            }
+            catch (const std::exception& e) {
+                std::cerr << "ERROR: " << e.what() << std::endl;
+                // Обработка ошибок при парсинге JSON
+                return;
+            }
+        }
+        else {
+            // Не найдено совпадение для данного ножа
+            std::cout << "Knife with id " << knifeIdToFind << " not found." << std::endl;
+        }
+    }
+
+    if (knife_id_API < 0) {
+        return;
+    }
 auto weapon_slot_map = g_ItemToSlotMap.find(knife_id_API);
 auto weapon_name = g_KnivesMap.find(knife_id_API);
 auto weapon_slot = weapon_slot_map->second;
