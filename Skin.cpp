@@ -923,25 +923,28 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 		auto range = Temp.equal_range(weapon_id);
 		for (auto it = range.first; it != range.second; ++it) {
 			//skin_id = weaponData["skin_id"];
+			nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
 			if(it->first==weapon_id)
 			{
-				nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
 				side = static_cast<int>(weaponData["side"]);
 				//uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
 				skin_id = weaponData["skin_id"];
 				
 				META_CONPRINTF("side: %lld, teamnum: %lld, skinid: %lld\n", side, teamnum, skin_id);
 				if (side == teamnum || side == 0) {
-				//side = weaponData["side"];
-            			skin_id = weaponData["skin_id"];
-				skin_float = weaponData["float"];
-				seed = weaponData["seed"];
-				nametag = weaponData["nametag"];
-				stattrak = weaponData["stattrak"];
-				weapon_id_API = weaponData["weapon_id"];
-				stattrak_count = weaponData["stattrak_count"];
+					if(it->first==weapon_id)
+					{
+					//side = weaponData["side"];
+            				skin_id = weaponData["skin_id"];
+					skin_float = weaponData["float"];
+					seed = weaponData["seed"];
+					nametag = weaponData["nametag"];
+					stattrak = weaponData["stattrak"];
+					weapon_id_API = weaponData["weapon_id"];
+					stattrak_count = weaponData["stattrak_count"];
 					META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n");
 					break;
+					}
 				}
 				else
 				{
@@ -950,6 +953,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 					META_CONPRINTF("NOFOUND TEAMNUM AND SIDE %lld\n");
 				}
 			}
+			
 			META_CONPRINTF("side: %lld, teamnum: %lld, skinid: %lld\n", side, teamnum, skin_id);
 		}
 		//auto it = Temp.find(weapon_id);
