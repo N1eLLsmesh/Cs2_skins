@@ -1049,7 +1049,7 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
             META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
         }
     }
-	
+
 	META_CONPRINTF("TestSkinchanger: Delete entity %s\n", weapon_name->second.c_str());//ТАЙМЕР ДЛЯ ТЕСТА
 	new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
         	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
