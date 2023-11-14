@@ -1009,10 +1009,10 @@ try
                 skin_id = weaponData["skin_id"];
                 skin_float = weaponData["float"];
                 seed = weaponData["seed"];
-                nametag = weaponData["nametag"];
-                stattrak = weaponData["stattrak"];
+                //nametag = weaponData["nametag"];
+                //stattrak = weaponData["stattrak"];
                 weapon_id_API = weaponData["weapon_id"];
-                stattrak_count = weaponData["stattrak_count"];
+                //stattrak_count = weaponData["stattrak_count"];
 
 		     nlohmann::json stickersJson = weaponData["stickers"];
 if (!stickersJson["stickers"].empty()) {
