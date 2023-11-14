@@ -1197,7 +1197,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 			{
 				break;
 			}
-			CBasePlayerController* cbpc= dynamic_cast<CBasePlayerController*>(pc)
+			CBasePlayerController* cbpc= dynamic_cast<CBasePlayerController*>(pc);
 			SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(cbpc);
     			//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     			teamnum=pSCBaseEntity->m_iTeamNum();
