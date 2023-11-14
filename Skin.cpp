@@ -71,10 +71,10 @@ Event_PlayerDisconnect g_PlayerDisconnect;
 void TestSkinchanger(int64_t arg1, int arg2);
 void SkinChangerKnife(int64_t arg1);
 std::map<int, std::vector<nlohmann::json>> GETSKINS(int64_t steamid64);
-void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, std::vector<nlohmann::json>> skins);
+void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, std::vector<nlohmann::json>> skins, SC_CBaseEntity* pbe);
 void ClearPlayer(int64_t steamid);
 
-void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp);
+void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, SC_CBaseEntity* pbe);
 
 CCSPlayerController* PC;
 CCSPlayerPawnBase* PP;
@@ -83,13 +83,13 @@ struct Players
 {
     CCSPlayerController* PC;
     CCSPlayerPawnBase* PP;
-    CBaseEntity* PBE;
+    SC_CBaseEntity* PBE;
     //nlohmann::json SKINS;
     std::map<int, std::vector<nlohmann::json>> PlayerSkins;
     bool firstspawn=true;
 };
 
-int teamnum;
+//int teamnum;
 
 //std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
 std::map<int64_t, Players> players;//TEST DYNAMIC MASSIVE
@@ -481,7 +481,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     						teamnum=pSCBaseEntity->m_iTeamNum();
     						META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
-    						META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
+    						//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 
 
 						
@@ -493,11 +493,11 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
    	 						//int weapon_id = skin["weapon_id"];
     							//TempSkins[weapon_id].push_back(skin);
 						//}
-						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
+						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid),pSCBaseEntity);
 						//firstPlayerSpawnEvent=false;
 						state[steamid]=false;
-						std::thread([pCSPlayerController, playerPawn, steamid]() {
-        						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
+						std::thread([pCSPlayerController, playerPawn, steamid,pSCBaseEntity]() {
+        						ThreadUpdate(steamid,pCSPlayerController,playerPawn,pSCBaseEntity);
 							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
 							//TestSkinchanger(steamid, ids);
@@ -509,7 +509,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     						teamnum=pSCBaseEntity->m_iTeamNum();
     						META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
-    						META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
+    						//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
     					//if (!players[steamid].firstspawn) 
 					//{
         					//return;
@@ -529,15 +529,15 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     					teamnum=pSCBaseEntity->m_iTeamNum();
     					META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
-    					META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
+    					//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 					
 					META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 					state[steamid]=true;
-					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
+					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid),pSCBaseEntity);
 					//firstPlayerSpawnEvent=false;
 					state[steamid]=false;
-					std::thread([pCSPlayerController, playerPawn, steamid]() {
-        						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
+					std::thread([pCSPlayerController, playerPawn, steamid,pSCBaseEntity]() {
+        						ThreadUpdate(steamid,pCSPlayerController,playerPawn,pSCBaseEntity);
 							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
 							//TestSkinchanger(steamid, ids);
@@ -948,6 +948,8 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
     CCSPlayerController* pPlayerController=players[steamid].PC;
     CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
+    SC_CBaseEntity* pSCBaseEntity=players[steamid].PBE;
+    int teamnum= pSCBaseEntity->m_iTeamNum();
     //SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
     //SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     //uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
@@ -1196,7 +1198,8 @@ void SkinChangerKnife(int64_t steamid)
 {
 	CCSPlayerController* pPlayerController = players[steamid].PC;
 	CCSPlayerPawnBase* pPlayerPawn = players[steamid].PP;
-
+        SC_CBaseEntity* pSCBaseEntity=players[steamid].PBE;
+	int teamnum= pSCBaseEntity->m_iTeamNum();
 CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
     std::map<int, std::vector<nlohmann::json>>& PlayerSkins = players[steamid].PlayerSkins;
@@ -1290,7 +1293,7 @@ META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_st
 
 //TEST END
 
-void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp)
+void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, SC_CBaseEntity* pbe)
 {
 	//AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 	try
@@ -1302,10 +1305,10 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 			{
 				break;
 			}
-			CBasePlayerController* cbpc= dynamic_cast<CBasePlayerController*>(pc);
-			SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(cbpc);
+			//CBasePlayerController* cbpc= dynamic_cast<CBasePlayerController*>(pc);
+			//SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(cbpc);
     			//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-    			teamnum=pSCBaseEntity->m_iTeamNum();
+    	                //teamnum=pSCBaseEntity->m_iTeamNum();
 		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
 			//GETSKINS(steamid);
 			//std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
@@ -1314,7 +1317,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
    	 			//int weapon_id = skin["weapon_id"];
     				//TempSkins[weapon_id].push_back(skin);
 			//}
-		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
+		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid),pbe);
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		//CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
 			
@@ -1336,7 +1339,7 @@ void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* p
 }
 
 //TEST ADDMAP
-void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, std::vector<nlohmann::json>> skins)
+void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, std::map<int, std::vector<nlohmann::json>> skins, SC_CBaseEntity* pbe)
 {
 	//Players player;
 	if(players[steamid].PC==nullptr&& !state[steamid])
@@ -1345,6 +1348,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 	 //
 	 	player.PC = pc;
     		player.PP = pp;
+	        player.PBE = pbe;
     		player.PlayerSkins = skins;
     		//player->firstspawn=true;
     		players[steamid] = player;
@@ -1358,6 +1362,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 			Players player;
 	 		player.PC = pc;
     			player.PP = pp;
+			player.PBE = pbe;
     			player.PlayerSkins = skins;
     			//player->firstspawn=true;
     			players[steamid] = player;
@@ -1367,6 +1372,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 		 players[steamid].firstspawn=true;
 		 players[steamid].PC=pc;
 		 players[steamid].PP=pp;
+		 players[steamid].PBE=pbe;
 			if(players[steamid].PlayerSkins!=skins)
 			{
 				players[steamid].PlayerSkins=skins;
@@ -1396,6 +1402,7 @@ void ClearPlayer(int64_t steamid) {
         // Очистить данные игрока
         players[steamid].PC = nullptr;
         players[steamid].PP = nullptr;
+	players[steamid].PBE = nullptr;
         players[steamid].PlayerSkins.clear();
         players[steamid].firstspawn = false;
     }
