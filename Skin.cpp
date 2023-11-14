@@ -1014,11 +1014,13 @@ try
                 weapon_id_API = weaponData["weapon_id"];
                 //stattrak_count = weaponData["stattrak_count"];
 
-		     nlohmann::json stickersJson = weaponData["stickers"];
+		     nlohmann::json stickersJson = {
+        		{"stickers", weaponData["stickers"]}
+    		};
 if (!stickersJson["stickers"].empty()) {
 
     // Получение значения стикеров
-    for (const auto& sticker : stickersJson) {
+    for (const auto& sticker : stickersJson["stickers"]) {
         int position = sticker["position"];
 
         switch (position) {
