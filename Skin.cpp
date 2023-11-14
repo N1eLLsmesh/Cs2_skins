@@ -915,6 +915,10 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				stattrak_count = weaponData["stattrak_count"];
 					break;
 				}
+				else
+				{
+					META_CONPRINTF("NOFOUND TEAMNUM AND SIDE %lld\n");
+				}
 			}
 		}
 		//auto it = Temp.find(weapon_id);
