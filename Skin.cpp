@@ -1015,7 +1015,7 @@ try
 		    
 		if (weaponDataList[0].contains("stickers") && !weaponDataList[0]["stickers"].empty()) {
         	// Получение значения стикеров
-        		for (const auto& sticker : skinArray[0]["stickers"]) {
+        		for (const auto& sticker : weaponDataList[0]["stickers"]) {
             		int position = sticker["position"];
 
 			switch (position) {
