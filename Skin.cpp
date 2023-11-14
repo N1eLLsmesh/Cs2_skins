@@ -922,7 +922,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	{
 		auto range = Temp.equal_range(weapon_id);
 		for (auto it = range.first; it != range.second; ++it) {
-			skin_id = weaponData["skin_id"];
+			//skin_id = weaponData["skin_id"];
 			if(it->first==weapon_id)
 			{
 				nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
@@ -946,6 +946,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				else
 				{
 					//side=0;
+					skin_id = weaponData["skin_id"];
 					META_CONPRINTF("NOFOUND TEAMNUM AND SIDE %lld\n");
 				}
 			}
