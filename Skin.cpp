@@ -13,6 +13,7 @@
 #include "sdk/CPlayer_ItemServices.cpp"
 #include "sdk/CSmokeGrenadeProjectile.h"
 #include <map>
+#include <vector>
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -469,7 +470,13 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 						
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 						state[steamid]=true;
-						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
+						std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
+						std::map<int, std::vector<nlohmann::json>> TempSkins;
+						for (const auto& skin : tempvec) {
+   	 						int weapon_id = skin["weapon_id"];
+    							TempSkins[weapon_id].push_back(skin);
+						}
+						AddOrUpdatePlayer(steamid,pc,pp,TempSkins);
 						//firstPlayerSpawnEvent=false;
 						state[steamid]=false;
 						std::thread([pCSPlayerController, playerPawn, steamid]() {
@@ -509,7 +516,13 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					
 					META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 					state[steamid]=true;
-					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
+					std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
+						std::map<int, std::vector<nlohmann::json>> TempSkins;
+						for (const auto& skin : tempvec) {
+   	 						int weapon_id = skin["weapon_id"];
+    							TempSkins[weapon_id].push_back(skin);
+						}
+					AddOrUpdatePlayer(steamid,pc,pp,TempSkins);
 					//firstPlayerSpawnEvent=false;
 					state[steamid]=false;
 					std::thread([pCSPlayerController, playerPawn, steamid]() {
