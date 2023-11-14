@@ -1012,8 +1012,11 @@ try
                 weapon_id_API = weaponData["weapon_id"];
                 stattrak_count = weaponData["stattrak_count"];
 
+		     //nlohmann::json stickersJson = {
+        		//{"stickers", originalJson["stickers"]}
+    		//};
 		    
-		if (weaponDataList[0].contains("stickers") && !weaponDataList[0]["stickers"].empty()) {
+		if (weaponData[0].contains("stickers") && !weaponData[0]["stickers"].empty()) {
         	// Получение значения стикеров
 			META_CONPRINTF("STICKERS IS FOUND\n");
         		for (const auto& sticker : weaponDataList[0]["stickers"]) {
