@@ -455,11 +455,13 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     				// Игрок существует в вашем контейнере
 					if(players[steamid].PC==nullptr)
 					{
-						CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
+						//CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
+						SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
 						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-						uint8_t teamnum=pBaseEntity->m_iTeamNum();
-        					META_CONPRINTF("Player ENTITY: %llu\n", pBaseEntity);
-						META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
+						//uint8_t teamnum=pBaseEntity->m_iTeamNum();
+        					//META_CONPRINTF("Player ENTITY: %llu\n", pBaseEntity);
+						//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
+						
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 						state[steamid]=true;
 						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
