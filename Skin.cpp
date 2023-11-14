@@ -843,9 +843,9 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
     SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
     //SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-    uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
-    META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
-    META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
+    //uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
+    //META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
+    //META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 	//int index = pPlayerController->entindex(); // Получение индекса игрока
 	//CBaseEntity* pEntity = g_pGameRules->GetPlayerByIndex(index);
 	//if (pEntity) {
@@ -905,6 +905,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 			{
 				nlohmann::json& weaponData = it.second; // Ссылка на json для удобства
 				side = weaponData["side"];
+				uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
 				META_CONPRINTF("side: %lld, teamnum: %lld\n", side, teamnum);
 				if (side == teamnum || side == 0) {
             			skin_id = weaponData["skin_id"];
