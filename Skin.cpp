@@ -436,6 +436,14 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	{
 		return;
 	}
+
+	CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
+        	META_CONPRINTF("Player ENTITY: %llu\n", pBaseEntity);
+    	
+	//else
+	//{
+		//META_CONPRINTF("Player ENTITY: NULL\n");
+	//}
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
 		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
@@ -454,16 +462,6 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     				// Игрок существует в вашем контейнере
 					if(players[steamid].PC==nullptr)
 					{
-						CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
-
-   						if (pBaseEntity)
-    						{
-        						META_CONPRINTF("Player ENTITY: %llu\n", pBaseEntity);
-    						}
-						else
-						{
-							META_CONPRINTF("Player ENTITY: NULL\n");
-						}
 						
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 						state[steamid]=true;
