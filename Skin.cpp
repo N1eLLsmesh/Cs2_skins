@@ -88,7 +88,7 @@ struct Players
     bool firstspawn=true;
 };
 
-uint8_t teamnum;
+int teamnum;
 
 //std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
 std::map<int64_t, Players> players;//TEST DYNAMIC MASSIVE
