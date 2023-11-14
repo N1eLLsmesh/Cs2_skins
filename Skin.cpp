@@ -715,7 +715,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
    	if (pBaseEntity && !steamidtestentity)
     	{
 		META_CONPRINTF( "----------------------------------------------------\n\n\n\n\n");
-		META_CONPRINTF( "PLAYER ENTITY\n");
+		META_CONPRINTF( "PLAYER ENTITY %d\n", steamidtestentity);
 		META_CONPRINTF( "----------------------------------------------------\n\n\n\n\n");
         	// Это игрок (CBasePlayer)
         	// Ваш код обработки здесь
