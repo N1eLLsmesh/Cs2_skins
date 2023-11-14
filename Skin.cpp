@@ -877,6 +877,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			}
 
 			if (DEBUG_OUTPUT) { META_CONPRINTF("After Stickers\n"); }
+			
+			pBasePlayerWeapon-> m_CBodyComponent ()-> m_pSceneNode ()-> GetSkeletonInstance ()-> m_modelState (). m_MeshGroupMask () = 2 ;
 
 			if(pBasePlayerWeapon->m_CBodyComponent() && pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()) {
 				pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
@@ -1017,8 +1019,9 @@ try
 		     nlohmann::json stickersJson = {
         		{"stickers", weaponData["stickers"]}
     		};
-		    
-if (!stickersJson["stickers"].empty()) {
+		    bool test=false;
+//if (!stickersJson["stickers"].empty()) {
+		    if (test) {
     // Получение значения стикеров
     for (const auto& sticker : stickersJson["stickers"]) {
         int position = sticker["position"];
