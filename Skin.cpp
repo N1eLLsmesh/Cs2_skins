@@ -826,7 +826,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     if(weapon_id==59|| weapon_id==42)
     {
 	    		std::thread([steamid, weapon_id]() {
-				//std::this_thread::sleep_for(std::chrono::milliseconds(100));
+				std::this_thread::sleep_for(std::chrono::milliseconds(150));
         		SkinChangerKnife(steamid);
 			
 			//TestSkinchanger(steamid, ids);
