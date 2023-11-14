@@ -82,6 +82,7 @@ struct Players
 {
     CCSPlayerController* PC;
     CCSPlayerPawnBase* PP;
+    CBaseEntity* PBE;
     //nlohmann::json SKINS;
     std::map<int, nlohmann::json> PlayerSkins;
     bool firstspawn=true;
@@ -436,14 +437,6 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	{
 		return;
 	}
-
-	CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
-        	META_CONPRINTF("Player ENTITY: %llu\n", pBaseEntity);
-    	
-	//else
-	//{
-		//META_CONPRINTF("Player ENTITY: NULL\n");
-	//}
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
 		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
@@ -462,13 +455,16 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     				// Игрок существует в вашем контейнере
 					if(players[steamid].PC==nullptr)
 					{
-						
+						CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
+						int teamnum=pBaseEntity->m_iTeamNum();
+        					META_CONPRINTF("Player ENTITY: %llu\n", pBaseEntity);
+						META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 						state[steamid]=true;
 						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid));
 						//firstPlayerSpawnEvent=false;
 						state[steamid]=false;
-						std::thread([pCSPlayerController, playerPawn, steamid]() {
+						std::thread([pCSPlayerController, playerPawn, steamid, pBaseEntity]() {
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn);
 							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
