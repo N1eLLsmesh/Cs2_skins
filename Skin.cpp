@@ -822,7 +822,9 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 
 		//????????????????????????????????????????????????????
 		auto sticker_parm = g_PlayerStickers.find(steamid);
-		if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
+		//if(sticker_parm != g_PlayerStickers.end() && FEATURE_STICKERS) {
+		bool zxc=false;
+		if(zxc) {
 				// Work in progress
 				if (sticker_parm->second.stickerDefIndex1 != 0) {
 					pBasePlayerWeapon->m_AttributeManager().m_Item().m_AttributeList().AddAttribute(113 + 1 * 4, sticker_parm->second.stickerDefIndex1);
