@@ -920,10 +920,12 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
 	try
 	{
-		auto range = Temp.equal_range(weapon_id);
-		for (auto it = range.first; it != range.second; ++it) {
+		//auto range = Temp.equal_range(weapon_id);
+		for (auto it:Temp) {
 			//skin_id = weaponData["skin_id"];
 			nlohmann::json& weaponData = it->second; // Ссылка на json для удобства
+			skin_id = weaponData["skin_id"];
+			side = static_cast<int>(weaponData["side"]);
 			if(it->first==weapon_id)
 			{
 				side = static_cast<int>(weaponData["side"]);
