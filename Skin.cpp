@@ -456,11 +456,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					if(players[steamid].PC==nullptr)
 					{
 						//CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
-						SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
-						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-						uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
-        					META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
-						META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
+						
 						
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 						state[steamid]=true;
@@ -845,7 +841,11 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
     CCSPlayerController* pPlayerController=players[steamid].PC;
     CCSPlayerPawnBase* pPlayerPawn=players[steamid].PP;
-
+    SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
+    //SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
+    uint8_t teamnum=pSCBaseEntity->m_iTeamNum();
+    META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
+    META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 	//int index = pPlayerController->entindex(); // Получение индекса игрока
 	//CBaseEntity* pEntity = g_pGameRules->GetPlayerByIndex(index);
 	//if (pEntity) {
