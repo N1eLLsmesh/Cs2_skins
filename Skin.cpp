@@ -921,7 +921,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	try
 	{
 		//size_t count = Temp.count(weapon_id);
-		for(auto it:Temp)
+		for(const auto& it:Temp)
 		{
 			if(it.first==weapon_id)
 			{
@@ -943,7 +943,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 				}
 				else
 				{
-					side=-1;
+					side=0;
 					META_CONPRINTF("NOFOUND TEAMNUM AND SIDE %lld\n");
 				}
 			}
