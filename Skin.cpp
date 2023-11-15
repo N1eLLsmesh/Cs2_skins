@@ -1212,7 +1212,7 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
         const std::string& knifeName = entry.second;
 
         // Проверка наличия ключа в PlayerSkins
-        if (PlayerSkins.find(knifeIdToFind) != PlayerSkins.end()) {
+        //if (PlayerSkins.find(knifeIdToFind) != PlayerSkins.end()) {
             // Найдено совпадение
             try {
                 // Получаем вектор скинов для данного ножа
@@ -1246,11 +1246,11 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
                 // Обработка ошибок при парсинге JSON
                 return;
             }
-        }
-        else {
+        //}
+        //else {
             // Не найдено совпадение для данного ножа
-            std::cout << "Knife with id " << knifeIdToFind << " not found." << std::endl;
-        }
+           // std::cout << "Knife with id " << knifeIdToFind << " not found." << std::endl;
+        //}
     }
 
     if (knife_id_API < 0) {
