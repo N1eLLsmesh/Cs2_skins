@@ -1316,10 +1316,10 @@ void ForceUpdate(int64_t steamid)
                             local_seed = weaponData["seed"];
                             local_weapon_id = weaponData["weapon_id"];
 			    META_CONPRINTF("local_skin_id %lld\n", local_skin_id);
-			    META_CONPRINTF("local_skin_float %lld\n", local_skin_float);
+			    META_CONPRINTF("local_skin_float %f\n", local_skin_float);
 			    META_CONPRINTF("local_seed %lld\n", local_skin_id);
 			    META_CONPRINTF("local_skin_id %lld\n", local_weapon_id);
-                             if (local_skin_id > 0 && local_skin_float > 0 && local_seed > 0 && local_weapon_id > 0) {
+                             if (local_skin_id > 0 && local_skin_float > 0.0f && local_seed > 0 && local_weapon_id > 0) {
                                 pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = local_weapon_id;
                                 pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
                                 pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
