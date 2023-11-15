@@ -523,7 +523,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				{
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
 					//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
-       					/AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+       					//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
 
 					SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
     						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
