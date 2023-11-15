@@ -59,6 +59,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 
 #include <regex>
 #include <cstdint>
+#include <cstring>
 
 #include <mutex>
 Event_ItemPurchase g_PlayerBuy;
@@ -809,7 +810,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
 		
 		if (!skin_parm->second.m_nameTag.empty()) {
-    			pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName() = skin_parm->second.m_nameTag.c_str();
+    			strcpy(pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName(), skin_parm->second.m_nameTag.c_str());
 		}
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = g_iItemIDHigh++;
 
