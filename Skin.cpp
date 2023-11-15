@@ -1296,7 +1296,7 @@ void ForceUpdate(int64_t steamid)
 	int weapon_id = -1;
 	int stattrak_count = -1;
 
-	    bool exitOuterLoop = false;  
+	    bool Loop = true;  
 	for (const auto& entry : TempWeapons) {
     weapon_id = entry.first;
     META_CONPRINTF("FORCE UPDATE WEAPON_ID %lld\n", weapon_id);
@@ -1326,7 +1326,7 @@ void ForceUpdate(int64_t steamid)
         for (const auto& weaponData : weaponDataList)
         {
             //side = static_cast<int>(weaponData["side"]);
-            if (weaponData)
+            if (Loop)
             {
                 skin_id = weaponData["skin_id"];
                 skin_float = weaponData["float"];
