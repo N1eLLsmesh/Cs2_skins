@@ -1282,7 +1282,7 @@ META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_st
 }
 
 
-void ForceUpdate(int64_t steamid)
+void ForceUpdate(int64_t steamid)//makework(at time no work)
 {
     std::map<int, CEntityInstance*> TempWeapons = players[steamid].PlayerWeapons;
     uint64_t newItemID = 16384;
@@ -1437,8 +1437,9 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 			if(players[steamid].PlayerSkins!=skins)
 			{
 				players[steamid].PlayerSkins=skins;
+				//ForceUpdate(steamid);
 				SkinChangerKnife(steamid);
-				ForceUpdate(steamid);
+				
 			}
 			else
 			{
