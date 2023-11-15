@@ -1206,6 +1206,7 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 
     int knife_id_API = -1;
     int side = -1;
+    bool exitOuterLoop = false;  
 for (const auto& entry : g_KnivesMap) {
     int knifeIdToFind = entry.first;
     META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
