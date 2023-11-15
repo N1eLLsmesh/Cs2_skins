@@ -120,6 +120,7 @@ typedef struct SkinParm
 	int m_nFallbackPaintKit;
 	int m_nFallbackSeed;
 	float m_flFallbackWear;
+	string m_nameTag;
 	bool used = false;
 }SkinParm;
 
@@ -806,6 +807,10 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
+		
+		if (!skin_parm->second.m_nameTag.empty()) {
+    			pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName() = skin_parm->second.m_nameTag;
+		}
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = g_iItemIDHigh++;
 
 		META_CONPRINTF("skin_parm->second.m_nFallbackPaintKit: %d\n", skin_parm->second.m_nFallbackPaintKit);
@@ -818,6 +823,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
 		pCEconEntityWeapon->m_flFallbackWear() = skin_parm->second.m_flFallbackWear;
+		
 		//pCEconEntityWeapon->m_nFallbackStatTrak() = 100;
 		//TEST
 		
@@ -993,7 +999,7 @@ std::map<int, std::vector<nlohmann::json>> Temp = players[steamid].PlayerSkins;
 int skin_id = -1;
 float skin_float = -1.0f;
 int seed = -1;
-std::string nametag = "NULL";
+std::string nametag;
 int side = -1;
 bool stattrak = false;
 int weapon_id_API = -1;
@@ -1014,6 +1020,9 @@ try
                 skin_id = weaponData["skin_id"];
                 skin_float = weaponData["float"];
                 seed = weaponData["seed"];
+		if (!weaponData["nametag"].empty()) {
+    			nametag = weaponData["nametag"];
+		}
                 //nametag = weaponData["nametag"];
                 //stattrak = weaponData["stattrak"];
                 weapon_id_API = weaponData["weapon_id"];
@@ -1092,6 +1101,9 @@ if (weapon_id_API < 0)
     g_PlayerSkins[steamid].m_nFallbackPaintKit = skin_id;
     g_PlayerSkins[steamid].m_nFallbackSeed = seed;
     g_PlayerSkins[steamid].m_flFallbackWear = skin_float;
+    if (!nametag.empty()) {
+    	 g_PlayerSkins[steamid].m_nameTag = nametag;
+    }
     
 	
     //META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
