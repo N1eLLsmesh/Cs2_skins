@@ -1325,6 +1325,11 @@ void ForceUpdate(int64_t steamid)
                                 pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
                                 pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
 
+
+				pCEconEntityWeapon->m_nFallbackPaintKit() = 0;
+                                pCEconEntityWeapon->m_nFallbackSeed() = 0;
+                                pCEconEntityWeapon->m_flFallbackWear() = 0.0f;
+				     
                                 pCEconEntityWeapon->m_nFallbackPaintKit() = local_skin_id;
                                 pCEconEntityWeapon->m_nFallbackSeed() = local_seed;
                                 pCEconEntityWeapon->m_flFallbackWear() = local_skin_float;
