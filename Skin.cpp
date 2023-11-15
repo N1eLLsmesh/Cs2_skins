@@ -1313,7 +1313,7 @@ void ForceUpdate(int64_t steamid)
                         seed = weaponData["seed"];
                         weapon_id = weaponData["weapon_id"];
 
-                        if (skin_id > 0 && skin_float > 0 && seed > 0 && weapon_id > 0) {
+                        //if (skin_id > 0 && skin_float > 0 && seed > 0 && weapon_id > 0) {
                             pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
                             pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
                             pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
@@ -1323,7 +1323,7 @@ void ForceUpdate(int64_t steamid)
                             pCEconEntityWeapon->m_nFallbackSeed() = seed;
                             pCEconEntityWeapon->m_flFallbackWear() = skin_float;
                             pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-                        }
+                        //}
 
                         META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n", weapon_id);
                         break;
