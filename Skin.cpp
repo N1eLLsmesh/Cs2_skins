@@ -1324,24 +1324,24 @@ void ForceUpdate(int64_t steamid)
 			    META_CONPRINTF("local_seed %lld\n", local_skin_id);
 			    META_CONPRINTF("local_skin_id %lld\n", local_weapon_id);
                              if (local_skin_id > 0 && local_skin_float > 0.0f && local_seed > 0 && local_weapon_id > 0) {
-                                pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = local_weapon_id;
-                                pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
-                                pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
-                                pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
+                                (dynamic_cast<CEconEntity*>(pEntity))->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = local_weapon_id;
+                                (dynamic_cast<CEconEntity*>(pEntity))->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
+                                (dynamic_cast<CEconEntity*>(pEntity))->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
+                                (dynamic_cast<CEconEntity*>(pEntity))->m_AttributeManager().m_Item().m_iItemID() = newItemID;
 
 
-				pCEconEntityWeapon->m_nFallbackPaintKit() = 0;
-                                pCEconEntityWeapon->m_nFallbackSeed() = 0;
-                                pCEconEntityWeapon->m_flFallbackWear() = 0.0f;
+				(dynamic_cast<CEconEntity*>(pEntity))->m_nFallbackPaintKit() = 0;
+                                (dynamic_cast<CEconEntity*>(pEntity))->m_nFallbackSeed() = 0;
+                                (dynamic_cast<CEconEntity*>(pEntity))->m_flFallbackWear() = 0.0f;
 				     
-                                pCEconEntityWeapon->m_nFallbackPaintKit() = local_skin_id;
-                                pCEconEntityWeapon->m_nFallbackSeed() = local_seed;
-                                pCEconEntityWeapon->m_flFallbackWear() = local_skin_float;
-                                pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+                                (dynamic_cast<CEconEntity*>(pEntity))->m_nFallbackPaintKit() = local_skin_id;
+                                (dynamic_cast<CEconEntity*>(pEntity))->m_nFallbackSeed() = local_seed;
+                                (dynamic_cast<CEconEntity*>(pEntity))->m_flFallbackWear() = local_skin_float;
+                                (dynamic_cast<CBasePlayerWeapon*>(pEntity))->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
                              }
 
                             META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n", local_weapon_id);
-                            Loop = false;
+                            //Loop = false;
                         }
                     }
                 });
