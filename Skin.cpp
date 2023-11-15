@@ -1206,32 +1206,34 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 
     int knife_id_API = -1;
     int side = -1;
-    // Метка для выхода из внешнего цикла
-outer_loop:
-
-for (const auto& entry : g_KnivesMap) {
-    int knifeIdToFind = entry.first;
-    META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
-    const std::string& knifeName = entry.second;
-    auto& KnifeDataVector = PlayerSkins[knifeIdToFind];
-
-    // Проверка наличия ключа в PlayerSkins
-    try {
-        for (const auto& KnifeData : KnifeDataVector) {
-            side = static_cast<int>(KnifeData["side"]);
-            if (PlayerSkins.find(knifeIdToFind) != PlayerSkins.end() && (side == teamnum || side == 0)) {
-                knife_id_API = KnifeData["weapon_id"];
-                META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
-                // Используем метку для выхода из внешнего цикла
-                goto outer_loop;
+    for (const auto& entry : g_KnivesMap) {
+        int knifeIdToFind = entry.first;
+        META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
+        const std::string& knifeName = entry.second;
+	auto& KnifeDataVector = PlayerSkins[knifeIdToFind];
+        // Проверка наличия ключа в PlayerSkins
+	    //auto& KnifeDataVector = PlayerSkins[knifeIdToFind];
+	    try {
+	    	for (const auto& KnifeData : KnifeDataVector) {
+		   	 side = static_cast<int>(KnifeData["side"]);
+		    	//if (PlayerSkins.find(knifeIdToFind) != PlayerSkins.end() && (side==teamnum||side==0))
+			if (side==teamnum||side==0)
+		    	{
+			    	knife_id_API = KnifeData["weapon_id"];
+			    	META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
+			    	break;
+		    	}
+		    
+	    	}
+	    }
+	    catch (const std::exception& e) {
+                std::cerr << "ERROR: " << e.what() << std::endl;
+                // Обработка ошибок при парсинге JSON
+                return;
             }
-        }
-    } catch (const std::exception& e) {
-        std::cerr << "ERROR: " << e.what() << std::endl;
-        // Обработка ошибок при парсинге JSON
-        return;
+	    
     }
-}
+
     if (knife_id_API < 0) {
         return;
     }
