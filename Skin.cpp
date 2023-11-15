@@ -1290,11 +1290,11 @@ void ForceUpdate(int64_t steamid)
 	int skin_id = -1;
 	float skin_float = -1.0f;
 	int seed = -1;
-	std::string nametag = "NULL";
-	int side = -1;
-	bool stattrak = false;
+	//std::string nametag = "NULL";
+	//int side = -1;
+	//bool stattrak = false;
 	int weapon_id = -1;
-	int stattrak_count = -1;
+	//int stattrak_count = -1;
 
 	    bool Loop = true;  
 	for (const auto& entry : TempWeapons) {
@@ -1336,63 +1336,7 @@ void ForceUpdate(int64_t steamid)
                 weapon_id = weaponData["weapon_id"];
                 //stattrak_count = weaponData["stattrak_count"];
 
-		     nlohmann::json stickersJson = {
-        		{"stickers", weaponData["stickers"]}
-    		};
-if (!stickersJson["stickers"].empty()) {
 
-    // Получение значения стикеров
-    for (const auto& sticker : stickersJson["stickers"]) {
-        int position = sticker["position"];
-
-        switch (position) {
-				case 0:
-        				g_PlayerStickers[steamid].stickerDefIndex1 = sticker["id"];
-        				g_PlayerStickers[steamid].stickerWear1 = static_cast<float>(sticker["wear"]) / 100.0f - 0.0000001f;
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex1);
-					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear1);
-
-       					break;
-    				case 1:
-        				g_PlayerStickers[steamid].stickerDefIndex2 = sticker["id"];
-        				g_PlayerStickers[steamid].stickerWear1 = static_cast<float>(sticker["wear"]) / 100.0f - 0.0000001f;
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex2);
-					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear2);
-        				break;
-    				case 2:
-        				g_PlayerStickers[steamid].stickerDefIndex3 = sticker["id"];
-        				g_PlayerStickers[steamid].stickerWear1 = static_cast<float>(sticker["wear"]) / 100.0f - 0.0000001f;
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex3);
-					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear3);
-       	 				break;
-    				case 3:
-        				g_PlayerStickers[steamid].stickerDefIndex4 = sticker["id"];
-        				g_PlayerStickers[steamid].stickerWear1 = static_cast<float>(sticker["wear"]) / 100.0f - 0.0000001f;
-					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex4);
-					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear4);
-        				break;
-            			// Добавьте другие case для других позиций, если необходимо
-           			default:
-                			// Обработка невалидных значений позиции
-                			break;
-        }
-
-	    if(skin_id > 0 && skin_float > 0  && seed >0 && weapon_id>0) {
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
-
-			pCEconEntityWeapon->m_nFallbackPaintKit() = skin_id;
-			pCEconEntityWeapon->m_nFallbackSeed() = seed;
-			pCEconEntityWeapon->m_flFallbackWear() = skin_float;
-		    	pBasePlayerWeapon-> m_CBodyComponent ()-> m_pSceneNode ()-> GetSkeletonInstance ()-> m_modelState (). m_MeshGroupMask () = 2 ;
-		}
-	    break;
-    }
-} else {
-    META_CONPRINTF("STICKERS IS NOT FOUND\n");
-}
 
 		    if(skin_id > 0 && skin_float > 0  && seed >0 && weapon_id>0) {
 			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
@@ -1408,7 +1352,7 @@ if (!stickersJson["stickers"].empty()) {
 		    
                 META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n");
                 break;
-            }
+            
         }
     }
 }
