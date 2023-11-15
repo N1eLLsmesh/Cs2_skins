@@ -1205,7 +1205,7 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
     std::map<int, std::vector<nlohmann::json>>& PlayerSkins = players[steamid].PlayerSkins;
 
     int knife_id_API = -1;
-
+    int side = -1;
     for (const auto& entry : g_KnivesMap) {
         int knifeIdToFind = entry.first;
         META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
