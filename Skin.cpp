@@ -120,7 +120,7 @@ typedef struct SkinParm
 	int m_nFallbackPaintKit;
 	int m_nFallbackSeed;
 	float m_flFallbackWear;
-	string m_nameTag;
+	std::string m_nameTag;
 	bool used = false;
 }SkinParm;
 
