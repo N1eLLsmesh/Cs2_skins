@@ -1220,7 +1220,11 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 
                 // Проходим по каждому элементу вектора
                 for (const auto& KnifeData : KnifeDataVector) {
-                    knife_id_API = KnifeData["weapon_id"];
+			side = static_cast<int>(weaponData["side"]);
+            		if (side == teamnum || side == 0)
+            		{
+                    		knife_id_API = KnifeData["weapon_id"];
+			}
                     META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
 
                     // Добавьте здесь код для обработки найденного скина, если необходимо
