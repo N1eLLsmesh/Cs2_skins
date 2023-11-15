@@ -942,7 +942,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 	    	META_CONPRINTF("Weapon IDIDIDIDIDIID %lld\n", weapon_id);
 	    	std::thread([steamid, weapon_id]() {
 			
-			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+			std::this_thread::sleep_for(std::chrono::milliseconds(150));
         		SkinChangerKnife(steamid);
 			
 		}).detach();
