@@ -1190,7 +1190,7 @@ void SkinChangerKnife(int64_t steamid)
 	int teamnum= pSCBaseEntity->m_iTeamNum();
 CPlayer_WeaponServices* pWeaponServices = pPlayerPawn->m_pWeaponServices();
 const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
-    std::map<int, std::vector<nlohmann::json>>& PlayerSkins = players[steamid].PlayerSkins;
+    std::map<int, std::vector<nlohmann::json>> Temp = players[steamid].PlayerSkins;
 
     int knife_id_API = -1;
     int side = -1;
@@ -1199,7 +1199,7 @@ for (const auto& entry : g_KnivesMap) {
     int knifeIdToFind = entry.first;
     META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
     const std::string& knifeName = entry.second;
-    auto& KnifeDataVector = PlayerSkins[knifeIdToFind];
+    auto& KnifeDataVector = Temp[knifeIdToFind];
 
     // Проверка наличия ключа в PlayerSkins
     try {
@@ -1351,7 +1351,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 			if(players[steamid].PlayerSkins!=skins)
 			{
 				players[steamid].PlayerSkins=skins;
-				//SkinChangerKnife(steamid);
+				SkinChangerKnife(steamid);
 			}
 			else
 			{
