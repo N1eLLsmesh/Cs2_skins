@@ -1322,7 +1322,7 @@ void ForceUpdate(int64_t steamid)
                             pCEconEntityWeapon->m_nFallbackPaintKit() = skin_id;
                             pCEconEntityWeapon->m_nFallbackSeed() = seed;
                             pCEconEntityWeapon->m_flFallbackWear() = skin_float;
-                            pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+                            //pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
                         //}
 
                         META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n", weapon_id);
