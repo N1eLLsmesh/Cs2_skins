@@ -773,9 +773,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 			return;
 		}
 
-		if (players.find(steamid) != players.end()) {
-        		players[steamid].PlayerWeapons[weaponId] = pEntity;
-    		}
+		
 		
 		TestSkinchanger(steamid, weaponId);
 		
@@ -930,6 +928,12 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 
+		//TESTFORCE
+		if (players.find(steamid) != players.end()) {
+        		players[steamid].PlayerWeapons[weaponId] = pEntity;
+    		}
+		//TESTFORCE
+		
 		skin_parm->second.m_iItemDefinitionIndex = -1;
 		skin_parm->second.m_nFallbackPaintKit = -1;
 		skin_parm->second.m_nFallbackSeed = -1;
