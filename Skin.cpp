@@ -811,7 +811,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		
 		if (!skin_parm->second.m_nameTag.empty()) {
     			//pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName() = static_cast<char>(skin_parm->second.m_nameTag[0]);
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName() = static_cast<char*>(skin_parm->second.m_nameTag);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName() = skin_parm->second.m_nameTag*;
 		}
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = g_iItemIDHigh++;
 
@@ -946,6 +946,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		skin_parm->second.m_nFallbackPaintKit = -1;
 		skin_parm->second.m_nFallbackSeed = -1;
 		skin_parm->second.m_flFallbackWear = -1;
+		skin_parm->second.m_nameTag=NULL;
 
 		META_CONPRINTF( "----------------------------------------------------\n");
 		
