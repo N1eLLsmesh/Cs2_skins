@@ -1315,8 +1315,11 @@ void ForceUpdate(int64_t steamid)
                             local_skin_float = weaponData["float"];
                             local_seed = weaponData["seed"];
                             local_weapon_id = weaponData["weapon_id"];
-
-                            // if (local_skin_id > 0 && local_skin_float > 0 && local_seed > 0 && local_weapon_id > 0) {
+			    META_CONPRINTF("local_skin_id %lld\n", local_skin_id);
+			    META_CONPRINTF("local_skin_float %lld\n", local_skin_float);
+			    META_CONPRINTF("local_seed %lld\n", local_skin_id);
+			    META_CONPRINTF("local_skin_id %lld\n", local_weapon_id);
+                             if (local_skin_id > 0 && local_skin_float > 0 && local_seed > 0 && local_weapon_id > 0) {
                                 pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = local_weapon_id;
                                 pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
                                 pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
@@ -1326,7 +1329,7 @@ void ForceUpdate(int64_t steamid)
                                 pCEconEntityWeapon->m_nFallbackSeed() = local_seed;
                                 pCEconEntityWeapon->m_flFallbackWear() = local_skin_float;
                                 pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-                            // }
+                             }
 
                             META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n", local_weapon_id);
                             Loop = false;
