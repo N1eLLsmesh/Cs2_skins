@@ -1414,7 +1414,7 @@ if (!stickersJson["stickers"].empty()) {
 }
 catch (const std::exception& e)
 {
-    META_CONPRINTF("ERROR %lld\n");
+    META_CONPRINTF("ERROR %s\n",e.what());
 }
 	}
 	
