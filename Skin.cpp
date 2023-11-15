@@ -1224,7 +1224,7 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
             		if (side == teamnum || side == 0)
             		{
                     		knife_id_API = KnifeData["weapon_id"];
-				break;
+				//break;
 			}
                     META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
 
