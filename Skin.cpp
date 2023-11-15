@@ -534,13 +534,13 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 					//META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 					state[steamid]=true;
 					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid),pSCBaseEntity);
-					firstPlayerSpawnEvent=false;
+					//firstPlayerSpawnEvent=false;
 					state[steamid]=false;
 					std::thread([pCSPlayerController, playerPawn, steamid,pSCBaseEntity]() {
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn,pSCBaseEntity);
 							std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
-							TestSkinchanger(steamid, ids);
+							//TestSkinchanger(steamid, ids);
 			
 						}).detach();
 					return;
