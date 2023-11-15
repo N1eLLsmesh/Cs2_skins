@@ -1286,14 +1286,9 @@ void ForceUpdate(int64_t steamid)
     uint32_t newItemIDHigh = newItemID >> 32;
 
     std::map<int, std::vector<nlohmann::json>> Temp = players[steamid].PlayerSkins;
-    int skin_id = -1;
-    float skin_float = -1.0f;
-    int seed = -1;
-    int weapon_id = -1;
 
-    bool Loop = true;  
     for (const auto& entry : TempWeapons) {
-        weapon_id = entry.first;
+        int weapon_id = entry.first;
         META_CONPRINTF("FORCE UPDATE WEAPON_ID %lld\n", weapon_id);
 
         try {
@@ -1304,40 +1299,47 @@ void ForceUpdate(int64_t steamid)
                 CEntityInstance* pEntity = entry.second;
                 CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
                 CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
-		g_Skin.NextFrame([pBasePlayerWeapon = pBasePlayerWeapon, pCEconEntityWeapon = pCEconEntityWeapon]()
-		{
-                if (!pBasePlayerWeapon) return;
 
-                for (const auto& weaponData : weaponDataList) {
-                    if (Loop) {
-                        skin_id = weaponData["skin_id"];
-                        skin_float = weaponData["float"];
-                        seed = weaponData["seed"];
-                        weapon_id = weaponData["weapon_id"];
+                g_Skin.NextFrame([=]() {
+                    if (!pBasePlayerWeapon) return;
 
-                        //if (skin_id > 0 && skin_float > 0 && seed > 0 && weapon_id > 0) {
-                            pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
-                            pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
-                            pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
-                            pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
+                    bool Loop = true;
+                    int local_skin_id = -1;
+                    float local_skin_float = -1.0f;
+                    int local_seed = -1;
+                    int local_weapon_id = -1;
 
-                            pCEconEntityWeapon->m_nFallbackPaintKit() = skin_id;
-                            pCEconEntityWeapon->m_nFallbackSeed() = seed;
-                            pCEconEntityWeapon->m_flFallbackWear() = skin_float;
-                            pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
-                        //}
+                    for (const auto& weaponData : weaponDataList) {
+                        if (Loop) {
+                            local_skin_id = weaponData["skin_id"];
+                            local_skin_float = weaponData["float"];
+                            local_seed = weaponData["seed"];
+                            local_weapon_id = weaponData["weapon_id"];
 
-                        META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n", weapon_id);
-                        break;
+                            // if (local_skin_id > 0 && local_skin_float > 0 && local_seed > 0 && local_weapon_id > 0) {
+                                pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = local_weapon_id;
+                                pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
+                                pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
+                                pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
+
+                                pCEconEntityWeapon->m_nFallbackPaintKit() = local_skin_id;
+                                pCEconEntityWeapon->m_nFallbackSeed() = local_seed;
+                                pCEconEntityWeapon->m_flFallbackWear() = local_skin_float;
+                                pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+                            // }
+
+                            META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n", local_weapon_id);
+                            Loop = false;
+                        }
                     }
-                }
-            });
-	}
+                });
+            }
         } catch (const std::exception& e) {
             META_CONPRINTF("ERROR %s\n", e.what());
         }
     }
 }
+
 //TEST END
 
 void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, SC_CBaseEntity* pbe)
