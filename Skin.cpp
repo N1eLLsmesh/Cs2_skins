@@ -1505,7 +1505,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 			{
 				players[steamid].PlayerSkins=skins;
 				SkinChangerKnife(steamid);
-				ForceUpdate(steamid)
+				ForceUpdate(steamid);
 			}
 			else
 			{
