@@ -936,8 +936,10 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     {
 	    return;
     }
+	
     if(weapon_id==59|| weapon_id==42)
     {
+	    	META_CONPRINTF("Weapon IDIDIDIDIDIID %lld\n", weapon_id);
 	    	std::thread([steamid, weapon_id]() {
 			
 			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
@@ -1349,7 +1351,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 			if(players[steamid].PlayerSkins!=skins)
 			{
 				players[steamid].PlayerSkins=skins;
-				SkinChangerKnife(steamid);
+				//SkinChangerKnife(steamid);
 			}
 			else
 			{
