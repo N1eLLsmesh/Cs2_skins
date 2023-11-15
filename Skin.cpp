@@ -523,27 +523,27 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 				{
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
 					//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
-       					//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
+       					/AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
 
-					//SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
+					SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
     						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     					//teamnum=pSCBaseEntity->m_iTeamNum();
     					//META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
     					//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
 					
 					//META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
-					//state[steamid]=true;
-					//AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid),pSCBaseEntity);
-					//firstPlayerSpawnEvent=false;
-					//state[steamid]=false;
-					//std::thread([pCSPlayerController, playerPawn, steamid,pSCBaseEntity]() {
-        						//ThreadUpdate(steamid,pCSPlayerController,playerPawn,pSCBaseEntity);
-							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
+					state[steamid]=true;
+					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid),pSCBaseEntity);
+					firstPlayerSpawnEvent=false;
+					state[steamid]=false;
+					std::thread([pCSPlayerController, playerPawn, steamid,pSCBaseEntity]() {
+        						ThreadUpdate(steamid,pCSPlayerController,playerPawn,pSCBaseEntity);
+							std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
-							//TestSkinchanger(steamid, ids);
+							TestSkinchanger(steamid, ids);
 			
-						//}).detach();
-					//return;
+						}).detach();
+					return;
 				}
 				
     			}
@@ -940,7 +940,7 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
     {
 	    	std::thread([steamid, weapon_id]() {
 			
-			std::this_thread::sleep_for(std::chrono::milliseconds(150));
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         		SkinChangerKnife(steamid);
 			
 		}).detach();
