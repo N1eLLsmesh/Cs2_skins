@@ -1210,43 +1210,63 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
         int knifeIdToFind = entry.first;
         META_CONPRINTF("knifeIdToFind %lld\n", knifeIdToFind);
         const std::string& knifeName = entry.second;
-
+	auto& KnifeDataVector = PlayerSkins[knifeIdToFind];
         // Проверка наличия ключа в PlayerSkins
-        //if (PlayerSkins.find(knifeIdToFind) != PlayerSkins.end()) {
+	    //auto& KnifeDataVector = PlayerSkins[knifeIdToFind];
+	    try {
+	    	for (const auto& KnifeData : KnifeDataVector) {
+		   	 side = static_cast<int>(KnifeData["side"]);
+		    	if (PlayerSkins.find(knifeIdToFind) != PlayerSkins.end() && (side==teamnum||side==0))
+		    	{
+			    	knife_id_API = KnifeData["weapon_id"];
+			    	META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
+			    	break;
+		    	}
+		    
+	    	}
+	    }
+	    catch (const std::exception& e) {
+                std::cerr << "ERROR: " << e.what() << std::endl;
+                // Обработка ошибок при парсинге JSON
+                return;
+            }
+	    //side = static_cast<int>(KnifeData["side"]);
+            		
+        //if (PlayerSkins.find(knifeIdToFind) != PlayerSkins.end() ) {
             // Найдено совпадение
-            try {
+           // try {
                 // Получаем вектор скинов для данного ножа
-                auto& KnifeDataVector = PlayerSkins[knifeIdToFind];
+                
 
                 // Проходим по каждому элементу вектора
-                for (const auto& KnifeData : KnifeDataVector) {
-			side = static_cast<int>(KnifeData["side"]);
-            		if (side == teamnum || side == 0)
-            		{
-                    		knife_id_API = KnifeData["weapon_id"];
+               // for (const auto& KnifeData : KnifeDataVector) {
+			//side = static_cast<int>(KnifeData["side"]);
+            		//if (side == teamnum || side == 0)
+            		//{
+                    		//knife_id_API = KnifeData["weapon_id"];
 				//break;
-			}
-                    META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
+			//}
+                    //META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
 
                     // Добавьте здесь код для обработки найденного скина, если необходимо
                     // ...
 
                     // Выход из цикла, если найденный скин подходит
                    
-                }
+                //}
 
                 // Если необходимо, добавьте код для обработки найденного скина
                 // ...
 
                 // Выход из цикла для следующего ножа
                 //break;
-            }
-            catch (const std::exception& e) {
-                std::cerr << "ERROR: " << e.what() << std::endl;
+            //}
+           // catch (const std::exception& e) {
+               // std::cerr << "ERROR: " << e.what() << std::endl;
                 // Обработка ошибок при парсинге JSON
-                return;
-            }
-        //}
+                //return;
+           // }
+       // }
         //else {
             // Не найдено совпадение для данного ножа
            // std::cout << "Knife with id " << knifeIdToFind << " not found." << std::endl;
