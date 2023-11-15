@@ -810,7 +810,8 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
 		
 		if (!skin_parm->second.m_nameTag.empty()) {
-    			pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName() = static_cast<char>(skin_parm->second.m_nameTag[0]);
+    			//pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName() = static_cast<char>(skin_parm->second.m_nameTag[0]);
+			pCEconEntityWeapon->m_AttributeManager().m_Item().m_szCustomName() = static_cast<char*>(skin_parm->second.m_nameTag);
 		}
 		// pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = g_iItemIDHigh++;
 
