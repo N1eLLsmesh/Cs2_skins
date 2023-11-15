@@ -946,7 +946,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		skin_parm->second.m_nFallbackPaintKit = -1;
 		skin_parm->second.m_nFallbackSeed = -1;
 		skin_parm->second.m_flFallbackWear = -1;
-		skin_parm->second.m_nameTag.clear()
+		skin_parm->second.m_nameTag.clear();
 
 		META_CONPRINTF( "----------------------------------------------------\n");
 		
