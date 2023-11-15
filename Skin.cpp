@@ -1220,7 +1220,7 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
 
                 // Проходим по каждому элементу вектора
                 for (const auto& KnifeData : KnifeDataVector) {
-			side = static_cast<int>(weaponData["side"]);
+			side = static_cast<int>(KnifeData["side"]);
             		if (side == teamnum || side == 0)
             		{
                     		knife_id_API = KnifeData["weapon_id"];
