@@ -774,7 +774,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		}
 
 		if (players.find(steamid) != players.end()) {
-        		players[steamid].PlayerWeapon[weaponId] = pEntity;
+        		players[steamid].PlayerWeapons[weaponId] = pEntity;
     		}
 		
 		TestSkinchanger(steamid, weaponId);
@@ -1316,7 +1316,7 @@ void ForceUpdate(int64_t steamid)
         std::vector<nlohmann::json>& weaponDataList = it->second; // Ссылка на вектор json для удобства
 
 	    
-	CEntityInstance& pEntity = entry.second;
+	CEntityInstance* pEntity = entry.second;
 	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
 	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
 	if(!pBasePlayerWeapon) return;
@@ -1326,7 +1326,7 @@ void ForceUpdate(int64_t steamid)
         for (const auto& weaponData : weaponDataList)
         {
             //side = static_cast<int>(weaponData["side"]);
-            if ()
+            if (weaponData)
             {
                 skin_id = weaponData["skin_id"];
                 skin_float = weaponData["float"];
