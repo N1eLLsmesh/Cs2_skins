@@ -1239,7 +1239,7 @@ const auto pPlayerWeapons = pWeaponServices->m_hMyWeapons();
                 // ...
 
                 // Выход из цикла для следующего ножа
-                break;
+                //break;
             }
             catch (const std::exception& e) {
                 std::cerr << "ERROR: " << e.what() << std::endl;
