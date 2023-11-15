@@ -1280,88 +1280,60 @@ META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_st
 
 void ForceUpdate(int64_t steamid)
 {
-	std::map<int, CEntityInstance*> TempWeapons = players[steamid].PlayerWeapons;
-	uint64_t newItemID = 16384;
-	uint32_t newItemIDLow = newItemID & 0xFFFFFFFF;
-	uint32_t newItemIDHigh = newItemID >> 32;
+    std::map<int, CEntityInstance*> TempWeapons = players[steamid].PlayerWeapons;
+    uint64_t newItemID = 16384;
+    uint32_t newItemIDLow = newItemID & 0xFFFFFFFF;
+    uint32_t newItemIDHigh = newItemID >> 32;
 
-	
-	std::map<int, std::vector<nlohmann::json>> Temp = players[steamid].PlayerSkins;
-	int skin_id = -1;
-	float skin_float = -1.0f;
-	int seed = -1;
-	//std::string nametag = "NULL";
-	//int side = -1;
-	//bool stattrak = false;
-	int weapon_id = -1;
-	//int stattrak_count = -1;
+    std::map<int, std::vector<nlohmann::json>> Temp = players[steamid].PlayerSkins;
+    int skin_id = -1;
+    float skin_float = -1.0f;
+    int seed = -1;
+    int weapon_id = -1;
 
-	    bool Loop = true;  
-	for (const auto& entry : TempWeapons) {
-    weapon_id = entry.first;
-    META_CONPRINTF("FORCE UPDATE WEAPON_ID %lld\n", weapon_id);
+    bool Loop = true;  
+    for (const auto& entry : TempWeapons) {
+        weapon_id = entry.first;
+        META_CONPRINTF("FORCE UPDATE WEAPON_ID %lld\n", weapon_id);
 
-		
-   
+        try {
+            auto it = Temp.find(weapon_id);
+            if (it != Temp.end()) {
+                std::vector<nlohmann::json>& weaponDataList = it->second;
 
-		
-    //auto& KnifeDataVector = Temp[knifeIdToFind];
-	
-	
-	try
-	{
-    auto it = Temp.find(weapon_id);
-    if (it != Temp.end())
-    {
-        std::vector<nlohmann::json>& weaponDataList = it->second; // Ссылка на вектор json для удобства
+                CEntityInstance* pEntity = entry.second;
+                CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
+                CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
+                if (!pBasePlayerWeapon) return;
 
-	    
-	CEntityInstance* pEntity = entry.second;
-	CBasePlayerWeapon* pBasePlayerWeapon = dynamic_cast<CBasePlayerWeapon*>(pEntity);
-	CEconEntity* pCEconEntityWeapon = dynamic_cast<CEconEntity*>(pEntity);
-	if(!pBasePlayerWeapon) return;
+                for (const auto& weaponData : weaponDataList) {
+                    if (Loop) {
+                        skin_id = weaponData["skin_id"];
+                        skin_float = weaponData["float"];
+                        seed = weaponData["seed"];
+                        weapon_id = weaponData["weapon_id"];
 
+                        if (skin_id > 0 && skin_float > 0 && seed > 0 && weapon_id > 0) {
+                            pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
+                            pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
+                            pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
+                            pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
 
-	    
-        for (const auto& weaponData : weaponDataList)
-        {
-            //side = static_cast<int>(weaponData["side"]);
-            if (Loop)
-            {
-                skin_id = weaponData["skin_id"];
-                skin_float = weaponData["float"];
-                seed = weaponData["seed"];
-                //nametag = weaponData["nametag"];
-                //stattrak = weaponData["stattrak"];
-                weapon_id = weaponData["weapon_id"];
-                //stattrak_count = weaponData["stattrak_count"];
+                            pCEconEntityWeapon->m_nFallbackPaintKit() = skin_id;
+                            pCEconEntityWeapon->m_nFallbackSeed() = seed;
+                            pCEconEntityWeapon->m_flFallbackWear() = skin_float;
+                            pBasePlayerWeapon->m_CBodyComponent()->m_pSceneNode()->GetSkeletonInstance()->m_modelState().m_MeshGroupMask() = 2;
+                        }
 
-
-
-		    if(skin_id > 0 && skin_float > 0  && seed >0 && weapon_id>0) {
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = weapon_id;
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDLow() = newItemIDLow;
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemIDHigh() = newItemIDHigh;
-			pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemID() = newItemID;
-
-			pCEconEntityWeapon->m_nFallbackPaintKit() = skin_id;
-			pCEconEntityWeapon->m_nFallbackSeed() = seed;
-			pCEconEntityWeapon->m_flFallbackWear() = skin_float;
-			pBasePlayerWeapon-> m_CBodyComponent ()-> m_pSceneNode ()-> GetSkeletonInstance ()-> m_modelState (). m_MeshGroupMask () = 2 ;
-		}
-		    
-                META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n");
-                break;
-            
+                        META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n", weapon_id);
+                        break;
+                    }
+                }
+            }
+        } catch (const std::exception& e) {
+            META_CONPRINTF("ERROR %s\n", e.what());
         }
     }
-}
-catch (const std::exception& e)
-{
-    META_CONPRINTF("ERROR %s\n",e.what());
-}
-	}
-	
 }
 //TEST END
 
