@@ -4,6 +4,7 @@
 #include "schemasystem.h"
 #include "ehandle.h"
 #include "c_baseplayer.h"
+#include "c_playerlocaldata.h";
 #include "playernet_vars.h"
 
 inline CEntityInstance* UTIL_FindEntityByClassname(CEntityInstance* pStart, const char* name)
