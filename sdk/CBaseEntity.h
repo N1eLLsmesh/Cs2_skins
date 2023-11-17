@@ -4,7 +4,7 @@
 #include "schemasystem.h"
 #include "ehandle.h"
 
-#include "playernet_vars.h"
+//#include "playernet_vars.h"
 #include "shared_classnames.h"
 #include "c_baseplayer.h"
 
