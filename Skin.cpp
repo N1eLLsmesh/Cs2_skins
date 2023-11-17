@@ -530,6 +530,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	
 		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
+
 		
 		//int ids=SearchMap[weapon];
 		//std::thread([pCSPlayerController, playerPawn, ids=ids]() {
