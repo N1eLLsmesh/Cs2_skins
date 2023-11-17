@@ -63,7 +63,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 
 #include <mutex>
 Event_ItemPurchase g_PlayerBuy;
-Event_PlayerSpawned g_PlayerSpawnedEvent;//nowork tested
+Event_PlayerSpawned g_PlayerSpawnedEvent;//tested
 OnRoundStart g_RoundStart;
 
 Event_PlayerConnect g_PlayerConnect;
@@ -92,8 +92,6 @@ struct Players
     bool firstspawn=true;
     std::map<int,CEntityInstance*> PlayerWeapons;
 };
-
-//int teamnum;
 
 //std::map<int64_t, std::shared_ptr<Players>> players;//TEST DYNAMIC MASSIVE
 std::map<int64_t, Players> players;//TEST DYNAMIC MASSIVE
@@ -437,14 +435,6 @@ void Skin::GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 
 void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 {
-	//if (!firstPlayerSpawnEvent)
-	//{
-		
-        	//return;
-		
-	//}
-
-	//firstPlayerSpawnEvent=false;
 	if (!g_pGameRules)//TEST
 	{
         	return;
@@ -465,87 +455,49 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController]()
 	{
 		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
-    		
-     		//PC=pCSPlayerController;//globalCONTROLLER
+		
 		int64_t steamid = pPlayerController->m_steamID();
 		if (pCSPlayerController)
 		{
     			CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
     			if (playerPawn)
 			{
-				//PP=playerPawn;//globalPAWN
-				//nlohmann::json jsonSkins=GETSKINS(steamid);
 				if (players.find(steamid) != players.end()) 
 				{
     				// Игрок существует в вашем контейнере
 					if(players[steamid].PC==nullptr)
 					{
-						//CBaseEntity* pBaseEntity = dynamic_cast<CBaseEntity*>(pPlayerController);
 						
 						SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
-    						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-    						//teamnum=pSCBaseEntity->m_iTeamNum();
     						META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
-    						//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
-
 
 						
 						META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
 						state[steamid]=true;
-						//std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
-						//std::map<int, std::vector<nlohmann::json>> TempSkins;
-						//for (const auto& skin : tempvec) {
-   	 						//int weapon_id = skin["weapon_id"];
-    							//TempSkins[weapon_id].push_back(skin);
-						//}
+						
 						AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid),pSCBaseEntity);
-						//firstPlayerSpawnEvent=false;
 						state[steamid]=false;
 						std::thread([pCSPlayerController, playerPawn, steamid,pSCBaseEntity]() {
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn,pSCBaseEntity);
-							//std::this_thread::sleep_for(std::chrono::milliseconds(150));
-			
-							//TestSkinchanger(steamid, ids);
 			
 						}).detach();
 					}
 					
-						SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
-    						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-    						//teamnum=pSCBaseEntity->m_iTeamNum();
-    						META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
-    						//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
-    					//if (!players[steamid].firstspawn) 
-					//{
-        					//return;
-    					//} 
-					//else 
-					//{
-
-    					//}
 				} 
 				else 
 				{
     				// Игрок не существует в вашем контейнере, возможно, нужно выполнить какие-то действия
-					//std::map<int, nlohmann::json> Temp = GETSKINS(steamid);
-       					//AddOrUpdatePlayer(steamid, pCSPlayerController, playerPawn, Temp);
 
 					SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
-    						//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-    					//teamnum=pSCBaseEntity->m_iTeamNum();
-    					//META_CONPRINTF("Player ENTITY: %llu\n", pSCBaseEntity);
-    					//META_CONPRINTF("Player TEAMNUM: %llu\n", teamnum);
-					
-					//META_CONPRINTF("Player Connect: , SteamID: %llu\n", steamid);
+
 					state[steamid]=true;
 					AddOrUpdatePlayer(steamid,pCSPlayerController,playerPawn,GETSKINS(steamid),pSCBaseEntity);
-					//firstPlayerSpawnEvent=false;
+
 					state[steamid]=false;
 					std::thread([pCSPlayerController, playerPawn, steamid,pSCBaseEntity]() {
         						ThreadUpdate(steamid,pCSPlayerController,playerPawn,pSCBaseEntity);
 							std::this_thread::sleep_for(std::chrono::milliseconds(150));
 			
-							//TestSkinchanger(steamid, ids);
 			
 						}).detach();
 					return;
@@ -570,7 +522,6 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
-	//const 
 	const std::string weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
@@ -579,17 +530,15 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	
 		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
-		//7 639 1 0
-		//[{"skin_id":724,"float":0.061400000000000003186340080674199271015822887420654296875,"seed":245,"nametag":"","side":1,"stickers":[],"stattrak":false,"weapon_id":7,"stattrak_count":0}]
-
-		int ids=SearchMap[weapon];
-		std::thread([pCSPlayerController, playerPawn, ids=ids]() {
-        		int64_t steamid = pCSPlayerController->m_steamID();
-			std::this_thread::sleep_for(std::chrono::milliseconds(150));
+		
+		//int ids=SearchMap[weapon];
+		//std::thread([pCSPlayerController, playerPawn, ids=ids]() {
+        	//	int64_t steamid = pCSPlayerController->m_steamID();
+		//	std::this_thread::sleep_for(std::chrono::milliseconds(150));
+		//	
+		//	//TestSkinchanger(steamid, 5031);
 			
-			//TestSkinchanger(steamid, 5031);
-			
-		}).detach();
+		//}).detach();
 	
 		META_CONPRINTF("PLAYER BUY WEAPON %d\n",ids);
 	});
@@ -612,14 +561,9 @@ void Event_PlayerSpawned::FireGameEvent(IGameEvent* event)
 
 void OnRoundStart::FireGameEvent(IGameEvent* event) 
 {
-	//TestSkinchanger(PC, PP, 61, 657, 1, 0.0f);
-	//firstPlayerSpawnEvent=true;
     	META_CONPRINTF("RoundStarted\n");
 }
 
-
-//Event_PlayerConnect g_PlayerConnect;
-//Event_PlayerDisconnect g_PlayerDisconnect;
 uint64_t ExtractSteamIDFromNetworkID(const std::string& networkID) {
 try {
         size_t start = networkID.find(":1:") + 3;
@@ -628,15 +572,12 @@ try {
         if (start != std::string::npos && end != std::string::npos) {
             std::string accountIDStr = networkID.substr(start, end - start);
             uint32_t accountID = std::stoi(accountIDStr);
-            uint64_t steamID = ((uint64_t)accountID) + 76561197960265728ULL;
+            uint64_t steamID = ((uint64_t)accountID) + 76561197960265728ULL;//const+accountid
             return steamID;
         } else {
-            // Логгирование или вывод сообщения об ошибке
             return 0;
         }
     } catch (const std::exception& e) {
-        // Обработка ошибок в блоке try
-        // Логгирование или вывод сообщения об ошибке
         return 0;
     }
 }
@@ -651,14 +592,12 @@ void Event_PlayerConnect::FireGameEvent(IGameEvent* event) {
         std::string netid = event->GetString("networkid");
 	    if (netid == "BOT")
 		{
-	    // Это бот, выполните соответствующие действия
     			return;
 		}
         uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
 
         META_CONPRINTF("Player Connected: , SteamID: %llu\n", steamid);
     } catch (const std::exception& e) {
-        // Обработка ошибок
     }
 }
 
@@ -666,14 +605,13 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
     try {
         bool isBot = event->GetBool("bot");
         if (isBot) {
-            return;
+        	return;
         }
 
         std::string netid = event->GetString("networkid");
-	if (netid == "BOT")
+	if (netid == "<BOT>")
 	{
-	    // Это бот, выполните соответствующие действия
-    	return;
+    		return;
 	}
         uint64_t steamid = ExtractSteamIDFromNetworkID(netid);
 	
@@ -687,11 +625,9 @@ void Event_PlayerDisconnect::FireGameEvent(IGameEvent* event) {
         
         META_CONPRINTF("Player Disconnected: , SteamID: %llu\n", steamid);
     } catch (const std::exception& e) {
-        // Обработка ошибок
     }
 }
 
-//META_CONPRINTF("PLAYER BUY WEAPON\n");
 //TEST END
 
 void CRoundPreStartEvent::FireGameEvent(IGameEvent* event)
@@ -794,14 +730,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		uint32_t newItemIDLow = newItemID & 0xFFFFFFFF;
 		uint32_t newItemIDHigh = newItemID >> 32;
 
-		// Combine the itemIDLow and itemIDHigh
-		//uint64_t itemID2 = temp_itemIDLow | (static_cast<uint64_t>(temp_itemIDHigh) << 32);
-
-		// print out all 4 values
-		//META_CONPRINTF("temp_itemID: %d\n", temp_itemID);
-		//META_CONPRINTF("temp_itemIDLow: %d\n", temp_itemIDLow);
-		//META_CONPRINTF("temp_itemIDHigh: %d\n", temp_itemIDHigh);
-		//META_CONPRINTF("itemID2: %d\n", itemID2);
+		
 
 		
 		pCEconEntityWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex() = skin_parm->second.m_iItemDefinitionIndex;
@@ -820,7 +749,6 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("skin_parm->second.m_flFallbackWear: %f\n", skin_parm->second.m_flFallbackWear);
 		META_CONPRINTF("skin_parm->second.m_iItemDefinitionIndex: %d\n", skin_parm->second.m_iItemDefinitionIndex);
 
-		//[{"skin_id":724,"float":0.061400000000000003186340080674199271015822887420654296875,"seed":245,"nametag":"","side":1,"stickers":[],"stattrak":false,"weapon_id":7,"stattrak_count":0}]
 		//ONLYTEST
 		pCEconEntityWeapon->m_nFallbackPaintKit() = skin_parm->second.m_nFallbackPaintKit;
 		pCEconEntityWeapon->m_nFallbackSeed() = skin_parm->second.m_nFallbackSeed;
@@ -936,7 +864,7 @@ void CEntityListener::OnEntitySpawned(CEntityInstance* pEntity)
 		META_CONPRINTF("initialized = %d\n", pBasePlayerWeapon->m_AttributeManager().m_Item().m_bInitialized());
 		META_CONPRINTF( "steamId: %lld itemId: %d itemId2: %d\n", steamid, skin_parm->second.m_iItemDefinitionIndex, pBasePlayerWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 
-		//TESTFORCE
+		//TESTFORCE//nowork
 		//if (players.find(steamid) != players.end()) {
         		//players[steamid].PlayerWeapons[weaponId] = pEntity;
     		//}
@@ -987,13 +915,9 @@ void TestSkinchanger(int64_t steamid, int weapon_id)
 
     char buf[255] = { 0 };
 
-   // auto weapon_name = g_WeaponsMap.find(weapon_id);
     bool isKnife = false;
-    //int64_t steamid = pPlayerController->m_steamID();
     META_CONPRINTF("STEAM IDIDIDIDIDIID %lld\n", steamid);
     META_CONPRINTF("Weapon IDIDIDIDIDIID %lld\n", weapon_id);
-    //nlohmann::json jsonResponse=GETSKINS(steamid);
-    //auto it=Temp.find(weapon_id);
 
 
 
@@ -1013,7 +937,7 @@ try
     auto it = Temp.find(weapon_id);
     if (it != Temp.end())
     {
-        std::vector<nlohmann::json>& weaponDataList = it->second; // Ссылка на вектор json для удобства
+        std::vector<nlohmann::json>& weaponDataList = it->second;
 
         for (const auto& weaponData : weaponDataList)
         {
@@ -1036,7 +960,6 @@ try
     		};
 if (!stickersJson["stickers"].empty()) {
 
-    // Получение значения стикеров
     for (const auto& sticker : stickersJson["stickers"]) {
         int position = sticker["position"];
 
@@ -1066,9 +989,7 @@ if (!stickersJson["stickers"].empty()) {
 					META_CONPRINTF("sticker_parm->second.stickerDefIndex1: %d\n", g_PlayerStickers[steamid].stickerDefIndex4);
 					META_CONPRINTF("sticker_parm->second.stickerWear1: %f\n", g_PlayerStickers[steamid].stickerWear4);
         				break;
-            // Добавьте другие case для других позиций, если необходимо
             default:
-                // Обработка невалидных значений позиции
                 break;
         }
     }
@@ -1076,13 +997,11 @@ if (!stickersJson["stickers"].empty()) {
     META_CONPRINTF("STICKERS IS NOT FOUND\n");
 }
 
-		    
                 META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n");
                 break;
             }
             else
             {
-                // Если совпадения по side не найдено, установите значения по умолчанию
                 side = -1;
                 skin_id = -1;
             }
@@ -1107,12 +1026,6 @@ if (weapon_id_API < 0)
     if (!nametag.empty()) {
     	 g_PlayerSkins[steamid].m_nameTag = nametag;
     }
-    
-	
-    //META_CONPRINTF("TestSkinchanger: Weapon id %lld\n", jsonString.c_str());
-
-    //sprintf(buf, "%s\x02 JSONSTR", jsonString.c_str());
-   //FnUTIL_ClientPrint(pPlayerController, 3, buf, nullptr, nullptr, nullptr, nullptr);
 	
     //TEST END
 if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].m_nFallbackPaintKit !=0 && g_PlayerSkins[steamid].m_nFallbackSeed != 0 &&  g_PlayerSkins[steamid].m_flFallbackWear !=0.0f)
@@ -1137,11 +1050,6 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
         META_CONPRINTF("TestSkinchanger: Unknown Weapon/Knife ID\n");
         return;
     }
-
-    //g_PlayerSkins[steamid].m_iItemDefinitionIndex = weapon_id;
-    //g_PlayerSkins[steamid].m_nFallbackPaintKit = paint_kit;
-    //g_PlayerSkins[steamid].m_nFallbackSeed = pattern_id;
-   //g_PlayerSkins[steamid].m_flFallbackWear = wear;
 
 	
     CBasePlayerWeapon* pPlayerWeapon = pWeaponServices->m_hActiveWeapon();
@@ -1184,7 +1092,6 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
 
         if (weapon_slot == weapon_slot_my_weapon) {
             pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
-            //FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
             META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
         }
     }
@@ -1192,19 +1099,9 @@ if(g_PlayerSkins[steamid].m_iItemDefinitionIndex != 0 && g_PlayerSkins[steamid].
 	META_CONPRINTF("TestSkinchanger: Delete entity %s\n", weapon_name->second.c_str());//ТАЙМЕР ДЛЯ ТЕСТА
 	new CTimer(0.05f, false, false, [pPlayerPawn, weapon_name]() {
         	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
-		//FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-		//break;
 	});
-	//delete CTimer;
-    META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
 
-	    	//if(zxczxc)
-    		//{
-	    		//zxczxc=false;
-			//META_CONPRINTF("GLOVESSSSSSSSSSSSSSSSSSSSSSSSSSSSS %s\n");
-	    		//FnGiveNamedItem(pPlayerPawn->m_pItemServices(), g_GlovesMap[5031].c_str(), nullptr, nullptr, nullptr, nullptr);    
-	    		//return;
-    		//}
+    META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
     }
     else
     {
@@ -1231,25 +1128,23 @@ for (const auto& entry : g_KnivesMap) {
     const std::string& knifeName = entry.second;
     auto& KnifeDataVector = Temp[knifeIdToFind];
 
-    // Проверка наличия ключа в PlayerSkins
     try {
         for (const auto& KnifeData : KnifeDataVector) {
             side = static_cast<int>(KnifeData["side"]);
             if (side == teamnum || side == 0) {
                 knife_id_API = KnifeData["weapon_id"];
                 META_CONPRINTF("knife_id_API %lld\n", knife_id_API);
-                exitOuterLoop = true;  // Устанавливаем флаг для выхода из внешнего цикла
+                exitOuterLoop = true;
                 break;
             }
         }
     } catch (const std::exception& e) {
         std::cerr << "ERROR: " << e.what() << std::endl;
-        // Обработка ошибок при парсинге JSON
         return;
     }
 
     if (exitOuterLoop) {
-        break;  // Выход из внешнего цикла
+        break;
     }
 }
 
@@ -1283,7 +1178,6 @@ for (size_t i = 0; i < pPlayerWeapons.m_size; i++) {
 	if (weapon_slot == weapon_slot_my_weapon) {
 		pWeaponServices->RemoveWeapon(static_cast<CBasePlayerWeapon*>(currentWeapon.Get()));
 			FnEntityRemove(g_pGameEntitySystem, static_cast<CBasePlayerWeapon*>(currentWeapon.Get()), nullptr, -1);
-			//META_CONPRINTF("TestSkinchanger: Removed weapon in slot %lld\n", weapon_slot);
 			
 	}
 }
@@ -1291,8 +1185,6 @@ for (size_t i = 0; i < pPlayerWeapons.m_size; i++) {
 META_CONPRINTF("TestSkinchanger: Delete entity %s\n", weapon_name->second.c_str());//ТАЙМЕР ДЛЯ ТЕСТА
 	META_CONPRINTF("TestSkinchanger: try  to give %s\n", weapon_name->second.c_str());
 	FnGiveNamedItem(pPlayerPawn->m_pItemServices(), weapon_name->second.c_str(), nullptr, nullptr, nullptr, nullptr);
-	//break;
-//delete CTimer;
 META_CONPRINTF("TestSkinchanger: Gave named item %s\n", weapon_name->second.c_str());
 }
 
@@ -1356,7 +1248,6 @@ void ForceUpdate(int64_t steamid)//makework(at time no work)
                              }
 
                             META_CONPRINTF("FOUND TEAMNUM AND SIDE %lld\n", local_weapon_id);
-                            //Loop = false;
                         }
                     }
                 });
@@ -1371,46 +1262,26 @@ void ForceUpdate(int64_t steamid)//makework(at time no work)
 
 void ThreadUpdate(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBase* pp, SC_CBaseEntity* pbe)
 {
-	//AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid));
 	try
 	{
-		//while (players.find(steamid) != players.end())
 		while(players[steamid].firstspawn)
 		{
 			if(players[steamid].PC==nullptr)
 			{
 				break;
 			}
-			//CBasePlayerController* cbpc= dynamic_cast<CBasePlayerController*>(pc);
-			//SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(cbpc);
-    			//SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
-    	                //teamnum=pSCBaseEntity->m_iTeamNum();
-		//std::map<int, nlohmann::json> Temp=GETSKINS(steamid);
-			//GETSKINS(steamid);
-			//std::vector<nlohmann::json> tempvec=GETSKINS(steamid);
-			//std::map<int, std::vector<nlohmann::json>> TempSkins;
-			//for (const auto& skin : tempvec) {
-   	 			//int weapon_id = skin["weapon_id"];
-    				//TempSkins[weapon_id].push_back(skin);
-			//}
-		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid),pbe);
-		std::this_thread::sleep_for(std::chrono::milliseconds(200));
-		//CCSPlayerPawnBase* base= pc->m_hPlayerPawn();
 			
-		META_CONPRINTF("UPDATESKINS SUCCESS %lld\n", players[steamid].PC);
+		AddOrUpdatePlayer(steamid,pc,pp,GETSKINS(steamid),pbe);
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));//api request 1sec/200ms=5 request per minut
 		
-			//if(!pp){
-			//META_CONPRINTF("TestSkinchanger: Invalid player or controller\n");
-			//players.erase(steamid);
-        		//break;
-			//}
+			
+		//META_CONPRINTF("UPDATESKINS SUCCESS %lld\n", players[steamid].PC);//debug
     		}
 		 ClearPlayer(steamid);
 		META_CONPRINTF("UPDATESKINS THREAD DELETE %lld\n");
 	}
 	catch(const std::exception& e)
 	{
-		//META_CONPRINTF("PlayerDisconected\n");
 	}
 }
 
@@ -1421,18 +1292,15 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 	if(players[steamid].PC==nullptr&& !state[steamid])
 	{	Players player;
 		player.firstspawn=false;
-	 //
 	 	player.PC = pc;
     		player.PP = pp;
 	        player.PBE = pbe;
     		player.PlayerSkins = skins;
     		//player->firstspawn=true;
     		players[steamid] = player;
-	 //
 	}
 	else
 	{
-		///
 		if(!players[steamid].firstspawn)
 		{
 			Players player;
@@ -1452,7 +1320,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 			if(players[steamid].PlayerSkins!=skins)
 			{
 				players[steamid].PlayerSkins=skins;
-				//ForceUpdate(steamid);
+				//ForceUpdate(steamid);//nowork
 				SkinChangerKnife(steamid);
 				
 			}
@@ -1462,14 +1330,7 @@ void AddOrUpdatePlayer(int64_t steamid, CCSPlayerController* pc, CCSPlayerPawnBa
 			}
 		 
 		}
-		////
 	}
-		
-    //player.PC = pc;
-    //player.PP = pp;
-    //player.PlayerSkins = skins;
-    //player->firstspawn=true;
-    //players[steamid] = player;
 }
 
 void ClearPlayer(int64_t steamid) {
@@ -1477,7 +1338,6 @@ void ClearPlayer(int64_t steamid) {
     auto it = players.find(steamid);
     if (it != players.end()) {
         META_CONPRINTF("CLEAR STRUCT\n");
-        // Очистить данные игрока
         players[steamid].PC = nullptr;
         players[steamid].PP = nullptr;
 	players[steamid].PBE = nullptr;
@@ -1503,7 +1363,6 @@ std::map<int, std::vector<nlohmann::json>> GETSKINS(int64_t steamid64) {
 	std::string steamid = std::to_string(steamid64);
 	nlohmann::json jsonResponse;
 	std::map<int, std::vector<nlohmann::json>> TempSkins;
-	//std::map<int, nlohmann::json> TempSkins;
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 
 	curl = curl_easy_init();
