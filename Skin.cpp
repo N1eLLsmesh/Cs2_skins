@@ -543,7 +543,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 			
 		//}).detach();
 	
-		META_CONPRINTF("PLAYER BUY WEAPON %d\n",ids);
+		//META_CONPRINTF("PLAYER BUY WEAPON %d\n",ids);
 	});
 }
 
