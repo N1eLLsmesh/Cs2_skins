@@ -3,7 +3,7 @@
 #include <baseentity.h>
 #include "schemasystem.h"
 #include "ehandle.h"
-#include "c_baseplayer.h"
+#include <hl2sdk-cs2/game/client/c_baseplayer.h>
 
 inline CEntityInstance* UTIL_FindEntityByClassname(CEntityInstance* pStart, const char* name)
 {
