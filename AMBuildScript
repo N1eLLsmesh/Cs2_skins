@@ -392,6 +392,7 @@ class MMSPluginConfig(object):
       paths.append(['common'])
       paths.append(['public', 'entity2'])
       paths.append(['game', 'server'])
+      paths.append(['game', 'client'])
     compiler.defines += ['SOURCE_ENGINE=' + sdk.code]
 
     if sdk.name in ['sdk2013', 'bms', 'pvkii'] and compiler.like('gcc'):
