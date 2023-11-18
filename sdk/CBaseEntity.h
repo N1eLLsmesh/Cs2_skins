@@ -6,7 +6,7 @@
 
 //#include "playernet_vars.h"
 #include "shared_classnames.h"
-#include "c_baseplayer.h"
+//#include "c_baseplayer.h"
 
 
 inline CEntityInstance* UTIL_FindEntityByClassname(CEntityInstance* pStart, const char* name)
