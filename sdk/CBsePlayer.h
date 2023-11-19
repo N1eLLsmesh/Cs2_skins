@@ -1,18 +1,15 @@
 #pragma once
-#include <entity2/entityidentity.h>
-#include <baseentity.h>
+//#include <entity2/entityidentity.h>
+//#include <baseentity.h>
 #include "schemasystem.h"
 #include "ehandle.h"
-
-//#include "playernet_vars.h"
 #include "shared_classnames.h"
-//#include "CBsePlayer.h"
-//#include "c_baseplayer.h"
 
-//class CBasePlayer*;
+#include "baseviewmodel.h"
 
-class SC_CBasePlayer : public CBaseEntity
+
+class SC_ViewModel : public CBaseViewModel
 {
 public:
-	SCHEMA_FIELD(CHandle<CBasePlayer>, CBaseEntity, m_pPredictionPlayer);
+	//SCHEMA_FIELD(CHandle<CBasePlayer>, CBaseEntity, m_pPredictionPlayer);
 };
