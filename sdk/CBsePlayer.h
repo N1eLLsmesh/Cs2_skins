@@ -5,7 +5,7 @@
 #include "ehandle.h"
 #include "shared_classnames.h"
 
-#include <baseviewmodel.h>
+#include <c_baseviewmodel.h>
 
 
 class SC_ViewModel : public CBaseViewModel
