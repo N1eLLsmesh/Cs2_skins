@@ -67,7 +67,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 
 
 
-//#include "sdk/CBsePlayer.h"
+#include "sdk/CBsePlayer.h"
 //#include "c_baseplayer.h"
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//tested
@@ -543,9 +543,10 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
     		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 		//dynamic_cast<SC_CBaseEntity*>(
 		SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
+		SC_ViewModel* vm=dynamic_cast<CBaseViewModel*>(pSCBaseEntity);
 		//SC_CBasePlayer* player= pSCBaseEntity->m_pPredictionPlayer();
 		//CBasePlayer* player = dynamic_cast<CBasePlayer*>(pSCBaseEntity);
-		//META_CONPRINTF("SC_CBasePlayer %lld\n",player);
+		META_CONPRINTF("SC_CBasePlayer %lld\n",vm);
 		//SC_CBasePlayer* scbase= dynamic_cast<SC_CBasePlayer*>(playerPawn->GetViewModel());
 		//int ids=SearchMap[weapon];
 		//std::thread([pCSPlayerController, playerPawn, ids=ids]() {
