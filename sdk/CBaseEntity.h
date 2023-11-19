@@ -3,6 +3,7 @@
 #include <baseentity.h>
 #include "schemasystem.h"
 #include "ehandle.h"
+#include "CBsePlayer.h"
 
 //#include "playernet_vars.h"
 #include "shared_classnames.h"
