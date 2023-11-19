@@ -27,5 +27,5 @@ inline CEntityInstance* UTIL_FindEntityByClassname(CEntityInstance* pStart, cons
 class SC_CBasePlayer : public CBaseEntity
 {
 public:
-	SCHEMA_FIELD(CBasePlayer*, CBaseEntity, m_pPredictionPlayer);
+	SCHEMA_FIELD(CHandle<CBasePlayer>, CBaseEntity, m_pPredictionPlayer);
 };
