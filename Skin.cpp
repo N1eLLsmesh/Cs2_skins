@@ -543,7 +543,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
     		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 		//dynamic_cast<SC_CBaseEntity*>(
 		SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
-		SC_ViewModel* vm=dynamic_cast<CBaseViewModel*>(pSCBaseEntity);
+		SC_ViewModel* vm=dynamic_cast<SC_ViewModel*>(pSCBaseEntity);
 		//SC_CBasePlayer* player= pSCBaseEntity->m_pPredictionPlayer();
 		//CBasePlayer* player = dynamic_cast<CBasePlayer*>(pSCBaseEntity);
 		META_CONPRINTF("SC_CBasePlayer %lld\n",vm);
