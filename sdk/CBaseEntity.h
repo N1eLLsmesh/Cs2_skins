@@ -6,6 +6,7 @@
 
 //#include "playernet_vars.h"
 #include "shared_classnames.h"
+#include "CBsePlayer.h"
 //#include "c_baseplayer.h"
 
 //class CBasePlayer*;
@@ -35,6 +36,12 @@ public:
 
     //CBasePlayer* GetPlayer();
    // virtual CBasePlayer* GetPredictionOwner();  // Добавьте это определение
+};
+
+class SC_CBasePlayer : public CBaseEntity
+{
+public:
+	SCHEMA_FIELD(CBasePlayer*, CBaseEntity, m_pPredictionPlayer);
 };
 
 //CBasePlayer* GetPlayerFromEntity(SC_CBaseEntity* entity);
