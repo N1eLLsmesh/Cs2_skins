@@ -3,7 +3,7 @@
 //#include <baseentity.h>
 #include "schemasystem.h"
 #include "ehandle.h"
-#include "shared_classnames.h"
+//#include "shared_classnames.h"
 
 #include <c_baseviewmodel.h>
 
