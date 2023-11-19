@@ -68,7 +68,7 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 
 
 #include "sdk/CBsePlayer.h"
-#include "baseviewmodel_shared.h"
+//#include "baseviewmodel_shared.h"
 //#include "c_baseplayer.h"
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//tested
