@@ -5,4 +5,5 @@
 class CCSPlayerPawn : public CCSPlayerPawnBase
 {
 public:
+      SCHEMA_FIELD(CbaseViewModel*, CCSPlayerPawn, m_hViewModel);
 };
