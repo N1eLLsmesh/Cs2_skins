@@ -542,7 +542,8 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
     		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 		//dynamic_cast<SC_CBaseEntity*>(
 		SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
-		SC_CBasePlayer* player= pSCBaseEntity->m_pPredictionPlayer();
+		//SC_CBasePlayer* player= pSCBaseEntity->m_pPredictionPlayer();
+		CBasePlayer* player = pSCBaseEntity->m_pPredictionPlayer.Get();
 		META_CONPRINTF("SC_CBasePlayer %lld\n",player);
 		//SC_CBasePlayer* scbase= dynamic_cast<SC_CBasePlayer*>(playerPawn->GetViewModel());
 		//int ids=SearchMap[weapon];
