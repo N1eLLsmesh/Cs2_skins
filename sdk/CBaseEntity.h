@@ -6,7 +6,7 @@
 
 //#include "playernet_vars.h"
 #include "shared_classnames.h"
-#include "CBsePlayer.h"
+//#include "CBsePlayer.h"
 //#include "c_baseplayer.h"
 
 //class CBasePlayer*;
