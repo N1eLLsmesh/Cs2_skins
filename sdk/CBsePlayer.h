@@ -5,10 +5,10 @@
 #include "ehandle.h"
 #include "shared_classnames.h"
 
-#include "baseviewmodel.h"
+#include <baseviewmodel.h>
 
 
-class SC_ViewModel : public CBaseViewModel
+class SC_ViewModel : public baseviewmodel_shared
 {
 public:
 	//SCHEMA_FIELD(CHandle<CBasePlayer>, CBaseEntity, m_pPredictionPlayer);
