@@ -1,5 +1,5 @@
 #pragma once
-#include "c_basecombatcharacter.h"
+#include "CBaseCombatCharacter.h"
 
 //class C_BaseViewModel;
 
