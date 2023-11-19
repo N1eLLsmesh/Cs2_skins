@@ -1,9 +1,18 @@
 #pragma once
-#include "CBaseCombatCharacter.h"
+#include <entity2/entityidentity.h>
+#include <baseentity.h>
+#include "schemasystem.h"
+#include "ehandle.h"
 
-//class C_BaseViewModel;
+//#include "playernet_vars.h"
+#include "shared_classnames.h"
+//#include "CBsePlayer.h"
+//#include "c_baseplayer.h"
 
-class CBasePlayer : public CBaseCombatCharacter
+//class CBasePlayer*;
+
+class SC_CBasePlayer : public CBaseEntity
 {
 public:
+	SCHEMA_FIELD(CBasePlayer*, CBaseEntity, m_pPredictionPlayer);
 };
