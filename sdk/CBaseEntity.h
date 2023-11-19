@@ -33,20 +33,20 @@ public:
     SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
 
-    CBasePlayer* GetPlayer();
-    virtual CBasePlayer* GetPredictionOwner();  // Добавьте это определение
+    //CBasePlayer* GetPlayer();
+   // virtual CBasePlayer* GetPredictionOwner();  // Добавьте это определение
 };
 
-CBasePlayer* GetPlayerFromEntity(SC_CBaseEntity* entity);
+//CBasePlayer* GetPlayerFromEntity(SC_CBaseEntity* entity);
 
-// Реализация метода для получения указателя на CBasePlayer
-CBasePlayer* GetPlayerFromEntity(SC_CBaseEntity* entity)
-{
-    return dynamic_cast<CBasePlayer*>(entity->GetPredictionOwner());
-}
+//// Реализация метода для получения указателя на CBasePlayer
+//CBasePlayer* GetPlayerFromEntity(SC_CBaseEntity* entity)
+//{
+//    return dynamic_cast<CBasePlayer*>(entity->GetPredictionOwner());
+//}
 
-// Реализация метода для получения указателя на CBasePlayer из SC_CBaseEntity
-CBasePlayer* SC_CBaseEntity::GetPlayer()
-{
-    return GetPlayerFromEntity(this);
-}
+//// Реализация метода для получения указателя на CBasePlayer из SC_CBaseEntity
+//CBasePlayer* SC_CBaseEntity::GetPlayer()
+//{
+//    return GetPlayerFromEntity(this);
+//}
