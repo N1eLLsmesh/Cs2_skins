@@ -26,7 +26,7 @@ inline CEntityInstance* UTIL_FindEntityByClassname(CEntityInstance* pStart, cons
 	return nullptr;
 }
 
-class SC_CBaseEntity : public CBaseEntity
+class SC_CBaseEntity : public CBaseEntity, public CBaseViewModel
 {
 public:
     SCHEMA_FIELD(int32_t, CBaseEntity, m_iHealth);
