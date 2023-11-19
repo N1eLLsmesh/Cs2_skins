@@ -11,4 +11,4 @@ public:
       //C_BasePlayer();
 	    //virtual			~C_BasePlayer();
       C_BaseViewModel		*GetViewModel( int viewmodelindex = 0 );
-}
+};
