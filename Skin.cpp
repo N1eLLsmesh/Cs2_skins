@@ -531,13 +531,20 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	const std::string weapon = event->GetString("weapon");
 	const int userId = event->GetInt("userid");
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
+	//dynamic_cast<SC_CBaseEntity*>(
+	
+	
+	
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController,weapon=weapon]()
 	{
 	
 		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
     		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
-
-		
+		//dynamic_cast<SC_CBaseEntity*>(
+		SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
+		SC_CBasePlayer* player= pSCBaseEntity->m_pPredictionPlayer();
+		META_CONPRINTF("SC_CBasePlayer %lld\n",player);
+		//SC_CBasePlayer* scbase= dynamic_cast<SC_CBasePlayer*>(playerPawn->GetViewModel());
 		//int ids=SearchMap[weapon];
 		//std::thread([pCSPlayerController, playerPawn, ids=ids]() {
         	//	int64_t steamid = pCSPlayerController->m_steamID();
