@@ -3,7 +3,7 @@
 
 //class C_BaseViewModel;
 
-class C_BaseViewModel : public CBaseCombatCharacter
+class CBasePlayer : public CBaseCombatCharacter
 {
 public:
 };
