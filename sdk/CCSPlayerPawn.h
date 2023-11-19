@@ -1,6 +1,7 @@
 #pragma once
 #include "CCSPlayerPawnBase.h"
 #include "schemasystem.h"
+#include "baseviewmodel_shared.h"
 
 class CCSPlayerPawn : public CCSPlayerPawnBase
 {
