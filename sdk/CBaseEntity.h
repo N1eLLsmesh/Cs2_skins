@@ -38,11 +38,11 @@ public:
    // virtual CBasePlayer* GetPredictionOwner();  // Добавьте это определение
 };
 
-class SC_CBasePlayer : public CBaseEntity
-{
-public:
-	SCHEMA_FIELD(CBasePlayer*, CBaseEntity, m_pPredictionPlayer);
-};
+//class SC_CBasePlayer : public CBaseEntity
+//{
+//public:
+//	SCHEMA_FIELD(CBasePlayer*, CBaseEntity, m_pPredictionPlayer);
+//};
 
 //CBasePlayer* GetPlayerFromEntity(SC_CBaseEntity* entity);
 
