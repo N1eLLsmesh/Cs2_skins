@@ -8,7 +8,7 @@
 #include <baseviewmodel.h>
 
 
-class SC_ViewModel : public baseviewmodel_shared
+class SC_ViewModel : public CBaseViewModel
 {
 public:
 	//SCHEMA_FIELD(CHandle<CBasePlayer>, CBaseEntity, m_pPredictionPlayer);
