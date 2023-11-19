@@ -64,6 +64,10 @@ CRoundPreStartEvent g_RoundPreStartEvent;
 //#include <cstring>
 
 #include <mutex>
+
+
+
+#include "sdk/CBsePlayer.h"
 Event_ItemPurchase g_PlayerBuy;
 Event_PlayerSpawned g_PlayerSpawnedEvent;//tested
 OnRoundStart g_RoundStart;
