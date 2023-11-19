@@ -36,13 +36,13 @@ public:
     SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
     SCHEMA_FIELD(CHandle<SC_ViewModel>, CBaseViewModel, m_hViewModel);
 
-CBaseViewModel* ToBaseViewModel()
-    {
-        if ( !m_hViewModel )
-            return nullptr;
+//CBaseViewModel* ToBaseViewModel()
+  //  {
+      //  if ( !m_hViewModel )
+     //       return nullptr;
         
-        return ::ToBaseViewModel(m_hViewModel.Get());
-    }
+     //   return ::ToBaseViewModel(m_hViewModel.Get());
+   // }
 
     //CBasePlayer* GetPlayer();
    // virtual CBasePlayer* GetPredictionOwner();  // Добавьте это определение
