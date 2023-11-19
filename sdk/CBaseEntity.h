@@ -33,7 +33,7 @@ public:
     SCHEMA_FIELD(LifeState_t, CBaseEntity, m_lifeState);
     SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
-    SCHEMA_FIELD(CHandle<CBasePlayer>, CBaseEntity, m_pPredictionPlayer);
+    SCHEMA_FIELD(CHandle<CBasePlayer>, CBaseEntity, m_hPlayerSimulationOwner);
 
     //CBasePlayer* GetPlayer();
    // virtual CBasePlayer* GetPredictionOwner();  // Добавьте это определение
