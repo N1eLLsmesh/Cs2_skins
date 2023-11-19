@@ -8,7 +8,7 @@
 #include "shared_classnames.h"
 //#include "c_baseplayer.h"
 
-class CBasePlayer;
+class CBasePlayer*;
 
 inline CEntityInstance* UTIL_FindEntityByClassname(CEntityInstance* pStart, const char* name)
 {
