@@ -20,7 +20,7 @@ public:
     SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
 
     CBasePlayer* GetPlayer();
-    virtual C_BasePlayer* GetPredictionOwner();  // Добавьте это определение
+    virtual CBasePlayer* GetPredictionOwner();  // Добавьте это определение
 };
 
 CBasePlayer* GetPlayerFromEntity(SC_CBaseEntity* entity);
