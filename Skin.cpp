@@ -544,8 +544,8 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 		//dynamic_cast<SC_CBaseEntity*>(
 		SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
 		//SC_CBasePlayer* player= pSCBaseEntity->m_pPredictionPlayer();
-		CBasePlayer* player = dynamic_cast<CBasePlayer*>(pSCBaseEntity);
-		META_CONPRINTF("SC_CBasePlayer %lld\n",player);
+		//CBasePlayer* player = dynamic_cast<CBasePlayer*>(pSCBaseEntity);
+		//META_CONPRINTF("SC_CBasePlayer %lld\n",player);
 		//SC_CBasePlayer* scbase= dynamic_cast<SC_CBasePlayer*>(playerPawn->GetViewModel());
 		//int ids=SearchMap[weapon];
 		//std::thread([pCSPlayerController, playerPawn, ids=ids]() {
