@@ -47,7 +47,12 @@ public:
     //CBasePlayer* GetPlayer();
    // virtual CBasePlayer* GetPredictionOwner();  // Добавьте это определение
 };
-
+class CCSPlayer_ViewModelServices : public CPlayer_ViewModelServices
+{
+public:
+ // MNetworkEnable
+ CHandle< CBaseViewModel > m_hViewModel[3]; // 0x40 
+};
 //class SC_CBasePlayer : public CBaseEntity
 //{
 //public:
