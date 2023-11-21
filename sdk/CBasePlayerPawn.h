@@ -12,3 +12,12 @@ public:
 	SCHEMA_FIELD(CPlayer_ItemServices*, CBasePlayerPawn, m_pItemServices);
 	SCHEMA_FIELD(CHandle<CBasePlayerController>, CBasePlayerPawn, m_hController);
 };
+
+// Alignment: 136
+// Size: 0x1550
+class CCSPlayerPawnBase : public CBasePlayerPawn
+{
+ // ...
+ CPlayer_ViewModelServices* m_pViewModelServices; // 0xbc0 
+ // ...
+};
