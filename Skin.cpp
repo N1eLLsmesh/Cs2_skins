@@ -544,12 +544,12 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
     		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 		//dynamic_cast<SC_CBaseEntity*>(
 		SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
-    		SC_ViewModel* pSCViewModel = ToBaseViewModel(pSCBaseEntity);
+    		//SC_ViewModel* pSCViewModel = ToBaseViewModel(pSCBaseEntity);
 
         	//CBaseViewModel* pViewModel = ToBaseViewModel(pSCViewModel);
 
             // Теперь у вас есть указатель на CBaseViewModel, который можно использовать
-            META_CONPRINTF("CBaseViewModel %p\n", pSCViewModel);
+           // META_CONPRINTF("CBaseViewModel %p\n", pSCViewModel);
 
 		//SC_CBasePlayer* player= pSCBaseEntity->m_pPredictionPlayer();
 		//CBasePlayer* player = dynamic_cast<CBasePlayer*>(pSCBaseEntity);
