@@ -41,7 +41,7 @@ public:
     SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
     
-    SCHEMA_FIELD(CPlayer_ViewModelServices , CBaseViewModel, m_hViewModel[3]);
+    SCHEMA_FIELD(CHandle<CCSPlayer_ViewModelServices> , CBaseViewModel, m_hViewModel);
 
 //CBaseViewModel* ToBaseViewModel()
   //  {
