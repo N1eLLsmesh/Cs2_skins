@@ -29,7 +29,7 @@ class CCSPlayer_ViewModelServices : public CPlayer_ViewModelServices
 {
 public:
  // MNetworkEnable
- CHandle< CBaseViewModel > m_hViewModel[3]; // 0x40 
+ //CHandle< CBaseViewModel > m_hViewModel[3]; // 0x40 
 };
 
 class SC_CBaseEntity : public CBaseEntity
