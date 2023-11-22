@@ -30,6 +30,7 @@ class CCSPlayer_ViewModelServices : public CPlayer_ViewModelServices
 public:
  // MNetworkEnable
  //CHandle< CBaseViewModel > m_hViewModel[3]; // 0x40 
+SCHEMA_FIELD(CHandle<CCSPlayer_ViewModelServices> , CBaseViewModel, m_hViewModel);
 };
 
 class SC_CBaseEntity : public CBaseEntity
@@ -41,7 +42,7 @@ public:
     SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
     
-    SCHEMA_FIELD(CHandle<CCSPlayer_ViewModelServices> , CBaseViewModel, m_hViewModel);
+    
 
 //CBaseViewModel* ToBaseViewModel()
   //  {
