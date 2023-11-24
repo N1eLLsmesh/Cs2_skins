@@ -1,3 +1,4 @@
+#pragma once
 #include "CBodyComponentSkeletonInstance.h"
 #include "schemasystem.h"
 
