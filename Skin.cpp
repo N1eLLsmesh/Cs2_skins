@@ -468,6 +468,13 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 		if (pCSPlayerController)
 		{
     			CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
+
+			
+			CCSPlayer_ViewModelServices* vms = playerPawn->m_pViewModelServices();
+			C_CSGOViewModel* csgoview = vms->m_hViewModel();
+			META_CONPRINTF("vms %p\n", vms);
+            		META_CONPRINTF("csgoview %p\n",csgoview);
+			
     			if (playerPawn)
 			{
 				if (players.find(steamid) != players.end()) 
@@ -550,6 +557,9 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 if (pawn) {
 	
     CCSPlayer_ViewModelServices* vms = playerPawn->m_pViewModelServices();
+//C_CSGOViewModel* csgoview = vms->m_hViewModel();
+	//META_CONPRINTF("vms %p\n", vms);
+            //META_CONPRINTF("csgoview %p\n",csgoview);
     if (vms) {
 
 	    
