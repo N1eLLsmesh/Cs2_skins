@@ -565,7 +565,10 @@ if (pawn) {
 	    
 	try
 	{
-	    C_CSGOViewModel* viewModel = vms->m_hViewModels[2].Get();
+	    C_CSGOViewModel* viewModel = vms->m_hViewModels();
+		
+		
+		
 	//C_CSGOViewModel* csgoview = vms->m_hViewModel();
         //C_CSGOViewModel* csgoview = vms->m_hViewModel();
         //if (csgoview) {
