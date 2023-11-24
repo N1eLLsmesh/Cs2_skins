@@ -18,8 +18,9 @@ CSchemaSystemTypeScope* CSchemaSystem::FindTypeScopeForModule(const char* szpMod
 
 CSchemaSystemTypeScope* CSchemaSystem::GetServerTypeScope()
 {
-    static CSchemaSystemTypeScope* pServerTypeScope = FindTypeScopeForModule(WIN_LINUX("server.dll", "libserver.so"));
-
+    //static CSchemaSystemTypeScope* pServerTypeScope = FindTypeScopeForModule(WIN_LINUX("server.dll", "libserver.so"));
+    static CSchemaSystemTypeScope* pServerTypeScope = FindTypeScopeForModule(WIN_LINUX("client.dll", "libserver.so"));
+    
     return pServerTypeScope;
 }
 
