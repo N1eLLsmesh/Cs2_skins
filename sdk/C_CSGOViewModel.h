@@ -13,7 +13,7 @@ struct Vector3 {
 };
 
 //class CBaseViewModel;
-class C_CSGOViewModel /*: public CBaseViewModel*/ {
+class CCSGOViewModel /*: public CBaseViewModel*/ {
 public:
     SCHEMA_FIELD(CBodyComponent*, C_BaseEntity, m_CBodyComponent);
     SCHEMA_FIELD(CBodyComponentSkeletonInstance*, C_BaseEntity, m_pGameSceneNode);
