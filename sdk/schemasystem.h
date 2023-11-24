@@ -89,5 +89,11 @@ extern CSchemaSystem* g_pCSchemaSystem;
         return *reinterpret_cast<std::add_pointer_t<type>>(reinterpret_cast<intptr_t>(this) + offset); \
     }
 
+#define SCHEMA_FIELD_CLIENT(type, className, propName) \
+    std::add_lvalue_reference_t<type> propName() \
+    { \
+        static const int32_t offset = g_pCSchemaSystem->GetClientOffset(#className, #propName); \
+        return *reinterpret_cast<std::add_pointer_t<type>>(reinterpret_cast<intptr_t>(this) + offset); \
+    }
 
 #endif //SCHEMASYSTEM_H
