@@ -544,6 +544,11 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
     		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 		//dynamic_cast<SC_CBaseEntity*>(
 		SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
+
+		
+		CCSPlayerPawn* pawn = dynamic_cast<CCSPlayerPawn*>(playerPawn);
+		CCSPlayer_ViewModelServices* vms= pawn->m_pViewModelServices();
+		META_CONPRINTF("CBaseViewModel %p\n", vms);
     		//SC_ViewModel* pSCViewModel = ToBaseViewModel(pSCBaseEntity);
 
         	//CBaseViewModel* pViewModel = ToBaseViewModel(pSCViewModel);
