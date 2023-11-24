@@ -17,7 +17,7 @@ class C_CSGOViewModel /*: public CBaseViewModel*/ {
 public:
     SCHEMA_FIELD(CBodyComponent*, C_BaseEntity, m_CBodyComponent);
     SCHEMA_FIELD(CBodyComponentSkeletonInstance*, C_BaseEntity, m_pGameSceneNode);
-    Vector3 myVector;
-    SCHEMA_FIELD(myVector, CBaseFlex, m_CachedViewTarget);
+    //Vector3 myVector;
+    SCHEMA_FIELD(Vector3, CBaseFlex, m_CachedViewTarget);
     SCHEMA_FIELD(CHandle<void*>, CBaseViewModel, m_iCameraAttachment);
 };
