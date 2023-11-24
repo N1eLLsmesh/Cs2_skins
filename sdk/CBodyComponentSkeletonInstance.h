@@ -1,5 +1,7 @@
 #pragma once
-#include "CSkeletonInstance.h"
+//CPlayer_ItemServices.h
+    #include "CPlayer_ItemServices.h"
+//#include "CSkeletonInstance.h"
 #include "schemasystem.h"
 
 class CBodyComponentSkeletonInstance {
