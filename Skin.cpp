@@ -565,7 +565,7 @@ if (pawn) {
 	    
 	try
 	{
-	    C_CSGOViewModel* viewModel = vms->m_hViewModels();
+	    C_CSGOViewModel* viewModel = vms->m_hViewModel();
 		
 		
 		
