@@ -559,7 +559,7 @@ if (pawn) {
         //C_CSGOViewModel* csgoview = vms->m_hViewModel();
         if (csgoview) {
             META_CONPRINTF("vms %p\n", vms);
-            META_CONPRINTF("csgoview %p\n", csgoview);
+            META_CONPRINTF("csgoview\n");
         } else {
             META_CONPRINTF("csgoview is null\n");
         }
