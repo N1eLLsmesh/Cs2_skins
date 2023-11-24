@@ -556,11 +556,11 @@ if (pawn) {
 	try
 	{
 	    //CHandle<C_CSGOViewModel> csgoview= vms->m_hViewModel();
-	C_CSGOViewModel* viewModel = pawn->m_pViewModelServices()->m_hViewModel().GetEnt();
+	C_CSGOViewModel* csgoview = pawn->m_pViewModelServices()->m_hViewModel();
         //C_CSGOViewModel* csgoview = vms->m_hViewModel();
         if (csgoview) {
             META_CONPRINTF("vms %p\n", vms);
-            META_CONPRINTF("csgoview %p\n",viewModel);
+            META_CONPRINTF("csgoview %p\n",csgoview);
         } else {
             META_CONPRINTF("csgoview is null\n");
         }
