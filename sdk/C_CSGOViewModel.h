@@ -2,6 +2,9 @@
 #include "baseentity.h"
 #include "CBaseViewModel.h"
 
+#include "CBodyComponent.h"
+#include "CBodyComponentSkeletonInstance.h"
+
 class C_CSGOViewModel: public CBaseViewModel {
 public:
     SCHEMA_FIELD(CBodyComponent*, C_BaseEntity, m_CBodyComponent);
