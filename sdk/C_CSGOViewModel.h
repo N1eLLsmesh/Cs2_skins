@@ -1,7 +1,7 @@
 #include "schemasystem.h"
 #include "baseentity.h"
 #include "CBaseFlex.h"
-//#include "CBaseViewModel.h"
+#include "CBaseViewModel.h"
 
 //#include "CBodyComponent.h"
 #include "CPlayer_ItemServices.h"
@@ -12,7 +12,7 @@ struct Vector3 {
 	float x, y, z;
 };
 
-class CBaseViewModel;
+//class CBaseViewModel;
 class C_CSGOViewModel /*: public CBaseViewModel*/ {
 public:
     SCHEMA_FIELD(CBodyComponent*, C_BaseEntity, m_CBodyComponent);
