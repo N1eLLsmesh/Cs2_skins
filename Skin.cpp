@@ -550,6 +550,11 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 if (pawn) {
     CCSPlayer_ViewModelServices* vms = pawn->m_pViewModelServices();
     if (vms) {
+
+	    
+	try
+	{
+	    
         C_CSGOViewModel* csgoview = vms->m_hViewModel();
         if (csgoview) {
             META_CONPRINTF("vms %p\n", vms);
@@ -557,6 +562,13 @@ if (pawn) {
         } else {
             META_CONPRINTF("csgoview is null\n");
         }
+
+	}
+	catch (const std::exception& e) 
+	{
+    META_CONPRINTF("Exception: %s\n", e.what());
+	}
+    
     } else {
         META_CONPRINTF("vms is null\n");
     }
