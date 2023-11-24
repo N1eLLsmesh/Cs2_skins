@@ -541,55 +541,20 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	const int userId = event->GetInt("userid");
 	CBasePlayerController* pPlayerController = static_cast<CBasePlayerController*>(event->GetPlayerController("userid"));
 	//dynamic_cast<SC_CBaseEntity*>(
+	CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
+    	CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 	
-	
-	
+	CCSPlayer_ViewModelServices* vms = playerPawn->m_pViewModelServices();
+	C_CSGOViewModel* viewModel = vms->m_hViewModel();
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController,weapon=weapon]()
 	{
 	
-		CCSPlayerController* pCSPlayerController = dynamic_cast<CCSPlayerController*>(pPlayerController);
-    		CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 		//dynamic_cast<SC_CBaseEntity*>(
-		SC_CBaseEntity* pSCBaseEntity = dynamic_cast<SC_CBaseEntity*>(pPlayerController);
 
 		
-		CCSPlayerPawn* pawn = dynamic_cast<CCSPlayerPawn*>(playerPawn);
-if (pawn) {
-	
-    CCSPlayer_ViewModelServices* vms = playerPawn->m_pViewModelServices();
-//C_CSGOViewModel* csgoview = vms->m_hViewModel();
-	//META_CONPRINTF("vms %p\n", vms);
-            //META_CONPRINTF("csgoview %p\n",csgoview);
-    if (vms) {
+		//CCSPlayerPawn* pawn = dynamic_cast<CCSPlayerPawn*>(playerPawn);
+		
 
-	    
-	try
-	{
-	    C_CSGOViewModel* viewModel = vms->m_hViewModel();
-		
-		
-		
-	//C_CSGOViewModel* csgoview = vms->m_hViewModel();
-        //C_CSGOViewModel* csgoview = vms->m_hViewModel();
-        //if (csgoview) {
-            META_CONPRINTF("vms %p\n", vms);
-            //META_CONPRINTF("csgoview %p\n",csgoview);
-        //} else {
-         //   META_CONPRINTF("csgoview is null\n");
-        //}
-
-	}
-	catch (const std::exception& e) 
-	{
-    META_CONPRINTF("Exception: %s\n", e.what());
-	}
-    
-    } else {
-        META_CONPRINTF("vms is null\n");
-    }
-} else {
-    META_CONPRINTF("pawn is null\n");
-}
     		//SC_ViewModel* pSCViewModel = ToBaseViewModel(pSCBaseEntity);
 
         	//CBaseViewModel* pViewModel = ToBaseViewModel(pSCViewModel);
