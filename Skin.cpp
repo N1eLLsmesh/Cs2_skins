@@ -549,14 +549,14 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 		CCSPlayerPawn* pawn = dynamic_cast<CCSPlayerPawn*>(playerPawn);
 if (pawn) {
 	
-    CCSPlayer_ViewModelServices* vms = pawn->m_pViewModelServices();
+    CCSPlayer_ViewModelServices* vms = playerPawn->m_pViewModelServices();
     if (vms) {
 
 	    
 	try
 	{
 	    //CHandle<C_CSGOViewModel> csgoview= vms->m_hViewModel();
-	C_CSGOViewModel* csgoview = pawn->m_pViewModelServices()->m_hViewModel();
+	C_CSGOViewModel* csgoview = vms->m_hViewModel();
         //C_CSGOViewModel* csgoview = vms->m_hViewModel();
         if (csgoview) {
             META_CONPRINTF("vms %p\n", vms);
