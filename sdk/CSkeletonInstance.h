@@ -1,3 +1,4 @@
+#pragma once
 #include "CModelState.h"
 #include "schemasystem.h"
 
