@@ -470,10 +470,10 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
     			CCSPlayerPawnBase* playerPawn = pCSPlayerController->m_hPlayerPawn();
 
 			
-			CCSPlayer_ViewModelServices* vms = playerPawn->m_pViewModelServices();
-			C_CSGOViewModel* csgoview = vms->m_hViewModel();
-			META_CONPRINTF("vms %p\n", vms);
-            		META_CONPRINTF("csgoview %p\n",csgoview);
+			//CCSPlayer_ViewModelServices* vms = playerPawn->m_pViewModelServices();
+			//C_CSGOViewModel* csgoview = vms->m_hViewModel();
+			//META_CONPRINTF("vms %p\n", vms);
+            		//META_CONPRINTF("csgoview %p\n",csgoview);
 			
     			if (playerPawn)
 			{
