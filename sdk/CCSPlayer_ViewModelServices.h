@@ -8,8 +8,7 @@ public:
   SCHEMA_FIELD(CHandle<C_CSGOViewModel>, CCSPlayer_ViewModelServices, m_hViewModel);
   SCHEMA_FIELD(CHandle<C_CSGOViewModel>[3], CCSPlayer_ViewModelServices, m_hViewModels);
 
-	//SCHEMA_FIELD(C_CSGOViewModel*, CCSPlayer_ViewModelServices, m_hViewModel);
-    C_CSGOViewModel* GetViewModel(int index) {
-        return m_hViewModels[index].Get();
-    }
+    //C_CSGOViewModel* GetViewModel(int index) {
+      //  return m_hViewModels[index].Get();
+    //}
 };
