@@ -1,5 +1,6 @@
 #pragma once
-#include "CModelState.h"
+//#include "CModelState.h"
+#include "CPlayer_ItemServices.h"
 #include "schemasystem.h"
 
 class CSkeletonInstance {
