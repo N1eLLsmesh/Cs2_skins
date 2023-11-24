@@ -547,10 +547,22 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 
 		
 		CCSPlayerPawn* pawn = dynamic_cast<CCSPlayerPawn*>(playerPawn);
-		CCSPlayer_ViewModelServices* vms= pawn->m_pViewModelServices();
-		C_CSGOViewModel* csgoview= vms->m_hViewModel();
-		META_CONPRINTF("CBaseViewModel %p\n", vms);
-		META_CONPRINTF("CBaseViewModel %p\n", csgoview);
+if (pawn) {
+    CCSPlayer_ViewModelServices* vms = pawn->m_pViewModelServices();
+    if (vms) {
+        C_CSGOViewModel* csgoview = vms->m_hViewModel();
+        if (csgoview) {
+            META_CONPRINTF("vms %p\n", vms);
+            META_CONPRINTF("csgoview %p\n", csgoview);
+        } else {
+            META_CONPRINTF("csgoview is null\n");
+        }
+    } else {
+        META_CONPRINTF("vms is null\n");
+    }
+} else {
+    META_CONPRINTF("pawn is null\n");
+}
     		//SC_ViewModel* pSCViewModel = ToBaseViewModel(pSCBaseEntity);
 
         	//CBaseViewModel* pViewModel = ToBaseViewModel(pSCViewModel);
