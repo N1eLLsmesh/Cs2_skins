@@ -25,13 +25,13 @@ inline CEntityInstance* UTIL_FindEntityByClassname(CEntityInstance* pStart, cons
 
 	return nullptr;
 }
-class CCSPlayer_ViewModelServices : public CPlayer_ViewModelServices
-{
-public:
+//class CCSPlayer_ViewModelServices : public CPlayer_ViewModelServices
+//{
+//public:
  // MNetworkEnable
  //CHandle< CBaseViewModel > m_hViewModel[3]; // 0x40 
-SCHEMA_FIELD(CHandle<CCSPlayer_ViewModelServices> , CBaseViewModel, m_hViewModel);
-};
+//SCHEMA_FIELD(CHandle<CCSPlayer_ViewModelServices> , CBaseViewModel, m_hViewModel);
+//};
 
 class SC_CBaseEntity : public CBaseEntity
 {
@@ -41,19 +41,7 @@ public:
     SCHEMA_FIELD(LifeState_t, CBaseEntity, m_lifeState);
     SCHEMA_FIELD(uint8_t, CBaseEntity, m_iTeamNum);
     SCHEMA_FIELD(float, CBaseEntity, m_flGravityScale);
-    
-    
 
-//CBaseViewModel* ToBaseViewModel()
-  //  {
-      //  if ( !m_hViewModel )
-     //       return nullptr;
-        
-     //   return ::ToBaseViewModel(m_hViewModel.Get());
-   // }
-
-    //CBasePlayer* GetPlayer();
-   // virtual CBasePlayer* GetPredictionOwner();  // Добавьте это определение
 };
 
 //class SC_CBasePlayer : public CBaseEntity
