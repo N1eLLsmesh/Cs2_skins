@@ -15,9 +15,9 @@ public:
 
 // Alignment: 136
 // Size: 0x1550
-class CCSPlayerPawnBase : public CBasePlayerPawn
-{
+//class CCSPlayerPawnBase : public CBasePlayerPawn
+//{
  // ...
- CPlayer_ViewModelServices* m_pViewModelServices; // 0xbc0 
+// CPlayer_ViewModelServices* m_pViewModelServices; // 0xbc0 
  // ...
-};
+//};
