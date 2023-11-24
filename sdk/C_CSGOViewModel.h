@@ -2,7 +2,8 @@
 #include "baseentity.h"
 #include "CBaseViewModel.h"
 
-#include "CBodyComponent.h"
+//#include "CBodyComponent.h"
+#include "CPlayer_ItemServices.h"
 #include "CBodyComponentSkeletonInstance.h"
 
 class C_CSGOViewModel: public CBaseViewModel {
