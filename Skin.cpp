@@ -546,6 +546,8 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	
 	CCSPlayer_ViewModelServices* vms = playerPawn->m_pViewModelServices();
 	C_CSGOViewModel* viewModel = vms->m_hViewModel();
+	META_CONPRINTF("vms %p\n", vms);
+	META_CONPRINTF("viewModel %p\n", viewModel);
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController,weapon=weapon]()
 	{
 	
