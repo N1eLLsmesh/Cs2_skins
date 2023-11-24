@@ -556,14 +556,14 @@ if (pawn) {
 	try
 	{
 	    //CHandle<C_CSGOViewModel> csgoview= vms->m_hViewModel();
-	C_CSGOViewModel* csgoview = vms->m_hViewModel();
+	//C_CSGOViewModel* csgoview = vms->m_hViewModel();
         //C_CSGOViewModel* csgoview = vms->m_hViewModel();
-        if (csgoview) {
+        //if (csgoview) {
             META_CONPRINTF("vms %p\n", vms);
-            META_CONPRINTF("csgoview %p\n",csgoview);
-        } else {
-            META_CONPRINTF("csgoview is null\n");
-        }
+            //META_CONPRINTF("csgoview %p\n",csgoview);
+        //} else {
+         //   META_CONPRINTF("csgoview is null\n");
+        //}
 
 	}
 	catch (const std::exception& e) 
