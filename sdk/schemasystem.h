@@ -78,6 +78,7 @@ public:
     CSchemaSystemTypeScope* FindTypeScopeForModule(const char* szpModuleName);
     CSchemaSystemTypeScope* GetServerTypeScope();
     int32_t GetServerOffset(const char* pszClassName, const char* pszPropName);
+    int32_t GetClientOffset(const char* pszClassName, const char* pszPropName); // Добавленная декларация
 };
 
 extern CSchemaSystem* g_pCSchemaSystem;
