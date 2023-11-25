@@ -154,7 +154,7 @@ typedef void(FASTCALL* UTIL_ClientPrintAll_t)(int msg_dest, const char* msg_name
 typedef void(FASTCALL *ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 
 //TEST
-typedef void* (FASTCALL* GetNextSceneEventIDOffset_t)(void* networkTransmitComponent, CEntityInstance* ent, int64 offset, int16_t a4, int16_t a5);
+typedef void* (FASTCALL* GetNextSceneEventIDOffset_t)(float ent, int64 offset, int16_t a4, int16_t a5);
 
 
 
@@ -185,10 +185,10 @@ void (*FnGiveNamedItem)(void* itemService,const char* pchName, void* iSubType,vo
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
-void (*FnStateChanged)(CCSGOViewModel* ent, int offset, int16_t a4, int16_t a5) = nullptr;
+void (*FnStateChanged)(void *networkTransmitComponent, CEntityInstance *ent, int offset, int16_t a4, int16_t a5) = nullptr;
 
 //TEST
-void (*GetNextSceneEventIDOffset)(CCSGOViewModel* ent, int64 offset, int16_t a4, int16_t a5)=nullptr;
+void (*GetNextSceneEventIDOffset)(float ent, int64 offset, int16_t a4, int16_t a5)=nullptr;
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
