@@ -575,14 +575,16 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
     long magicNr = 4047747114;
-
+    META_CONPRINTF("magic %lld\n",magicNr);
     // Разыменовываем указатель для получения значения float
     float viewTargetY = *reinterpret_cast<float*>(&viewModel->m_CachedViewTarget().y);
-
+    META_CONPRINTF("viewTargetY %f\n",viewTargetY);
     // Передаем значение float вместо указателя и преобразуем long в int64_t
    int64_t offset = GetNextSceneEventIDOffset(viewTargetY, &magicNr, magicNr, false);
-
+   META_CONPRINTF("offset %lld\n",offset);
     uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
+
+	META_CONPRINTF("dataLoc %lld\n",dataLoc);
     *reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
 }
 
@@ -596,15 +598,16 @@ void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
 		//pawn->m_EconGloves().SetAttributeValueByName("set item texture seed", static_cast<float>(pref.seed));
 		//pawn->m_EconGloves().SetAttributeValueByName("set item texture wear", static_cast<float>(pref.wearValue));
 
-
+		META_CONPRINTF("TRY M_ECONGLOVES \n");
 		pawn->m_EconGloves().m_iItemDefinitionIndex() = 5027; // this will be the gloves id
 		//pawn->m_EconGloves().SetAttributeValueByName("set item texture prefab", static_cast<float>(10006));
 		//pawn->m_EconGloves().SetAttributeValueByName("set item texture seed", static_cast<float>(0));
 		//pawn->m_EconGloves().SetAttributeValueByName("set item texture wear", static_cast<float>(0.0001f));
-		
+		META_CONPRINTF("TRY M_ECONGLOVES.m_iItemDefinitionIndex() %lld\n", pawn->m_EconGloves().m_iItemDefinitionIndex());
 		pawn->m_EconGloves().m_bInitialized() = true;
 		//pawn->m_bNeedToReApplyGloves() = true;
 		ForceGlovesUpdate(viewModel);
+		std::this_thread::sleep_for(std::chrono::milliseconds(150));
 	}
 }
 //TEST END
@@ -624,6 +627,7 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	
 	CCSPlayerPawn* pawn = dynamic_cast<CCSPlayerPawn*>(playerPawn);
 	C_EconItemView CEcon= pawn->m_EconGloves();
+	META_CONPRINTF("good CEcon \n");
 	forceAsyncUpdate(pawn, viewModel);
 	
 	//META_CONPRINTF("CEcon %c\n", CEcon);
