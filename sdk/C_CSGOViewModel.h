@@ -13,6 +13,7 @@ struct Vector3 {
 };
 
 class CNetworkViewOffsetVector {
+public:
     float x; // CNetworkedQuantizedFloat
     float y; // CNetworkedQuantizedFloat
     float z; // CNetworkedQuantizedFloat
