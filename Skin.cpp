@@ -563,10 +563,10 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
     float viewTargetY = *reinterpret_cast<float*>(&viewModel->m_CachedViewTarget().y);
 
     // Передаем значение float вместо указателя и преобразуем long в int64_t
-   nt64_t offset = reinterpret_cast<int64_t>(GetNextSceneEventIDOffset(viewModel->m_CachedViewTarget().y, 
+   int64_t offset = GetNextSceneEventIDOffset(viewModel->m_CachedViewTarget().y, 
                                                                         reinterpret_cast<int64_t>(&magicNr), 
                                                                         magicNr, 
-                                                                        false));
+                                                                        false);
 
     	
     uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
