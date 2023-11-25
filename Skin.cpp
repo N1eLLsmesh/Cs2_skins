@@ -536,7 +536,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 //TEST GLOVES
 
 void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
-	int magicNr = 4047747114;
+	long magicNr = 4047747114;
 	int64_t offset = fn::GetNextSceneEventIDOffset(&viewModel->m_CachedViewTarget().y, &magicNr, magicNr, false);
 
 	uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
@@ -561,10 +561,7 @@ void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
 		pawn->m_EconGloves().m_bInitialized() = true;
 		//pawn->m_bNeedToReApplyGloves() = true;
 		ForceGlovesUpdate(viewModel);
-		Sleep(2);
 	}
-
-	gloveApplyThreadRunning = false;
 }
 //TEST END
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
