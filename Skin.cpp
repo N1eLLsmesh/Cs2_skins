@@ -154,7 +154,7 @@ typedef void(FASTCALL* UTIL_ClientPrintAll_t)(int msg_dest, const char* msg_name
 typedef void(FASTCALL *ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 
 //TEST
-typedef void* (FASTCALL* GetNextSceneEventIDOffset_t)(float ent, long* magicNrPtr, int64_t magicNr, bool flag);
+typedef int64_t (FASTCALL* GetNextSceneEventIDOffset_t)(float ent, long* magicNrPtr, int64_t magicNr, bool flag);
 
 
 
