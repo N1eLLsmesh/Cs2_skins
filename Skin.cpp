@@ -533,8 +533,40 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 }
 
 
+//TEST GLOVES
+
+void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
+	int magicNr = 4047747114;
+	int64_t offset = fn::GetNextSceneEventIDOffset(&viewModel->m_CachedViewTarget().y, &magicNr, magicNr, false);
+
+	uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
+	*reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
+}
+// weird shit to make the gloves update properly
+void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
+//[{"skin_id":10006,"float":0.000100000000000000004792173602385929598312941379845142364501953125,"seed":0,"nametag":"","side":0,"stickers":[],"stattrak":false,"stattrak_count":0,"type":"glove","weapon_id":5027}]
+	for (int i = 0; i < 10; i++) {
+		// we should probably try checking if memory addresses have been allocated...
+		//pawn->m_EconGloves().m_iItemDefinitionIndex() = pref.weaponID; // this will be the gloves id
+		//pawn->m_EconGloves().SetAttributeValueByName("set item texture prefab", static_cast<float>(pref.paintKitID));
+		//pawn->m_EconGloves().SetAttributeValueByName("set item texture seed", static_cast<float>(pref.seed));
+		//pawn->m_EconGloves().SetAttributeValueByName("set item texture wear", static_cast<float>(pref.wearValue));
 
 
+		pawn->m_EconGloves().m_iItemDefinitionIndex() = 5027; // this will be the gloves id
+		pawn->m_EconGloves().SetAttributeValueByName("set item texture prefab", static_cast<float>(10006));
+		pawn->m_EconGloves().SetAttributeValueByName("set item texture seed", static_cast<float>(0));
+		pawn->m_EconGloves().SetAttributeValueByName("set item texture wear", static_cast<float>(0.0001f));
+		
+		pawn->m_EconGloves().m_bInitialized() = true;
+		//pawn->m_bNeedToReApplyGloves() = true;
+		ForceGlovesUpdate(viewModel);
+		Sleep(2);
+	}
+
+	gloveApplyThreadRunning = false;
+}
+//TEST END
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 {
 	const std::string weapon = event->GetString("weapon");
@@ -550,8 +582,10 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	META_CONPRINTF("viewModel %p\n", viewModel);
 	
 	CCSPlayerPawn* pawn = dynamic_cast<CCSPlayerPawn*>(playerPawn);
-	C_EconItemView* CEcon= pawn->m_EconGloves();
-	META_CONPRINTF("CEcon %p\n", viewModel);
+	C_EconItemView CEcon= pawn->m_EconGloves();
+	forceAsyncUpdate(pawn, viewModel);
+	
+	//META_CONPRINTF("CEcon %c\n", CEcon);
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController,weapon=weapon]()
 	{
 	
