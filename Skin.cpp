@@ -402,7 +402,7 @@ GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(reinte
 
 	//TEST
 	
-	//GetNextSceneEventIDOffset = libserver.FindPatternSIMD("E8 00 00 00 00 4C 63 F0 49 C1 E6").RCast<decltype(GetNextSceneEventIDOffset)>();
+	GetNextSceneEventIDOffset = libserver.FindPatternSIMD("E8 00 00 00 00 4C 63 F0 49 C1 E6").RCast<decltype(GetNextSceneEventIDOffset)>();
 	
 	#endif
 
