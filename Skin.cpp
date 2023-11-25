@@ -155,7 +155,7 @@ typedef void(FASTCALL *ClientPrint)(CBasePlayerController *player, int msg_dest,
 
 //TEST
 //using fGetNextSceneEventIDOffset = int64_t (__fastcall*)(void*, void*, int, bool);
-typedef int64_t (FASTCALL* GetNextSceneEventIDOffset_t)(void* ent, void* magicNrPtr, int64_t magicNr, bool flag);
+typedef int64_t (FASTCALL* GetNextSceneEventIDOffset_t)(float ent, int64_t magicNrPtr, int64_t magicNr, bool flag);
 
 
 
@@ -190,7 +190,7 @@ void (*FnStateChanged)(void *networkTransmitComponent, CEntityInstance *ent, int
 
 //TEST
 //
-void (*GetNextSceneEventIDOffset)(void* ent, void* magicNrPtr, int64_t magicNr, bool flag)=nullptr;
+void (*GetNextSceneEventIDOffset)(float ent, int64_t magicNrPtr, int64_t magicNr, bool flag)=nullptr;
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
