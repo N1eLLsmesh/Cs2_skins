@@ -598,9 +598,9 @@ void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
 
 
 		pawn->m_EconGloves().m_iItemDefinitionIndex() = 5027; // this will be the gloves id
-		pawn->m_EconGloves().SetAttributeValueByName("set item texture prefab", static_cast<float>(10006));
-		pawn->m_EconGloves().SetAttributeValueByName("set item texture seed", static_cast<float>(0));
-		pawn->m_EconGloves().SetAttributeValueByName("set item texture wear", static_cast<float>(0.0001f));
+		//pawn->m_EconGloves().SetAttributeValueByName("set item texture prefab", static_cast<float>(10006));
+		//pawn->m_EconGloves().SetAttributeValueByName("set item texture seed", static_cast<float>(0));
+		//pawn->m_EconGloves().SetAttributeValueByName("set item texture wear", static_cast<float>(0.0001f));
 		
 		pawn->m_EconGloves().m_bInitialized() = true;
 		//pawn->m_bNeedToReApplyGloves() = true;
