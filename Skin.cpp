@@ -548,13 +548,17 @@ void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
 	CCSGOViewModel* viewModel = vms->m_hViewModel();
 	META_CONPRINTF("vms %p\n", vms);
 	META_CONPRINTF("viewModel %p\n", viewModel);
+	
+	CCSPlayerPawn* pawn = dynamic_cast<CCSPlayerPawn*>(playerPawn);
+	C_EconItemView* CEcon= pawn->m_EconGloves();
+	META_CONPRINTF("CEcon %p\n", viewModel);
 	g_Skin.NextFrame([hPlayerController = CHandle<CBasePlayerController>(pPlayerController), pPlayerController = pPlayerController,weapon=weapon]()
 	{
 	
 		//dynamic_cast<SC_CBaseEntity*>(
 
 		
-		//CCSPlayerPawn* pawn = dynamic_cast<CCSPlayerPawn*>(playerPawn);
+		
 		
 
     		//SC_ViewModel* pSCViewModel = ToBaseViewModel(pSCBaseEntity);
