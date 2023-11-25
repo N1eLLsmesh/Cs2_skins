@@ -189,7 +189,8 @@ void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) =
 void (*FnStateChanged)(void *networkTransmitComponent, CEntityInstance *ent, int offset, int16_t a4, int16_t a5) = nullptr;
 
 //TEST
-void (*GetNextSceneEventIDOffset)(float ent, int64 offset, int16_t a4, int16_t a5)=nullptr;
+//
+void (*GetNextSceneEventIDOffset)(void* ent, void* magicNrPtr, int64_t magicNr, bool flag)=nullptr;
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
