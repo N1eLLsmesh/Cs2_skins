@@ -3,6 +3,7 @@
 #include "schemasystem.h"
 #include "CCSPlayer_ViewModelServices.h"
 
+
 //class C_CSPlayerPawnBase;
 class CCSPlayerPawnBase : public CBasePlayerPawn
 {
