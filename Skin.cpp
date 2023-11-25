@@ -155,7 +155,7 @@ typedef void(FASTCALL *ClientPrint)(CBasePlayerController *player, int msg_dest,
 
 //TEST
 //using fGetNextSceneEventIDOffset = int64_t (__fastcall*)(void*, void*, int, bool);
-typedef int64_t (FASTCALL* GetNextSceneEventIDOffset_t)(float ent, long* magicNrPtr, long magicNr, bool flag);
+typedef int64_t (FASTCALL* GetNextSceneEventIDOffset_t)(float* ent, long* magicNrPtr, long magicNr, bool flag);
 
 
 
@@ -190,7 +190,7 @@ void (*FnStateChanged)(void *networkTransmitComponent, CEntityInstance *ent, int
 
 //TEST
 //
-int64_t (*GetNextSceneEventIDOffset)(float ent, long* magicNrPtr, long magicNr, bool flag)=nullptr;
+int64_t (*GetNextSceneEventIDOffset)(float* ent, long* magicNrPtr, long magicNr, bool flag)=nullptr;
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
@@ -580,11 +580,11 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 	
     //float viewTargetY = viewModel->m_CachedViewTarget().y;
 	
-float viewTargetY = viewModel->m_vecViewOffset().y;
+    float viewTargetY = viewModel->m_vecViewOffset().y;
 	
-    META_CONPRINTF("viewTargetY %f\n",viewTargetY);
+    META_CONPRINTF("viewTargetY %p\n",viewModel->m_vecViewOffset().y);
     // Передаем значение float вместо указателя и преобразуем long в int64_t
-   int64_t offset = GetNextSceneEventIDOffset(viewTargetY, &magicNr, magicNr, false);
+   int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_vecViewOffset().y, &magicNr, magicNr, false);
    META_CONPRINTF("offset %lld\n",offset);
     uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
 
