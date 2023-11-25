@@ -24,7 +24,7 @@ public:
     SCHEMA_FIELD(CBodyComponent*, C_BaseEntity, m_CBodyComponent);
     SCHEMA_FIELD(CBodyComponentSkeletonInstance*, C_BaseEntity, m_pGameSceneNode);
 	//m_vecLastFacing CBaseViewModel
-    SCHEMA_FIELD(CNetworkViewOffsetVector, CBaseModelEntity, m_vecViewOffset);
+    SCHEMA_FIELD(Vector3, CBaseFlex, m_viewtarget);
     SCHEMA_FIELD(Vector3, CBaseFlex, m_CachedViewTarget);
     SCHEMA_FIELD(CHandle<void*>, CBaseViewModel, m_iCameraAttachment);
 };
