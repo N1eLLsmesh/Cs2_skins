@@ -537,10 +537,11 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 
 void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 	long magicNr = 4047747114;
-	int64_t offset = fn::GetNextSceneEventIDOffset(&viewModel->m_CachedViewTarget().y, &magicNr, magicNr, false);
+	
+	//int64_t offset = fn::GetNextSceneEventIDOffset(&viewModel->m_CachedViewTarget().y, &magicNr, magicNr, false);
 
-	uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
-	*reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
+	//uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
+	//*reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
 }
 // weird shit to make the gloves update properly
 void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
