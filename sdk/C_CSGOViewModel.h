@@ -13,9 +13,9 @@ struct Vector3 {
 };
 
 class CNetworkViewOffsetVector {
-    float X; // CNetworkedQuantizedFloat
-    float Y; // CNetworkedQuantizedFloat
-    float Z; // CNetworkedQuantizedFloat
+    float x; // CNetworkedQuantizedFloat
+    float y; // CNetworkedQuantizedFloat
+    float z; // CNetworkedQuantizedFloat
 };
 class CBaseModelEntity;
 class CCSGOViewModel /*: public CBaseViewModel*/ {
