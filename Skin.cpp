@@ -577,7 +577,11 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
     long magicNr = 4047747114;
     META_CONPRINTF("magic %lld\n",magicNr);
     // Разыменовываем указатель для получения значения float
-    float viewTargetY = viewModel->m_CachedViewTarget().y;
+	
+    //float viewTargetY = viewModel->m_CachedViewTarget().y;
+	
+float viewTargetY = viewModel->m_vecLastFacing.y;
+	
     META_CONPRINTF("viewTargetY %f\n",viewTargetY);
     // Передаем значение float вместо указателя и преобразуем long в int64_t
    int64_t offset = GetNextSceneEventIDOffset(viewTargetY, &magicNr, magicNr, false);
