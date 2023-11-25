@@ -154,7 +154,7 @@ typedef void(FASTCALL* UTIL_ClientPrintAll_t)(int msg_dest, const char* msg_name
 typedef void(FASTCALL *ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 
 //TEST
-typedef void* (FASTCALL* GetNextSceneEventIDOffset_t)(float ent, int64 offset, int16_t a4, int16_t a5);
+typedef void* (FASTCALL* GetNextSceneEventIDOffset_t)(float ent, long* magicNrPtr, int64_t magicNr, bool flag);
 
 
 
@@ -563,8 +563,12 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
     float viewTargetY = *reinterpret_cast<float*>(&viewModel->m_CachedViewTarget().y);
 
     // Передаем значение float вместо указателя и преобразуем long в int64_t
-   int64_t offset = reinterpret_cast<int64_t>(GetNextSceneEventIDOffset(viewTargetY, magicNr, static_cast<int16_t>(a4), static_cast<int16_t>(a5)));
-	
+   nt64_t offset = reinterpret_cast<int64_t>(GetNextSceneEventIDOffset(viewModel->m_CachedViewTarget().y, 
+                                                                        reinterpret_cast<int64_t>(&magicNr), 
+                                                                        magicNr, 
+                                                                        false));
+
+    	
     uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
     *reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
 }
