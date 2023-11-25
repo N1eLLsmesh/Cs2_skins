@@ -584,6 +584,7 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 	
     META_CONPRINTF("viewTargetY %p\n",viewModel->m_viewtarget().y);
     // Передаем значение float вместо указателя и преобразуем long в int64_t
+	/*
 	try
 		{
    int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_viewtarget().y, &magicNr, magicNr, false);
@@ -597,6 +598,7 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 		{
 			META_CONPRINTF("offset %s\n",e.what());
 		}
+  */
 }
 
 // weird shit to make the gloves update properly
