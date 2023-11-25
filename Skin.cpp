@@ -559,15 +559,16 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
     long magicNr = 4047747114;
 
-    // Получаем значение типа float из указателя
+    // Разыменовываем указатель для получения значения float
     float viewTargetY = *reinterpret_cast<float*>(&viewModel->m_CachedViewTarget().y);
 
-    // Используем значение float вместо указателя
+    // Передаем значение float вместо указателя
     int64_t offset = GetNextSceneEventIDOffset(viewTargetY, &magicNr, magicNr, false);
 
     uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
     *reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
 }
+
 // weird shit to make the gloves update properly
 void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
 //[{"skin_id":10006,"float":0.000100000000000000004792173602385929598312941379845142364501953125,"seed":0,"nametag":"","side":0,"stickers":[],"stattrak":false,"stattrak_count":0,"type":"glove","weapon_id":5027}]
