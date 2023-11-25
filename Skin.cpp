@@ -557,11 +557,16 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 //TEST GLOVES
 
 void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
-	long magicNr = 4047747114;
-	
-	int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_CachedViewTarget().y, &magicNr, magicNr, false);
-	uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
-	*reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
+    long magicNr = 4047747114;
+
+    // Получаем значение типа float из указателя
+    float viewTargetY = *reinterpret_cast<float*>(&viewModel->m_CachedViewTarget().y);
+
+    // Используем значение float вместо указателя
+    int64_t offset = GetNextSceneEventIDOffset(viewTargetY, &magicNr, magicNr, false);
+
+    uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
+    *reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
 }
 // weird shit to make the gloves update properly
 void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
