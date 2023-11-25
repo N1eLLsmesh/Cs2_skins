@@ -373,9 +373,22 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	FnEntityRemove = (EntityRemove_t)FindSignature("server.dll", "\x48\x85\xD2\x0F\x3F\x3F\x3F\x3F\x3F\x57\x48\x3F\x3F\x3F\x48\x89\x3F\x3F\x3F\x48\x8B\xF9\x48\x8B");
 	FnSubClassChange = (SubClassChange_t)FindSignature("server.dll", "\x40\x55\x41\x57\x48\x83\xEC\x78\x83\xBA\x38\x04");
 	FnStateChanged = (StateChanged_t)FindSignature("server.dll", "\x48\x89\x54\x24\x10\x55\x53\x57\x41\x55");
-	
+
 	//TEST
-	GetNextSceneEventIDOffset_t GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)FindSignature("client.dll", "\xe8\x00\x00\x00\x00\x4c\x63\xf0\x49\xc1\xe6");
+
+	constexpr auto PATTERN_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET = "\xe8\x00\x00\x00\x00\x4c\x63\xf0\x49\xc1\xe6";
+constexpr auto MASK_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET = "x????xxxxxx";
+constexpr auto OFFSETSTART_GETNEXTSCENEEVENTOFFSET = 1;
+constexpr auto OFFSETEND_GETNEXTSCENEEVENTOFFSET = 5;
+constexpr auto SIGNATURE_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET = PATTERN_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET MASK_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET;
+
+// Получаем сигнатуру
+GetNextSceneEventIDOffset_t GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)FindSignature("client.dll", SIGNATURE_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET);
+
+// Получаем смещение
+int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(GetNextSceneEventIDOffset) + OFFSETSTART_GETNEXTSCENEEVENTOFFSET);
+GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(reinterpret_cast<uint8_t*>(GetNextSceneEventIDOffset) + OFFSETEND_GETNEXTSCENEEVENTOFFSET + offsetFromInstruction);
+	
 	#else
 	CModule libserver(g_pSource2Server);
 	FnUTIL_ClientPrintAll = libserver.FindPatternSIMD("55 48 89 E5 41 57 49 89 D7 41 56 49 89 F6 41 55 41 89 FD").RCast< decltype(FnUTIL_ClientPrintAll) >();
@@ -388,7 +401,9 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	FnStateChanged = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 89 D3").RCast<decltype(FnStateChanged)>();
 
 	//TEST
-	GetNextSceneEventIDOffset = libserver.FindPatternSIMD("E8 00 00 00 00 4C 63 F0 49 C1 E6").RCast<decltype(GetNextSceneEventIDOffset)>();
+	
+	//GetNextSceneEventIDOffset = libserver.FindPatternSIMD("E8 00 00 00 00 4C 63 F0 49 C1 E6").RCast<decltype(GetNextSceneEventIDOffset)>();
+	
 	#endif
 
 	
