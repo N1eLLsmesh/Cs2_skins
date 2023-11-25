@@ -566,7 +566,7 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 
     // Передаем значение float вместо указателя и преобразуем long в int64_t
    int64_t offset = GetNextSceneEventIDOffset(viewTargetY, 
-                                                                        reinterpret_cast<int64_t>(&magicNr), 
+                                                                        &magicNr, 
                                                                         magicNr, 
                                                                         false);
 
