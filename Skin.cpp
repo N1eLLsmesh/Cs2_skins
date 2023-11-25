@@ -386,7 +386,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	FnStateChanged = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 89 D3").RCast<decltype(FnStateChanged)>();
 
 	//TEST
-	GetNextSceneEventIDOffset = libserver.FindPatternSIMD("\xe8\x00\x00\x00\x00\x4c\x63\xf0\x49\xc1\xe6").RCast<GetNextSceneEventIDOffset_t>();
+	GetNextSceneEventIDOffset = libserver.FindPatternSIMD("E8 00 00 00 00 4C 63 F0 49 C1 E6").RCast<GetNextSceneEventIDOffset_t>();
 	#endif
 
 	
