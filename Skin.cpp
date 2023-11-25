@@ -153,11 +153,20 @@ typedef void(FASTCALL* GiveNamedItem_t)(void* itemService,const char* pchName, v
 typedef void(FASTCALL* UTIL_ClientPrintAll_t)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4);
 typedef void(FASTCALL *ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 
+//TEST
+typedef void* (FASTCALL* GetNextSceneEventIDOffset_t)(void* networkTransmitComponent, CEntityInstance* ent, int64 offset, int16_t a4, int16_t a5);
+
+
+
 extern SubClassChange_t FnSubClassChange;
 extern EntityRemove_t FnEntityRemove;
 extern GiveNamedItem_t FnGiveNamedItem;
 extern UTIL_ClientPrintAll_t FnUTIL_ClientPrintAll;
 extern ClientPrint_t FnUTIL_ClientPrint;
+
+//TEST
+extern GetNextSceneEventIDOffset_t GetNextSceneEventIDOffset;
+
 
 
 EntityRemove_t FnEntityRemove;
@@ -167,6 +176,9 @@ ClientPrint_t FnUTIL_ClientPrint;
 SubClassChange_t FnSubClassChange;
 StateChanged_t FnStateChanged;
 
+//TEST
+GetNextSceneEventIDOffset_t GetNextSceneEventIDOffset;
+
 #else
 void (*FnEntityRemove)(CGameEntitySystem*, void*, void*,uint64_t) = nullptr;
 void (*FnGiveNamedItem)(void* itemService,const char* pchName, void* iSubType,void* pScriptItem, void* a5,void* a6) = nullptr;
@@ -174,6 +186,9 @@ void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* pa
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
 void (*FnStateChanged)(void* networkTransmitComponent, CEntityInstance* ent, int offset, int16_t a4, int16_t a5) = nullptr;
+
+//TEST
+void (*GetNextSceneEventIDOffset)(void* networkTransmitComponent, CEntityInstance* ent, int64 offset, int16_t a4, int16_t a5)=nullptr;
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
@@ -356,6 +371,9 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	FnEntityRemove = (EntityRemove_t)FindSignature("server.dll", "\x48\x85\xD2\x0F\x3F\x3F\x3F\x3F\x3F\x57\x48\x3F\x3F\x3F\x48\x89\x3F\x3F\x3F\x48\x8B\xF9\x48\x8B");
 	FnSubClassChange = (SubClassChange_t)FindSignature("server.dll", "\x40\x55\x41\x57\x48\x83\xEC\x78\x83\xBA\x38\x04");
 	FnStateChanged = (StateChanged_t)FindSignature("server.dll", "\x48\x89\x54\x24\x10\x55\x53\x57\x41\x55");
+	
+	//TEST
+	GetNextSceneEventIDOffset_t GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)FindSignature("client.dll", "\xe8\x00\x00\x00\x00\x4c\x63\xf0\x49\xc1\xe6");
 	#else
 	CModule libserver(g_pSource2Server);
 	FnUTIL_ClientPrintAll = libserver.FindPatternSIMD("55 48 89 E5 41 57 49 89 D7 41 56 49 89 F6 41 55 41 89 FD").RCast< decltype(FnUTIL_ClientPrintAll) >();
@@ -366,6 +384,9 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	FnUTIL_ClientPrint = libserver.FindPatternSIMD("55 48 89 E5 41 57 49 89 CF 41 56 49 89 D6 41 55 41 89 F5 41 54 4C 8D A5 A0 FE FF FF").RCast<decltype(FnUTIL_ClientPrint)>();
 	FnSubClassChange = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC C8 00 00 00 83 BE 38 04 00 00 01 0F 8E 47 02").RCast<decltype(FnSubClassChange)>();
 	FnStateChanged = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 89 D3").RCast<decltype(FnStateChanged)>();
+
+	//TEST
+	GetNextSceneEventIDOffset = libserver.FindPatternSIMD("\xe8\x00\x00\x00\x00\x4c\x63\xf0\x49\xc1\xe6").RCast<GetNextSceneEventIDOffset_t>();
 	#endif
 
 	
