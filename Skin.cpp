@@ -580,7 +580,7 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 	
     //float viewTargetY = viewModel->m_CachedViewTarget().y;
 	
-float viewTargetY = viewModel->m_vecLastFacing.y;
+float viewTargetY = viewModel->m_vecLastFacing().y;
 	
     META_CONPRINTF("viewTargetY %f\n",viewTargetY);
     // Передаем значение float вместо указателя и преобразуем long в int64_t
