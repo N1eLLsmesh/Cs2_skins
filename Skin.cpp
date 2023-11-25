@@ -185,10 +185,10 @@ void (*FnGiveNamedItem)(void* itemService,const char* pchName, void* iSubType,vo
 void (*FnUTIL_ClientPrintAll)(int msg_dest, const char* msg_name, const char* param1, const char* param2, const char* param3, const char* param4) = nullptr;
 void (*FnUTIL_ClientPrint)(CBasePlayerController *player, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4);
 void (*FnSubClassChange)(const CCommandContext &context, const CCommand &args) = nullptr;
-void (*FnStateChanged)(void* networkTransmitComponent, CEntityInstance* ent, int offset, int16_t a4, int16_t a5) = nullptr;
+void (*FnStateChanged)(CCSGOViewModel* ent, int offset, int16_t a4, int16_t a5) = nullptr;
 
 //TEST
-void (*GetNextSceneEventIDOffset)(void* networkTransmitComponent, CEntityInstance* ent, int64 offset, int16_t a4, int16_t a5)=nullptr;
+void (*GetNextSceneEventIDOffset)(CCSGOViewModel* ent, int64 offset, int16_t a4, int16_t a5)=nullptr;
 #endif
 
 std::map<int, std::string> g_WeaponsMap;
@@ -559,8 +559,7 @@ void CPlayerSpawnEvent::FireGameEvent(IGameEvent* event)
 void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 	long magicNr = 4047747114;
 	
-	int64_t offset = GetNextSceneEventIDOffset(reinterpret_cast<void*>(&viewModel->m_CachedViewTarget().y), &magicNr, magicNr, false);
-
+	int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_CachedViewTarget().y, &magicNr, magicNr, false);
 	uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
 	*reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
 }
