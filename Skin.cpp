@@ -421,7 +421,23 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
     
     			// Используйте std::intptr_t для выполнения арифметических операций
     			int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
-    			GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)(relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction);
+			
+			std::vector<uint8_t> name;
+
+			// Вычисляем длину паттерна
+			size_t patternLength = strlen(reinterpret_cast<const char*>(PATTERN_FUNCTION_PTR));
+
+			// Изменяем размер вектора, чтобы он был достаточно большим
+			name.resize(patternLength);
+
+			// Копируем значения из области памяти в вектор
+			std::memcpy(name.data(), offsetFromInstruction);
+
+			uint8_t temppat[patternVector.size()];
+			std::copy(patternVector.begin(), patternVector.end(), temppat);
+
+			GetNextSceneEventIDOffset = libserver.FindPatternSIMD(temppat).RCast<decltype(GetNextSceneEventIDOffset)>();
+    			//GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)(relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction);
 		}
 	/*
 	auto* relCallPtr = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR).RCast<decltype(GetNextSceneEventIDOffset)>();
