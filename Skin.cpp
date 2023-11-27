@@ -644,7 +644,7 @@ void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
 		//pawn->m_EconGloves().m_bInitialized() = true;
 		
 			
-			std::this_thread::sleep_for(std::chrono::milliseconds(150));
+			std::this_thread::sleep_for(std::chrono::milliseconds(1500));
         		
 			ForceGlovesUpdate(viewModel);
 		
