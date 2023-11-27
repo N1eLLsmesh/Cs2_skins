@@ -408,6 +408,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	// Signature for sub_F518D0:
 	// 55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00 48 89 95 B8 FE FF FF 
 	// \x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x38\x01\x00\x00\x48\x89\x95\xB8\xFE\xFF\xFF
+/*
 	constexpr uint8_t PATTERN_FUNCTION_PTR[] = {0x55, 0x48, 0x89, 0xE5, 0x41, 0x57, 0x41, 0x56, 0x41, 0x55, 0x41, 0x54, 0x53, 0x48, 0x81, 0xEC, 0x38, 0x01, 0x00, 0x00, 0x48, 0x89, 0x95, 0xB8, 0xFE, 0xFF, 0xFF};
 	constexpr auto MASK_FUNCTION_PTR = "xxxxxxxxxxxxxxxxxx??xxxxxxxx";
 	constexpr auto OFFSETSTART_FUNCTION_PTR = 1;
@@ -428,30 +429,11 @@ if (patternResult)
 
     uint8_t temppat[name.size()];
     std::copy(name.begin(), name.end(), temppat);
-
-    //GetNextSceneEventIDOffset = libserver.FindPatternSIMD(temppat).RCast<decltype(GetNextSceneEventIDOffset)>();
 	std::string patternString = reinterpret_cast<char*>(temppat);
 	GetNextSceneEventIDOffset = libserver.FindPatternSIMD(patternString.c_str()).RCast<decltype(GetNextSceneEventIDOffset)>();
 }
-	/*
-	auto* relCallPtr = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR).RCast<decltype(GetNextSceneEventIDOffset)>();
-	if (relCallPtr)
-	{
-   		int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
-    		GetNextSceneEventIDOffset = (relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction).RCast<decltype(GetNextSceneEventIDOffset)>();
-	}
-    	*/
-			
-	// set up your function by its relative call address
-	/*
-	int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
-	YourFunction = reinterpret_cast<YourFunctionType>(relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction);
-
-	// Приведение смещения к нужному типу
-	//GetNextSceneEventIDOffset = libserver.FindPatternSIMD("48 85 FF 0F 84 ? ? ? ? 55 31 C0 48 89 E5 41 57").RCast<decltype(GetNextSceneEventIDOffset)>();
-	//GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffsetFn>(functionAddress + offset);
-	GetNextSceneEventIDOffset = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00 48 89 95 B8 FE FF FF").RCast<decltype(GetNextSceneEventIDOffset)>();
 	*/
+	GetNextSceneEventIDOffset = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00 48 89 95 B8 FE FF FF").RCast<decltype(GetNextSceneEventIDOffset)>();
 	#endif
 
 	
@@ -637,7 +619,7 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
    uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_viewtarget().y) + offset * 0x10;
 
    META_CONPRINTF("dataLoc %lld\n",dataLoc);
-    //*reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
+    *reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
 
   
 }
@@ -645,7 +627,8 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 // weird shit to make the gloves update properly
 void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
 //[{"skin_id":10006,"float":0.000100000000000000004792173602385929598312941379845142364501953125,"seed":0,"nametag":"","side":0,"stickers":[],"stattrak":false,"stattrak_count":0,"type":"glove","weapon_id":5027}]
-	//for (int i = 0; i < 10; i++) {
+	std::thread([pawn,viewModel]() {
+		for (int i = 0; i < 10; i++) {
 		// we should probably try checking if memory addresses have been allocated...
 		//pawn->m_EconGloves().m_iItemDefinitionIndex() = pref.weaponID; // this will be the gloves id
 		//pawn->m_EconGloves().SetAttributeValueByName("set item texture prefab", static_cast<float>(pref.paintKitID));
@@ -658,11 +641,18 @@ void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
 		//pawn->m_EconGloves().SetAttributeValueByName("set item texture seed", static_cast<float>(0));
 		//pawn->m_EconGloves().SetAttributeValueByName("set item texture wear", static_cast<float>(0.0001f));
 		META_CONPRINTF("TRY M_ECONGLOVES.m_iItemDefinitionIndex() %lld\n", pawn->m_EconGloves().m_iItemDefinitionIndex());
-		pawn->m_EconGloves().m_bInitialized() = true;
+		//pawn->m_EconGloves().m_bInitialized() = true;
+		
+			
+			std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        		
+			ForceGlovesUpdate(viewModel);
+		
 		//pawn->m_bNeedToReApplyGloves() = true;
-		ForceGlovesUpdate(viewModel);
+		
 		//std::this_thread::sleep_for(std::chrono::milliseconds(150));
-	//}
+		}
+			}).detach();
 }
 //TEST END
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
