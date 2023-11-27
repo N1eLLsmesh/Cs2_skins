@@ -408,12 +408,12 @@ GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(reinte
 	// Signature for sub_F518D0:
 	// 55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00 48 89 95 B8 FE FF FF 
 	// \x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x38\x01\x00\x00\x48\x89\x95\xB8\xFE\xFF\xFF
-	constexpr auto PATTERN_FUNCTION_PTR = "55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00 48 89 95 B8 FE FF FF";
+	constexpr auto PATTERN_FUNCTION_PTR = reinterpret_cast<const uint8_t*>("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00 48 89 95 B8 FE FF FF");
 	constexpr auto MASK_FUNCTION_PTR = "xxxxxxxxxxxxxxxxxx??xxxxxxxx";
 	constexpr auto OFFSETSTART_FUNCTION_PTR = 1;
 	constexpr auto OFFSETEND_FUNCTION_PTR = 5;
 
-	auto* relCallPtr = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00 48 89 95 B8 FE FF FF", MASK_FUNCTION_PTR).RCast<decltype(GetNextSceneEventIDOffset)>();
+	auto* relCallPtr = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR).RCast<decltype(GetNextSceneEventIDOffset)>();
 	if (relCallPtr)
 	{
 		int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
