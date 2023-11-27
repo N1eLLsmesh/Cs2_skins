@@ -595,7 +595,7 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 		{
    int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_viewtarget().y, &magicNr, magicNr, false);
    META_CONPRINTF("offset %lld\n",offset);
-    uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_CachedViewTarget().y) + offset * 0x10;
+    uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_viewtarget().y) + offset * 0x10;
 
 	META_CONPRINTF("dataLoc %lld\n",dataLoc);
     *reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
