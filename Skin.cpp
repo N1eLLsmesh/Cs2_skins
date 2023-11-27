@@ -417,7 +417,7 @@ GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(reinte
 		if (patternResult)
 		{
 			//RCast<decltype(GetNextSceneEventIDOffset_t)>()
-    			uint8_t* relCallPtr = reinterpret_cast<uint8_t*>((patternResult).RCast<uint64_t*>);
+    			uint8_t* relCallPtr = reinterpret_cast<uint8_t*>(patternResult.RCast<uint64_t*>());
     
     			// Используйте std::intptr_t для выполнения арифметических операций
     			int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
