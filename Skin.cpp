@@ -386,11 +386,11 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 //constexpr auto SIGNATURE_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET = PATTERN_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET MASK_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET;
 
 // Получаем сигнатуру
-GetNextSceneEventIDOffset_t GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)FindSignature("server.dll", "\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x38\x01\x00\x00\x48\x89\x95\xB8\xFE\xFF\xFF");
+//GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)FindSignature("server.dll", "\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x38\x01\x00\x00\x48\x89\x95\xB8\xFE\xFF\xFF");
 
 // Получаем смещение
-int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(GetNextSceneEventIDOffset) + OFFSETSTART_GETNEXTSCENEEVENTOFFSET);
-GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(reinterpret_cast<uint8_t*>(GetNextSceneEventIDOffset) + OFFSETEND_GETNEXTSCENEEVENTOFFSET + offsetFromInstruction);
+//int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(GetNextSceneEventIDOffset) + OFFSETSTART_GETNEXTSCENEEVENTOFFSET);
+//GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(reinterpret_cast<uint8_t*>(GetNextSceneEventIDOffset) + OFFSETEND_GETNEXTSCENEEVENTOFFSET + offsetFromInstruction);
 	
 	#else
 	CModule libserver(g_pSource2Server);
@@ -421,7 +421,7 @@ GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(reinte
     
     			// Используйте std::intptr_t для выполнения арифметических операций
     			int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
-    			GetNextSceneEventIDOffset = reinterpret_cast<int64_t*>(relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction);
+    			GetNextSceneEventIDOffset = (relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction).RCast<GetNextSceneEventIDOffset>();
 		}
 	/*
 	auto* relCallPtr = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR).RCast<decltype(GetNextSceneEventIDOffset)>();
