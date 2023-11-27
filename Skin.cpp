@@ -411,7 +411,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	constexpr uint8_t PATTERN_FUNCTION_PTR[] = {0x55, 0x48, 0x89, 0xE5, 0x41, 0x57, 0x41, 0x56, 0x41, 0x55, 0x41, 0x54, 0x53, 0x48, 0x81, 0xEC, 0x38, 0x01, 0x00, 0x00, 0x48, 0x89, 0x95, 0xB8, 0xFE, 0xFF, 0xFF};
 	constexpr auto MASK_FUNCTION_PTR = "xxxxxxxxxxxxxxxxxx??xxxxxxxx";
 	constexpr auto OFFSETSTART_FUNCTION_PTR = 1;
-	constexpr auto OFFSETEND_FUNCTION_PTR = 5;
+	constexpr int32_t OFFSETEND_FUNCTION_PTR = 5;
 
 		auto patternResult = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR);
 		if (patternResult)
@@ -421,7 +421,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
     
     			// Используйте std::intptr_t для выполнения арифметических операций
     			int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
-    			GetNextSceneEventIDOffset = (relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction).RCast<GetNextSceneEventIDOffset>();
+    			GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)(relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction);
 		}
 	/*
 	auto* relCallPtr = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR).RCast<decltype(GetNextSceneEventIDOffset)>();
