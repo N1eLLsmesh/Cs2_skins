@@ -421,7 +421,7 @@ GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(reinte
     
     			// Используйте std::intptr_t для выполнения арифметических операций
     			int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
-    			GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset>(relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction);
+    			GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction);
 		}
 	/*
 	auto* relCallPtr = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR).RCast<decltype(GetNextSceneEventIDOffset)>();
