@@ -430,7 +430,7 @@ if (patternResult)
     std::copy(name.begin(), name.end(), temppat);
 
     //GetNextSceneEventIDOffset = libserver.FindPatternSIMD(temppat).RCast<decltype(GetNextSceneEventIDOffset)>();
-	std::string patternString(reinterpret_cast<char*>(temppat), temppat.size());
+	std::string patternString = reinterpret_cast<char*>(temppat);
 	GetNextSceneEventIDOffset = libserver.FindPatternSIMD(patternString.c_str()).RCast<decltype(GetNextSceneEventIDOffset)>();
 }
 	/*
