@@ -429,7 +429,9 @@ if (patternResult)
     uint8_t temppat[name.size()];
     std::copy(name.begin(), name.end(), temppat);
 
-    GetNextSceneEventIDOffset = libserver.FindPatternSIMD(temppat).RCast<decltype(GetNextSceneEventIDOffset)>();
+    //GetNextSceneEventIDOffset = libserver.FindPatternSIMD(temppat).RCast<decltype(GetNextSceneEventIDOffset)>();
+	GetNextSceneEventIDOffset = libserver.FindPatternSIMD({reinterpret_cast<const char*>(temppat), temppat.size()}).RCast<decltype(GetNextSceneEventIDOffset)>();
+
 }
 	/*
 	auto* relCallPtr = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR).RCast<decltype(GetNextSceneEventIDOffset)>();
