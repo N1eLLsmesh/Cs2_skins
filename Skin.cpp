@@ -386,7 +386,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 //constexpr auto SIGNATURE_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET = PATTERN_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET MASK_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET;
 
 // Получаем сигнатуру
-GetNextSceneEventIDOffset_t GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)FindSignature("client.dll", "\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x38\x01\x00\x00\x48\x89\x95\xB8\xFE\xFF\xFF");
+GetNextSceneEventIDOffset_t GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)FindSignature("server.dll", "\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x38\x01\x00\x00\x48\x89\x95\xB8\xFE\xFF\xFF");
 
 // Получаем смещение
 int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(GetNextSceneEventIDOffset) + OFFSETSTART_GETNEXTSCENEEVENTOFFSET);
@@ -405,6 +405,9 @@ GetNextSceneEventIDOffset = reinterpret_cast<GetNextSceneEventIDOffset_t>(reinte
 
 	//TEST
 	
+	// Signature for sub_F518D0:
+	// 55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00 48 89 95 B8 FE FF FF 
+	// \x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x38\x01\x00\x00\x48\x89\x95\xB8\xFE\xFF\xFF
 	GetNextSceneEventIDOffset = libserver.FindPatternSIMD("55 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00 48 89 95 B8 FE FF FF").RCast<decltype(GetNextSceneEventIDOffset)>();
 	
 	#endif
@@ -607,7 +610,7 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 // weird shit to make the gloves update properly
 void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
 //[{"skin_id":10006,"float":0.000100000000000000004792173602385929598312941379845142364501953125,"seed":0,"nametag":"","side":0,"stickers":[],"stattrak":false,"stattrak_count":0,"type":"glove","weapon_id":5027}]
-	for (int i = 0; i < 10; i++) {
+	//for (int i = 0; i < 10; i++) {
 		// we should probably try checking if memory addresses have been allocated...
 		//pawn->m_EconGloves().m_iItemDefinitionIndex() = pref.weaponID; // this will be the gloves id
 		//pawn->m_EconGloves().SetAttributeValueByName("set item texture prefab", static_cast<float>(pref.paintKitID));
@@ -623,8 +626,8 @@ void forceAsyncUpdate(CCSPlayerPawn* pawn, CCSGOViewModel* viewModel) {
 		pawn->m_EconGloves().m_bInitialized() = true;
 		//pawn->m_bNeedToReApplyGloves() = true;
 		ForceGlovesUpdate(viewModel);
-		std::this_thread::sleep_for(std::chrono::milliseconds(150));
-	}
+		//std::this_thread::sleep_for(std::chrono::milliseconds(150));
+	//}
 }
 //TEST END
 void Event_ItemPurchase::FireGameEvent(IGameEvent* event)
