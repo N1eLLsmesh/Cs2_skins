@@ -413,32 +413,24 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 	constexpr auto OFFSETSTART_FUNCTION_PTR = 1;
 	constexpr int32_t OFFSETEND_FUNCTION_PTR = 5;
 
-		auto patternResult = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR);
-		if (patternResult)
-		{
-			//RCast<decltype(GetNextSceneEventIDOffset_t)>()
-    			uint8_t* relCallPtr = reinterpret_cast<uint8_t*>(patternResult.RCast<uint64_t*>());
-    
-    			// Используйте std::intptr_t для выполнения арифметических операций
-    			int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
-			
-			std::vector<uint8_t> name;
+auto patternResult = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR);
+if (patternResult)
+{
+    uint8_t* relCallPtr = reinterpret_cast<uint8_t*>(patternResult.RCast<uint64_t*>());
+    int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(relCallPtr + OFFSETSTART_FUNCTION_PTR);
 
-			// Вычисляем длину паттерна
-			size_t patternLength = strlen(reinterpret_cast<const char*>(PATTERN_FUNCTION_PTR));
+    // Изменяем размер вектора, чтобы он был достаточно большим
+    size_t patternLength = sizeof(PATTERN_FUNCTION_PTR);
+    std::vector<uint8_t> name(patternLength);
 
-			// Изменяем размер вектора, чтобы он был достаточно большим
-			name.resize(patternLength);
+    // Копируем значения из области памяти в вектор
+    std::memcpy(name.data(), relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction, patternLength);
 
-			// Копируем значения из области памяти в вектор
-			std::memcpy(name.data(), offsetFromInstruction);
+    uint8_t temppat[name.size()];
+    std::copy(name.begin(), name.end(), temppat);
 
-			uint8_t temppat[patternVector.size()];
-			std::copy(patternVector.begin(), patternVector.end(), temppat);
-
-			GetNextSceneEventIDOffset = libserver.FindPatternSIMD(temppat).RCast<decltype(GetNextSceneEventIDOffset)>();
-    			//GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)(relCallPtr + OFFSETEND_FUNCTION_PTR + offsetFromInstruction);
-		}
+    GetNextSceneEventIDOffset = libserver.FindPatternSIMD(temppat).RCast<decltype(GetNextSceneEventIDOffset)>();
+}
 	/*
 	auto* relCallPtr = libserver.FindPatternSIMD(PATTERN_FUNCTION_PTR, MASK_FUNCTION_PTR).RCast<decltype(GetNextSceneEventIDOffset)>();
 	if (relCallPtr)
