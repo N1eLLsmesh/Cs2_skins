@@ -610,13 +610,17 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
 	
     //float viewTargetY = viewModel->m_CachedViewTarget().y;
 	
-    float viewTargetY = viewModel->m_viewtarget().y;
-	
-    META_CONPRINTF("viewTargetY %p\n",viewModel->m_viewtarget().y);
+    //float viewTargetY = viewModel->m_viewtarget().y;
+	//m_vLookTargetPosition
+    //META_CONPRINTF("viewTargetY %p\n",viewModel->m_viewtarget().y);
+	META_CONPRINTF("viewTargetY %p\n",viewModel->m_vLookTargetPosition().y);
     // Передаем значение float вместо указателя и преобразуем long в int64_t
-   int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_viewtarget().y, &magicNr, magicNr, false);
+   //int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_viewtarget().y, &magicNr, magicNr, false);
+	int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_vLookTargetPosition().y, &magicNr, magicNr, false);
    META_CONPRINTF("offset %lld\n",offset);
-   uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_viewtarget().y) + offset * 0x10;
+   //uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_viewtarget().y) + offset * 0x10;
+
+	uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_vLookTargetPosition().y) + offset * 0x10;
 
    META_CONPRINTF("dataLoc %lld\n",dataLoc);
     *reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
