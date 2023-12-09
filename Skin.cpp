@@ -386,7 +386,7 @@ void Skin::StartupServer(const GameSessionConfiguration_t& config, ISource2World
 //constexpr auto SIGNATURE_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET = PATTERN_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET MASK_GETNEXTSCENEEVENTOFFSET_PTR_OFFSET;
 
 // Получаем сигнатуру
-//GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)FindSignature("server.dll", "\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x38\x01\x00\x00\x48\x89\x95\xB8\xFE\xFF\xFF");
+GetNextSceneEventIDOffset = (GetNextSceneEventIDOffset_t)FindSignature("server.dll", "\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x38\x01\x00\x00\x48\x89\x95\xB8\xFE\xFF\xFF");
 
 // Получаем смещение
 //int32_t offsetFromInstruction = *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(GetNextSceneEventIDOffset) + OFFSETSTART_GETNEXTSCENEEVENTOFFSET);
@@ -613,19 +613,17 @@ void ForceGlovesUpdate(CCSGOViewModel* viewModel) {
     //float viewTargetY = viewModel->m_viewtarget().y;
 	//m_vLookTargetPosition
     //META_CONPRINTF("viewTargetY %p\n",viewModel->m_viewtarget().y);
-	META_CONPRINTF("viewTargetY %p\n",viewModel->m_vLookTargetPosition().y);
+	META_CONPRINTF("viewTargetY %p\n",viewModel->m_viewtarget().y);
     // Передаем значение float вместо указателя и преобразуем long в int64_t
    //int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_viewtarget().y, &magicNr, magicNr, false);
-	int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_vLookTargetPosition().y, &magicNr, magicNr, false);
+	int64_t offset = GetNextSceneEventIDOffset(&viewModel->m_viewtarget().y, &magicNr, magicNr, false);
    META_CONPRINTF("offset %lld\n",offset);
    //uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_viewtarget().y) + offset * 0x10;
 
-	uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_vLookTargetPosition().y) + offset * 0x10;
+	uint8_t* dataLoc = *reinterpret_cast<uint8_t**>(&viewModel->m_viewtarget().y) + offset * 0x10;
 
    META_CONPRINTF("dataLoc %lld\n",dataLoc);
     *reinterpret_cast<int*>(dataLoc + 0xc) -= 1;
-
-  
 }
 
 // weird shit to make the gloves update properly
